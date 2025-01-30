@@ -4,20 +4,18 @@ class Coin extends DrawableObject {
         'img/8_coin/coin_2.png'
     ];
 
-    constructor(x, y) {
+    constructor(minX, maxX, y) {
         super();
         let randomCoin = this.COIN_IMAGES[Math.floor(Math.random() * this.COIN_IMAGES.length)];
         this.loadImage(randomCoin); // Zufälliges Coin-Bild laden
-        this.x = x;
+        this.x = Math.floor(Math.random() * (maxX - minX)) + minX;         // Zufällige X-Position zwischen minX und maxX
         this.y = y;
-        this.width = 50; // Standardgröße
-        this.height = 50;
+        this.width = 100;
+        this.height = 100;
 
-        // Optional: Zufällige Größenvariation (falls gewünscht)
-        if (randomCoin == 'img/8_coin/coin_2.png') {
-            this.width = 100;
-            this.height = 100;
+        if (randomCoin === 'img/8_coin/coin_2.png') {         // Falls der größere Coin gewählt wird, passe die Größe an
+            this.width = 150;
+            this.height = 150;
         }
     }
 }
-
