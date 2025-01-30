@@ -24,6 +24,15 @@ class World {
 
     checkCollisions() {
         setInterval(() => {
+
+            this.level.coins.forEach((coin, index) => {
+                if (this.character.isColliding(coin)) {
+                    /* console.log('Coin eingesammelt:', coin); */
+                    this.level.coins.splice(index, 1); 
+                    this.coinBar.setCoins(this.coinBar.collectedCoins + 1);
+                }
+            });
+
             this.level.enemies.forEach((enemy) => {
                 if(this.character.isColliding(enemy) ) {
                     this.character.hit();
@@ -31,6 +40,7 @@ class World {
                     console.log('CHARACTER LEBEN', this.character.energie);    
                 }
             });
+
         }, 200);
     }
 
@@ -69,7 +79,7 @@ class World {
         if (mo.otherDirection) {
             this.flipImage(mo);
         }
-
+        
         mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
 
