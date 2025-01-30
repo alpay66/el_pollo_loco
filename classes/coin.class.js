@@ -17,5 +17,31 @@ class Coin extends DrawableObject {
             this.width = 150;
             this.height = 150;
         }
+        this.startCoinAnimation();
     }
+
+    startCoinAnimation() {
+        setInterval(() => {
+            this.animateCoin();
+        }, 1000); // Alle 1 Sekunde Animation starten
+    }
+
+    animateCoin() {
+    let growSize = 10; // Um wie viel der Coin wachsen soll
+
+    // Coin wächst
+    this.width += growSize;
+    this.height += growSize;
+    this.x -= growSize / 2; // Damit es von der Mitte aus wächst
+    this.y -= growSize / 2;
+
+    // Nach 200ms zurück zur normalen Größe
+    setTimeout(() => {
+        this.width -= growSize;
+        this.height -= growSize;
+        this.x += growSize / 2;
+        this.y += growSize / 2;
+    }, 200);
+}
+
 }
