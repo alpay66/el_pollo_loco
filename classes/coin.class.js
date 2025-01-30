@@ -6,11 +6,18 @@ class Coin extends DrawableObject {
 
     constructor(x, y) {
         super();
-        this.loadImage('img/8_coin/coin_1.png'); // Zufälliges Coin-Bild laden
+        let randomCoin = this.COIN_IMAGES[Math.floor(Math.random() * this.COIN_IMAGES.length)];
+        this.loadImage(randomCoin); // Zufälliges Coin-Bild laden
         this.x = x;
         this.y = y;
         this.width = 50; // Standardgröße
         this.height = 50;
+
+        // Optional: Zufällige Größenvariation (falls gewünscht)
+        if (randomCoin == 'img/8_coin/coin_2.png') {
+            this.width = 100;
+            this.height = 100;
+        }
     }
 }
 
