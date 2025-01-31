@@ -28,20 +28,25 @@ class Coin extends DrawableObject {
 
     animateCoin() {
         let growSize = 10;
-
-        // Coin wächst
-        this.width += growSize;
-        this.height += growSize;
-        this.x -= growSize / 2; // Damit es von der Mitte aus wächst
-        this.y -= growSize / 2;
-
-        // Nach 200ms zurück zur normalen Größe
+        this.growCoin(growSize);
+    
         setTimeout(() => {
-            this.width -= growSize;
-            this.height -= growSize;
-            this.x += growSize / 2;
-            this.y += growSize / 2;
+            this.shrinkCoin(growSize);
         }, 200);
     }
     
+    growCoin(size) {
+        this.width += size;
+        this.height += size;
+        this.x -= size / 2;
+        this.y -= size / 2;
+    }
+    
+    shrinkCoin(size) {
+        this.width -= size;
+        this.height -= size;
+        this.x += size / 2;
+        this.y += size / 2;
+    }
+
 }
