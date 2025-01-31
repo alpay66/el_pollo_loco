@@ -48,4 +48,6 @@ class Coin extends DrawableObject {
         this.x += size / 2;
         this.y += size / 2;
     }
+
+    
 }
