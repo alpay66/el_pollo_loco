@@ -22,10 +22,23 @@ class Bottlebar extends DrawableObject {
 
     setBottles(bottles) {
         this.collectedBottles = bottles;
-        this.img = this.imgCache[this.BOTLLE_BAR_IMAGE[this.resolveImageIndex()]];
+        let path = this.BOTLLE_BAR_IMAGE[this.resolveImageIndex()];
+        this.img = this.imgCache[path];
     }
 
     resolveImageIndex() {
-        return Math.min(5, Math.floor(this.collectedBottles / 5)); // Maximal 100%
+        if (this.collectedBottles >= 5) {
+            return 5;
+        } else if (this.collectedBottles >= 4) {
+            return 4;
+        } else if (this.collectedBottles >= 3) {
+            return 3;
+        } else if (this.collectedBottles >= 2) {
+            return 2;
+        } else if (this.collectedBottles >= 1) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

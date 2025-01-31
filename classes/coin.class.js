@@ -43,5 +43,5 @@ class Coin extends DrawableObject {
             this.y += growSize / 2;
         }, 200);
     }
-
+    
 }

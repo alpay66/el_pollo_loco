@@ -1,13 +1,13 @@
 class World {
     character = new Character();
+    healthBar = new Healthbar();
+    coinBar = new Coinbar();
+    bottleBar = new Bottlebar();
     level = level_1;
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
-    healthBar = new Healthbar();
-    coinBar = new Coinbar();
-    bottleBar = new Bottlebar();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -25,6 +25,7 @@ class World {
     checkCollisions() {
         setInterval(() => {
 
+            // ✅ Collect Coins 
             this.level.coins.forEach((coin, index) => {
                 if (this.character.isColliding(coin)) {
                     /* console.log('Coin eingesammelt:', coin); */
@@ -33,6 +34,16 @@ class World {
                 }
             });
 
+            // ✅ Collect Bottles
+            this.level.bottles.forEach((bottle, index) => {
+                if (this.character.isColliding(bottle, 0)) { 
+                    console.log('Bottle eingesammelt:', bottle);
+                    this.level.bottles.splice(index, 1);
+                    this.bottleBar.setBottles(this.bottleBar.collectedBottles + 1);
+                }
+            });
+
+            // ✅ Enemy Can Hit
             this.level.enemies.forEach((enemy) => {
                 if(this.character.isColliding(enemy) ) {
                     this.character.hit();
@@ -59,6 +70,7 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
 
         this.addToMap(this.character);
 
