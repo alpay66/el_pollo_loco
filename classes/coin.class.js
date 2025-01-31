@@ -8,12 +8,12 @@ class Coin extends DrawableObject {
         super();
         let randomCoin = this.COIN_IMAGES[Math.floor(Math.random() * this.COIN_IMAGES.length)];
         this.loadImage(randomCoin); // Zufälliges Coin-Bild laden
-        this.x = Math.floor(Math.random() * (maxX - minX)) + minX;  
+        this.x = Math.floor(Math.random() * (maxX - minX)) + minX;
         this.y = y;
         this.width = 100;
         this.height = 100;
 
-        if (randomCoin === 'img/8_coin/coin_2.png') {        
+        if (randomCoin === 'img/8_coin/coin_2.png') {
             this.width = 150;
             this.height = 150;
         }
@@ -27,21 +27,21 @@ class Coin extends DrawableObject {
     }
 
     animateCoin() {
-        let growSize = 10;
+        let growSize = 10; // change how big the coin can grow 
         this.growCoin(growSize);
-    
+
         setTimeout(() => {
             this.shrinkCoin(growSize);
         }, 200);
     }
-    
+
     growCoin(size) {
         this.width += size;
         this.height += size;
         this.x -= size / 2;
         this.y -= size / 2;
     }
-    
+
     shrinkCoin(size) {
         this.width -= size;
         this.height -= size;
