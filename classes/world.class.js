@@ -26,15 +26,7 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkThrowObjects();
         }, 200);
-    }
-
-    checkThrowObjects() {
-        if(this.keyboard.D) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
-            this.throwableObjects.push(bottle);
-        }
     }
 
     checkCollisions() {
@@ -50,7 +42,7 @@ class World {
         // ✅ Collect Bottles
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle, 0)) {
-                console.log('Bottle eingesammelt:', bottle);
+                /* console.log('Bottle eingesammelt:', bottle); */
                 this.level.bottles.splice(index, 1);
                 this.bottleBar.setBottles(this.bottleBar.collectedBottles + 1);
             }
@@ -61,7 +53,7 @@ class World {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.healthBar.setPercentage(this.character.energie);
-                console.log('CHARACTER LEBEN', this.character.energie);
+                /* console.log('CHARACTER LEBEN', this.character.energie); */
             }
         });
     }
