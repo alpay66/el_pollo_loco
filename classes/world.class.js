@@ -8,6 +8,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    throwableObjects = [];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -15,44 +16,54 @@ class World {
         this.keyboard = keyboard;
         this.drawInWorld();
         this.setWorld();
-        this.checkCollisions();
+        this.run();
     }
 
     setWorld() {
         this.character.world = this;
     }
 
-    checkCollisions() {
+    run() {
         setInterval(() => {
-
-            // ✅ Collect Coins 
-            this.level.coins.forEach((coin, index) => {
-                if (this.character.isColliding(coin)) {
-                    /* console.log('Coin eingesammelt:', coin); */
-                    this.level.coins.splice(index, 1); 
-                    this.coinBar.setCoins(this.coinBar.collectedCoins + 1);
-                }
-            });
-
-            // ✅ Collect Bottles
-            this.level.bottles.forEach((bottle, index) => {
-                if (this.character.isColliding(bottle, 0)) { 
-                    console.log('Bottle eingesammelt:', bottle);
-                    this.level.bottles.splice(index, 1);
-                    this.bottleBar.setBottles(this.bottleBar.collectedBottles + 1);
-                }
-            });
-
-            // ✅ Enemy Can Hit
-            this.level.enemies.forEach((enemy) => {
-                if(this.character.isColliding(enemy) ) {
-                    this.character.hit();
-                    this.healthBar.setPercentage(this.character.energie);
-                    console.log('CHARACTER LEBEN', this.character.energie);    
-                }
-            });
-
+            this.checkCollisions();
+            this.checkThrowObjects();
         }, 200);
+    }
+
+    checkThrowObjects() {
+        if(this.keyboard.D) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
+            this.throwableObjects.push(bottle);
+        }
+    }
+
+    checkCollisions() {
+        // ✅ Collect Coins 
+        this.level.coins.forEach((coin, index) => {
+            if (this.character.isColliding(coin)) {
+                /* console.log('Coin eingesammelt:', coin); */
+                this.level.coins.splice(index, 1);
+                this.coinBar.setCoins(this.coinBar.collectedCoins + 1);
+            }
+        });
+
+        // ✅ Collect Bottles
+        this.level.bottles.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle, 0)) {
+                console.log('Bottle eingesammelt:', bottle);
+                this.level.bottles.splice(index, 1);
+                this.bottleBar.setBottles(this.bottleBar.collectedBottles + 1);
+            }
+        });
+
+        // ✅ Enemy Can Hit
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.healthBar.setPercentage(this.character.energie);
+                console.log('CHARACTER LEBEN', this.character.energie);
+            }
+        });
     }
 
     drawInWorld() {
@@ -65,12 +76,14 @@ class World {
         this.addToMap(this.healthBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
-        this.ctx.translate(this.camera_x, 0); 
+        this.ctx.translate(this.camera_x, 0);
         /////////////////
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.throwableObjects);
+
 
         this.addToMap(this.character);
 

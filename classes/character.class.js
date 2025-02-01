@@ -91,7 +91,8 @@ class Character extends MovableObject {
             }
             if (this.world.keyboard.UP && !this.isAboveGround()) {
                 this.jump();
-            }
+            }        
+            
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
@@ -121,7 +122,7 @@ class Character extends MovableObject {
         this.idleInterval = setInterval(() => {
             this.idleTime += 1;
 
-            if (this.idleTime >= 10) {
+            if (this.idleTime >= 15) {
                 this.playAnimation(this.CHARACTER_LONG_IDLE);
             } else if (this.idleTime >= 5) {
                 this.playAnimation(this.CHARACTER_IDLE);
