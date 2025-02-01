@@ -92,9 +92,11 @@ class Character extends MovableObject {
             }
             if (this.world.keyboard.UP && !this.isAboveGround()) {
                 this.jump();
+                this.resetIdleTimer();
             }
             if (this.world.keyboard.D) { // 🔹 Hier Werfen einfügen
                 this.throwBottle();
+                this.resetIdleTimer();
             }
 
             this.world.camera_x = -this.x + 100;
@@ -121,7 +123,8 @@ class Character extends MovableObject {
         if (this.canThrow && this.world.bottleBar.collectedBottles > 0) {
             this.canThrow = false;
 
-            let bottle = new ThrowableObject(this.x + 100, this.y + 100);
+            let bottleDirection = this.otherDirection ? -10 : 10;
+            let bottle = new ThrowableObject(this.x + 5, this.y + 130, bottleDirection);
             this.world.throwableObjects.push(bottle);
 
             this.world.bottleBar.setBottles(this.world.bottleBar.collectedBottles - 1); // ✅ Korrekt reduzieren

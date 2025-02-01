@@ -48,7 +48,7 @@ class World {
             }
         });
 
-        // ✅ Enemy Can Hit
+        // ✅ Enemy Can Hit && u lost health 
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
@@ -56,6 +56,16 @@ class World {
                 /* console.log('CHARACTER LEBEN', this.character.energie); */
             }
         });
+
+        this.throwableObjects.forEach((bottle, index) => {
+            let hitEnemy = this.level.enemies.find(enemy => bottle.isColliding(enemy));
+            if (hitEnemy) {
+                console.log("💥 Flasche trifft Gegner!");
+                bottle.splash(); // 🔹 Splash-Animation starten
+                setTimeout(() => this.throwableObjects.splice(index, 1), 500); // 🔹 Flasche nach Splash entfernen
+            }
+        });
+
     }
 
     drawInWorld() {
