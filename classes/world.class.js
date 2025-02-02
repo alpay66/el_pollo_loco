@@ -61,8 +61,12 @@ class World {
             let hitEnemy = this.level.enemies.find(enemy => bottle.isColliding(enemy));
             if (hitEnemy) {
                 console.log("💥 Flasche trifft Gegner!");
-                bottle.splash(); // 🔹 Splash-Animation starten
-                setTimeout(() => this.throwableObjects.splice(index, 1), 500); // 🔹 Flasche nach Splash entfernen
+                bottle.splash();
+                setTimeout(() => {
+                    if (this.throwableObjects.includes(bottle)) {
+                        this.throwableObjects.splice(index, 1);
+                    }
+                }, 500); // delete bottle after splash
             }
         });
 
@@ -91,7 +95,7 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
-        requestAnimationFrame(function () { // draw() wird immer wieder aufgerufen
+        requestAnimationFrame(function () {
             self.drawInWorld();
         });
     }

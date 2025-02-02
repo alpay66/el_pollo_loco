@@ -94,9 +94,8 @@ class Character extends MovableObject {
                 this.jump();
                 this.resetIdleTimer();
             }
-            if (this.world.keyboard.D) { // 🔹 Hier Werfen einfügen
+            if (this.world.keyboard.D) { 
                 this.throwBottle();
-                this.resetIdleTimer();
             }
 
             this.world.camera_x = -this.x + 100;
@@ -127,8 +126,9 @@ class Character extends MovableObject {
             let bottle = new ThrowableObject(this.x + 5, this.y + 130, bottleDirection);
             this.world.throwableObjects.push(bottle);
 
-            this.world.bottleBar.setBottles(this.world.bottleBar.collectedBottles - 1); // ✅ Korrekt reduzieren
+            this.world.bottleBar.setBottles(this.world.bottleBar.collectedBottles - 1);
 
+            this.lastThrowTime = true;
             setTimeout(() => {
                 this.canThrow = true;
             }, 500);
@@ -136,7 +136,7 @@ class Character extends MovableObject {
     }
 
     resetIdleTimer() {
-        this.idleTime = 0; // Zurücksetzen des Timers
+        this.idleTime = 0;
     }
 
     startIdleCheck() {

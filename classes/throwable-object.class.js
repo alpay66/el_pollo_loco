@@ -37,9 +37,9 @@ class ThrowableObject extends MovableObject {
     
     startThrowMovement() {
         this.throwInterval = setInterval(() => {
-            if (this.y < 360) { // 🔹 Solange die Flasche in der Luft ist
+            if (this.y < 360) { // if bottle in the air
                 this.x += this.speedX;
-            } else { // 🔹 Wenn die Flasche den Boden erreicht -> Splash
+            } else { // if bottle hit ground then splash
                 this.splash();
             }
         }, 25);
@@ -48,10 +48,10 @@ class ThrowableObject extends MovableObject {
     startRotationAnimation() {
         let rotationIndex = 0;
         this.rotationInterval = setInterval(() => {
-            if (this.y < 360) { // 🔹 Solange die Flasche fliegt, rotiert sie
+            if (this.y < 360) { // if the bottle fly its rotateed
                 rotationIndex = (rotationIndex + this.rotationSpeed) % this.ROTATED_SALSA_BOTTLE.length;
                 this.loadImage(this.ROTATED_SALSA_BOTTLE[Math.floor(rotationIndex)]);
-            } else { // 🔹 Stoppe Rotation bei Splash
+            } else { // stop rotation if splash
                 clearInterval(this.rotationInterval);
             }
         }, 25);
@@ -60,18 +60,18 @@ class ThrowableObject extends MovableObject {
     splash() {
         console.log("💥 Flasche explodiert!");
     
-        // 🔹 Stoppe Bewegung
+        // Stop Movement
         this.speedX = 0;
         this.speedY = 0;
     
-        // 🔹 Stoppe Rotation
+        // Stop Rotation
         clearInterval(this.rotationInterval);
         
-        // 🔹 Splash-Animation abspielen
+        // play Splash Animation
         this.playAnimation(this.SALSA_BOTTLE_SPLASH);
     
         setTimeout(() => {
-            this.loadImage(this.SALSA_BOTTLE_SPLASH[this.SALSA_BOTTLE_SPLASH.length - 1]); // Letztes Bild setzen
+            this.loadImage(this.SALSA_BOTTLE_SPLASH[this.SALSA_BOTTLE_SPLASH.length - 1]); // set last pic
         }, 500);
     }
     
