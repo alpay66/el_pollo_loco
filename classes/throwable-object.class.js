@@ -58,8 +58,6 @@ class ThrowableObject extends MovableObject {
     }
 
     splash() {
-        console.log("💥 Flasche explodiert!");
-    
         // Stop Movement
         this.speedX = 0;
         this.speedY = 0;
