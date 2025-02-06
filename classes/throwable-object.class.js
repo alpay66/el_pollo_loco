@@ -13,20 +13,18 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
-    acceleration = 1.2;
 
-    // speedX: horizontale Fluggeschwindigkeit, rotationSpeed: wie schnell die Bilder wechseln (Rotation)
-    constructor(x, y, speedX = 7, rotationSpeed = 1, speedY = 15) {
+    rotationSpeed = 0.5; // for bottle rotation
+    height = 90;
+    width = 70;
+
+    constructor(x, y, speedX = 7) {
         super().loadImage(this.ROTATED_SALSA_BOTTLE[0]);
         this.loadImages(this.ROTATED_SALSA_BOTTLE);
         this.loadImages(this.SALSA_BOTTLE_SPLASH);
         this.x = x;
         this.y = y;
-        this.height = 90;
-        this.width = 70;
         this.speedX = speedX;
-        this.speedY = speedY;
-        this.rotationSpeed = rotationSpeed;
         this.throwBottle();
     }
 
@@ -39,9 +37,8 @@ class ThrowableObject extends MovableObject {
 
     startThrowMovement() {
         this.throwInterval = setInterval(() => {
-            if (this.y < 180) { 
-                rotationIndex = (rotationIndex + this.rotationSpeed) % this.ROTATED_SALSA_BOTTLE.length;
-                this.loadImage(this.ROTATED_SALSA_BOTTLE[Math.floor(rotationIndex)]);
+            if (this.y < 360) { 
+                this.x += this.speedX;
             } else {
                 this.splash();
             }
@@ -51,7 +48,7 @@ class ThrowableObject extends MovableObject {
     startRotationAnimation() {
         let rotationIndex = 0;
         this.rotationInterval = setInterval(() => {
-            if (this.isAboveGround()) {
+            if (this.y < 360) { 
                 rotationIndex = (rotationIndex + this.rotationSpeed) % this.ROTATED_SALSA_BOTTLE.length;
                 this.loadImage(this.ROTATED_SALSA_BOTTLE[Math.floor(rotationIndex)]);
             } else {
@@ -63,9 +60,10 @@ class ThrowableObject extends MovableObject {
     splash() {
         this.speedX = 0;
         this.speedY = 0;
+        
         clearInterval(this.rotationInterval);
         this.playAnimation(this.SALSA_BOTTLE_SPLASH);
-
+    
         setTimeout(() => {
             this.loadImage(this.SALSA_BOTTLE_SPLASH[this.SALSA_BOTTLE_SPLASH.length - 1]);
         }, 500);
