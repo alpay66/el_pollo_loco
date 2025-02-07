@@ -25,7 +25,7 @@ class ThrowableObject extends MovableObject {
         this.x = x;
         this.y = y;
         this.speedX = speedX;
-        this.throwBottle();
+        this.throwBottle(); 
     }
 
     throwBottle() {
