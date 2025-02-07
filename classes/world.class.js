@@ -30,47 +30,80 @@ class World {
     }
 
     checkCollisions() {
-        // ✅ Collect Coins 
+        this.checkCoinCollisions();
+        this.checkBottleCollisions();
+        this.checkEnemyCollisions();
+        this.checkThrowableObjectCollisions();
+    }
+
+    checkCoinCollisions() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
-                /* console.log('Coin eingesammelt:', coin); */
                 this.level.coins.splice(index, 1);
                 this.coinBar.setCoins(this.coinBar.collectedCoins + 1);
             }
         });
-
-        // ✅ Collect Bottles
+    }
+    
+    checkBottleCollisions() {
         this.level.bottles.forEach((bottle, index) => {
-            if (this.character.isColliding(bottle, 0)) {
-                /* console.log('Bottle eingesammelt:', bottle); */
+            if (this.character.isColliding(bottle)) {
                 this.level.bottles.splice(index, 1);
                 this.bottleBar.setBottles(this.bottleBar.collectedBottles + 1);
             }
         });
+    }
 
-        // ✅ Enemy Can Hit && u lost health 
+    checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.healthBar.setPercentage(this.character.energie);
-                /* console.log('CHARACTER LEBEN', this.character.energie); */
             }
         });
-
-        this.throwableObjects.forEach((bottle, index) => {
-            let hitEnemy = this.level.enemies.find(enemy => bottle.isColliding(enemy));
-            if (hitEnemy) {
-                console.log("💥 Flasche trifft Gegner!");
-                bottle.splash();
-                setTimeout(() => {
-                    if (this.throwableObjects.includes(bottle)) {
-                        this.throwableObjects.splice(index, 1);
-                    }
-                }, 500); // delete bottle after splash
-            }
-        });
-
     }
+    
+    checkThrowableObjectCollisions() {
+        this.throwableObjects.forEach((bottle, bottleIndex) => {
+            let hitEnemyIndex = this.level.enemies.findIndex(enemy => bottle.isColliding(enemy));
+    
+            if (hitEnemyIndex !== -1) {
+                this.handleBottleHit(bottle, hitEnemyIndex, bottleIndex);
+            }
+        });
+    }
+
+    handleBottleHit(bottle, hitEnemyIndex) {
+        let hitEnemy = this.level.enemies[hitEnemyIndex];
+    
+        if (hitEnemy instanceof Chicken || hitEnemy instanceof SmallChicken) {
+            console.log("💥 Flasche trifft Chicken!");
+    
+            bottle.splash();
+            hitEnemy.die();
+    
+            setTimeout(() => {
+                this.removeEnemy(hitEnemy);
+                this.removeThrowableObject(bottle);
+            }, 500); // 500ms wait, then remove enemy and bottle
+        }
+    }
+
+    removeEnemy(enemy) {
+        let indexToRemove = this.level.enemies.indexOf(enemy);
+        if (indexToRemove !== -1) {
+            this.level.enemies.splice(indexToRemove, 1);
+        }
+    }
+    
+    removeThrowableObject(bottle) {
+        let indexToRemove = this.throwableObjects.indexOf(bottle);
+        if (indexToRemove !== -1) {
+            this.throwableObjects.splice(indexToRemove, 1);
+        }
+    }
+    
+    
 
     drawInWorld() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

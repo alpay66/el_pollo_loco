@@ -121,19 +121,22 @@ class Character extends MovableObject {
     throwBottle() {
         if (this.canThrow && this.world.bottleBar.collectedBottles > 0) {
             this.canThrow = false;
-
-            let bottleDirection = this.otherDirection ? -10 : 10;
-            let bottle = new ThrowableObject(this.x + 5, this.y + 130, bottleDirection);
+    
+            let bottleX = this.x + (this.otherDirection ? -20 : 20);
+            let bottleY = this.y + 100;
+            let bottleSpeed = this.otherDirection ? -7 : 7;
+    
+            let bottle = new ThrowableObject(bottleX, bottleY, bottleSpeed, this.world); // `this.world` übergeben
             this.world.throwableObjects.push(bottle);
-
+    
             this.world.bottleBar.setBottles(this.world.bottleBar.collectedBottles - 1);
-
-            this.lastThrowTime = true;
+    
             setTimeout(() => {
                 this.canThrow = true;
             }, 500);
         }
     }
+    
 
     resetIdleTimer() {
         this.idleTime = 0;

@@ -25,6 +25,7 @@ class ThrowableObject extends MovableObject {
         this.x = x;
         this.y = y;
         this.speedX = speedX;
+        this.world = world;
         this.throwBottle(); 
     }
 
@@ -58,14 +59,26 @@ class ThrowableObject extends MovableObject {
     }
 
     splash() {
-        this.speedX = 0;
-        this.speedY = 0;
-        
-        clearInterval(this.rotationInterval);
+        this.clearBottleIntervals();
         this.playAnimation(this.SALSA_BOTTLE_SPLASH);
     
         setTimeout(() => {
             this.loadImage(this.SALSA_BOTTLE_SPLASH[this.SALSA_BOTTLE_SPLASH.length - 1]);
+            
+            if (this.world) {
+                let bottleIndex = this.world.throwableObjects.indexOf(this);
+                if (bottleIndex !== -1) {
+                    this.world.throwableObjects.splice(bottleIndex, 1);
+                }
+            }
         }, 500);
     }
+    
+    clearBottleIntervals() {
+        this.speedX = 0;
+        this.speedY = 0;
+        clearInterval(this.throwInterval);
+        clearInterval(this.rotationInterval);
+    }
+    
 }
