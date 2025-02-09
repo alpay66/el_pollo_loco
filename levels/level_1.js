@@ -35,21 +35,21 @@ const level_1 = new Level(
     [   // new Coin(x300-x800, y300)
         new Coin(300, 2000, 300),
         new Coin(300, 2000, 250), 
-        new Coin(300, 2000, 200), 
+/*         new Coin(300, 2000, 200), 
         new Coin(300, 2000, 350),
         new Coin(300, 2000, 300),
         new Coin(300, 2000, 250), 
         new Coin(300, 2000, 200), 
-        new Coin(300, 2000, 350),
+        new Coin(300, 2000, 350), */
     ],
     [
         new Bottle(200, 2000),  
         new Bottle(250, 2000),
-        new Bottle(300, 2000),
+/*         new Bottle(300, 2000),
         new Bottle(350, 2000),
         new Bottle(400, 2000),  
         new Bottle(450, 2000),
         new Bottle(320, 2000),
-        new Bottle(180, 2600)
+        new Bottle(180, 2600) */
     ],
 );
