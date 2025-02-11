@@ -13,9 +13,9 @@ class Bottlebar extends DrawableObject {
     constructor() {
         super();
         this.loadImages(this.BOTLLE_BAR_IMAGE);
-        this.x = 480;
+        this.x = 280;
         this.y = 20; // Unter Coinbar
-        this.width = 220;
+        this.width = 120;
         this.height = 40;
         this.setBottles(100); // i set it for me on 100 to implate the splash effect
     }

@@ -21,7 +21,13 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.level.enemies.forEach(enemy => {
+            if (enemy instanceof Endboss) {
+                enemy.world = this; // Endboss bekommt Zugriff auf die World
+            }
+        });
     }
+    
 
     run() {
         setInterval(() => {
@@ -44,7 +50,7 @@ class World {
             }
         });
     }
-    
+
     checkBottleCollisions() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
@@ -57,36 +63,41 @@ class World {
     checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
+                if (enemy instanceof Endboss) {
+                    this.character.hit();
+                    console.log("💥 Endboss trifft den Spieler! Schaden genommen!");
+                } else {
+                    this.character.hit();
+                }
                 this.healthBar.setPercentage(this.character.energie);
             }
         });
     }
     
+
     checkThrowableObjectCollisions() {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             let hitEnemyIndex = this.level.enemies.findIndex(enemy => bottle.isColliding(enemy));
     
             if (hitEnemyIndex !== -1) {
-                this.handleBottleHit(bottle, hitEnemyIndex, bottleIndex);
+                let hitEnemy = this.level.enemies[hitEnemyIndex];
+    
+                if (hitEnemy instanceof Chicken || hitEnemy instanceof SmallChicken) {
+                    console.log("💥 Flasche trifft Chicken!");
+                    bottle.splash();
+                    hitEnemy.die();
+                    setTimeout(() => {
+                        this.removeEnemy(hitEnemy);
+                    }, 500);
+                }
+    
+                if (hitEnemy instanceof Endboss) {
+                    console.log("🔥 Flasche trifft Endboss!");
+                    bottle.splash();
+                    hitEnemy.takeDamage(); // Schaden zufügen
+                }
             }
         });
-    }
-
-    handleBottleHit(bottle, hitEnemyIndex) {
-        let hitEnemy = this.level.enemies[hitEnemyIndex];
-    
-        if (hitEnemy instanceof Chicken || hitEnemy instanceof SmallChicken) {
-            console.log("💥 Flasche trifft Chicken!");
-    
-            bottle.splash();
-            hitEnemy.die();
-    
-            setTimeout(() => {
-                this.removeEnemy(hitEnemy);
-                
-            }, 500); // 500ms wait, then remove enemy and bottle
-        }
     }
 
     removeEnemy(enemy) {
@@ -95,15 +106,6 @@ class World {
             this.level.enemies.splice(indexToRemove, 1);
         }
     }
-    
-    removeThrowableObject(bottle) {
-        let indexToRemove = this.throwableObjects.indexOf(bottle);
-        if (indexToRemove !== -1) {
-            this.throwableObjects.splice(indexToRemove, 1);
-        }
-    }
-    
-    
 
     drawInWorld() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -115,6 +117,11 @@ class World {
         this.addToMap(this.healthBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
+
+        let endboss = this.level.enemies.find(e => e instanceof Endboss);
+        if (endboss) {
+            this.addToMap(endboss.endbossBar);
+        }
         this.ctx.translate(this.camera_x, 0);
         /////////////////
         this.addObjectsToMap(this.level.clouds);

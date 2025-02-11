@@ -39,25 +39,30 @@ class Endboss extends MovableObject {
     width = 250;
     y = 120;
     energie = 100;
+    speed = 2.5;
+
     isAlerted = false;
     isAttacking = false;
     isHurt = false;
     isDead = false;
 
     constructor() {
-        super().loadImage(this.ENDBOSS_WALKING[0]);
+        super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
         this.loadImages(this.ENDBOSS_WALKING);
         this.loadImages(this.ENDBOSS_ALERT);
         this.loadImages(this.ENDBOSS_ATTACK);
         this.loadImages(this.ENDBOSS_HURT);
         this.loadImages(this.ENDBOSS_DEAD);
-        this.x = 500;
-        this.speed = 1;
+        this.x = 1200;
+        this.world = null;
+        this.endbossBar = new EndbossBar();
         this.animateEndboss(); 
     }
 
     animateEndboss() {
         setInterval(() => {
+            this.checkPlayerDistance(); // Prüft, ob der Spieler in Reichweite ist
+    
             if (this.isDead) {
                 this.playAnimation(this.ENDBOSS_DEAD);
             } else if (this.isHurt) {
@@ -65,35 +70,84 @@ class Endboss extends MovableObject {
             } else if (this.isAttacking) {
                 this.playAnimation(this.ENDBOSS_ATTACK);
             } else if (this.isAlerted) {
-                this.playAnimation(this.ENDBOSS_ALERT);
-                this.moveLeft();
-            } else {
                 this.playAnimation(this.ENDBOSS_WALKING);
+                this.moveToPlayer();
+            } else {
+                this.playAnimation(this.ENDBOSS_ALERT);
+                
             }
         }, 150);
     }
+    
+    moveToPlayer() {
+        if (!this.world || !this.world.character) return;
+
+        let playerX = this.world.character.x;
+        let distance = Math.abs(playerX - this.x);
+
+        if (distance > 50) { // Nur bewegen, wenn der Charakter nicht zu nah ist
+            if (playerX < this.x) {
+                this.x -= this.speed;
+                this.otherDirection = false;
+            } else {
+                this.x += this.speed;
+                this.otherDirection = true;
+            }
+        } else {
+            this.attack(); // Wenn nah genug → Angriff starten
+        }
+    }
+    
+
+    checkPlayerDistance() {
+        if (!this.world || !this.world.character) return;
+
+        let distance = Math.abs(this.world.character.x - this.x);
+        if (distance < 300 && !this.isAlerted) {
+            this.alert();
+        }
+    }
+    
 
     alert() {
         this.isAlerted = true;
-        this.isAttacking = false;
-        this.isHurt = false;
-        this.isDead = false;
+        this.playAnimation(this.ENDBOSS_ALERT);
+    
+        setTimeout(() => {
+            if (this.isAlerted && !this.isDead) {
+                this.moveToPlayer(); 
+            }
+        }, 1000); // 1 Sekunde warten, dann beginnt er zu laufen
     }
+    
 
     attack() {
-        this.isAttacking = true;
-        this.isAlerted = false;
-        this.isHurt = false;
-        this.isDead = false;
+        if (!this.isDead && !this.isAttacking) {
+            this.isAttacking = true;
+            this.isAlerted = false;
+            this.isHurt = false;
+
+            this.playAnimation(this.ENDBOSS_ATTACK);
+
+            setTimeout(() => {
+                if (this.isAttacking) {
+                    this.isAttacking = false; // Nach der Attacke zurücksetzen
+                }
+            }, 700);
+        }
     }
 
     takeDamage() {
         if (!this.isDead) {
-            this.isHurt = true;
             this.energie -= 20;
+            this.isHurt = true;
+            this.endbossBar.setPercentage(this.energie);
+            console.log("⚔️ Endboss getroffen! Energie:", this.energie);
+
             setTimeout(() => {
                 this.isHurt = false;
             }, 500);
+
             if (this.energie <= 0) {
                 this.die();
             }
@@ -101,20 +155,26 @@ class Endboss extends MovableObject {
     }
 
     die() {
-        this.isDead = true;
-        this.isAlerted = false;
-        this.isAttacking = false;
-        this.isHurt = false;
-        setTimeout(() => {
-            this.removeEndboss();
-        }, 1000); // Endboss verschwindet nach 1 Sekunde
+        if (!this.isDead) { // Stelle sicher, dass die Methode nur einmal ausgeführt wird
+            this.isDead = true;
+            this.speed = 0;
+            console.log("💀 Endboss besiegt!");
+    
+            this.playAnimation(this.ENDBOSS_DEAD); // Nur einmal abspielen
+    
+            setTimeout(() => {
+                this.removeEndboss();
+            }, 1000); // Warte 1 Sekunde, dann entfernen
+        }
     }
+    
 
     removeEndboss() {
-        // Entfernt den Endboss aus dem Spiel
-        let index = this.world.level.enemies.indexOf(this);
-        if (index !== -1) {
-            this.world.level.enemies.splice(index, 1);
+        if (this.world && this.world.level) { // Überprüfe, ob world noch existiert
+            let index = this.world.level.enemies.indexOf(this);
+            if (index !== -1) {
+                this.world.level.enemies.splice(index, 1);
+            }
         }
     }
     
