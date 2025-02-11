@@ -26,7 +26,7 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-        }, 200);
+        }, 500);
     }
 
     checkCollisions() {
@@ -84,7 +84,7 @@ class World {
     
             setTimeout(() => {
                 this.removeEnemy(hitEnemy);
-                this.removeThrowableObject(bottle);
+                
             }, 500); // 500ms wait, then remove enemy and bottle
         }
     }

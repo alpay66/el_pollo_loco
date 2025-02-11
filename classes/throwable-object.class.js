@@ -71,7 +71,7 @@ class ThrowableObject extends MovableObject {
                     this.world.throwableObjects.splice(bottleIndex, 1);
                 }
             }
-        }, 500);
+        }, 400);
     }
     
     clearBottleIntervals() {
