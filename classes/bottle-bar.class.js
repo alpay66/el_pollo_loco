@@ -8,16 +8,16 @@ class Bottlebar extends DrawableObject {
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/green/100.png'
     ];
     
-    collectedBottles = 100;
+    collectedBottles = 50;
 
     constructor() {
         super();
         this.loadImages(this.BOTLLE_BAR_IMAGE);
         this.x = 280;
-        this.y = 20; // Unter Coinbar
+        this.y = 20;
         this.width = 120;
         this.height = 40;
-        this.setBottles(100); // i set it for me on 100 to implate the splash effect
+        this.setBottles(50);
     }
 
     setBottles(bottles) {

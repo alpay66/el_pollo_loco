@@ -40,7 +40,8 @@ class Endboss extends MovableObject {
     y = 120;
     energie = 100;
     speed = 2.5;
-
+    lastAttackTime = 0;
+    lastDamageTime = 0; 
     isAlerted = false;
     isAttacking = false;
     isHurt = false;
@@ -61,22 +62,21 @@ class Endboss extends MovableObject {
 
     animateEndboss() {
         setInterval(() => {
-            this.checkPlayerDistance(); // Prüft, ob der Spieler in Reichweite ist
-    
-            if (this.isDead) {
-                this.playAnimation(this.ENDBOSS_DEAD);
-            } else if (this.isHurt) {
-                this.playAnimation(this.ENDBOSS_HURT);
-            } else if (this.isAttacking) {
-                this.playAnimation(this.ENDBOSS_ATTACK);
-            } else if (this.isAlerted) {
-                this.playAnimation(this.ENDBOSS_WALKING);
-                this.moveToPlayer();
-            } else {
-                this.playAnimation(this.ENDBOSS_ALERT);
-                
-            }
-        }, 150);
+            this.checkPlayerDistance();
+            this.updateAnimationState();
+        }, 100);
+    }
+
+    updateAnimationState() {
+        if (this.isDead) this.playAnimation(this.ENDBOSS_DEAD);
+        else if (this.isHurt) this.playAnimation(this.ENDBOSS_HURT);
+        else if (this.isAttacking) this.playAnimation(this.ENDBOSS_ATTACK);
+        else if (this.isAlerted) {
+            this.playAnimation(this.ENDBOSS_WALKING);
+            this.moveToPlayer();
+        } else {
+            this.playAnimation(this.ENDBOSS_ALERT);
+        }
     }
     
     moveToPlayer() {
@@ -85,7 +85,7 @@ class Endboss extends MovableObject {
         let playerX = this.world.character.x;
         let distance = Math.abs(playerX - this.x);
 
-        if (distance > 50) { // Nur bewegen, wenn der Charakter nicht zu nah ist
+        if (distance > 50) {
             if (playerX < this.x) {
                 this.x -= this.speed;
                 this.otherDirection = false;
@@ -94,7 +94,7 @@ class Endboss extends MovableObject {
                 this.otherDirection = true;
             }
         } else {
-            this.attack(); // Wenn nah genug → Angriff starten
+            this.attack(); // if its close then attack
         }
     }
     
@@ -112,12 +112,8 @@ class Endboss extends MovableObject {
     alert() {
         this.isAlerted = true;
         this.playAnimation(this.ENDBOSS_ALERT);
-    
-        setTimeout(() => {
-            if (this.isAlerted && !this.isDead) {
-                this.moveToPlayer(); 
-            }
-        }, 1000); // 1 Sekunde warten, dann beginnt er zu laufen
+
+        this.lastAttackTime = new Date().getTime(); // saved the first attack
     }
     
 
@@ -131,7 +127,7 @@ class Endboss extends MovableObject {
 
             setTimeout(() => {
                 if (this.isAttacking) {
-                    this.isAttacking = false; // Nach der Attacke zurücksetzen
+                    this.isAttacking = false; // reset after attack
                 }
             }, 700);
         }
@@ -155,22 +151,22 @@ class Endboss extends MovableObject {
     }
 
     die() {
-        if (!this.isDead) { // Stelle sicher, dass die Methode nur einmal ausgeführt wird
+        if (!this.isDead) { // get safe that played once time
             this.isDead = true;
             this.speed = 0;
             console.log("💀 Endboss besiegt!");
     
-            this.playAnimation(this.ENDBOSS_DEAD); // Nur einmal abspielen
+            this.playAnimation(this.ENDBOSS_DEAD); // play one time
     
             setTimeout(() => {
                 this.removeEndboss();
-            }, 1000); // Warte 1 Sekunde, dann entfernen
+            }, 1000); // wait 1 sec denn remove
         }
     }
     
 
     removeEndboss() {
-        if (this.world && this.world.level) { // Überprüfe, ob world noch existiert
+        if (this.world && this.world.level) { // check if world exists
             let index = this.world.level.enemies.indexOf(this);
             if (index !== -1) {
                 this.world.level.enemies.splice(index, 1);

@@ -74,31 +74,39 @@ class World {
         });
     }
     
-
     checkThrowableObjectCollisions() {
-        this.throwableObjects.forEach((bottle, bottleIndex) => {
+        this.throwableObjects.forEach((bottle) => {
             let hitEnemyIndex = this.level.enemies.findIndex(enemy => bottle.isColliding(enemy));
     
             if (hitEnemyIndex !== -1) {
                 let hitEnemy = this.level.enemies[hitEnemyIndex];
     
                 if (hitEnemy instanceof Chicken || hitEnemy instanceof SmallChicken) {
-                    console.log("💥 Flasche trifft Chicken!");
-                    bottle.splash();
-                    hitEnemy.die();
-                    setTimeout(() => {
-                        this.removeEnemy(hitEnemy);
-                    }, 500);
+                    this.handleChickenHit(bottle, hitEnemy);
                 }
     
                 if (hitEnemy instanceof Endboss) {
-                    console.log("🔥 Flasche trifft Endboss!");
-                    bottle.splash();
-                    hitEnemy.takeDamage(); // Schaden zufügen
+                    this.handleEndbossHit(bottle, hitEnemy);
                 }
             }
         });
     }
+
+    handleChickenHit(bottle, chicken) {
+        console.log("💥 Flasche trifft Chicken!");
+        bottle.splash();
+        chicken.die();
+        setTimeout(() => {
+            this.removeEnemy(chicken);
+        }, 500);
+    }
+    
+    handleEndbossHit(bottle, endboss) {
+        console.log("🔥 Flasche trifft Endboss!");
+        bottle.splash();
+        endboss.takeDamage();
+    }
+    
 
     removeEnemy(enemy) {
         let indexToRemove = this.level.enemies.indexOf(enemy);
