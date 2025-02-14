@@ -18,7 +18,7 @@
     <script src="classes/cloud.class.js"></script>
     <script src="classes/background-object.class.js"></script>
     <script src="classes/endboss.class.js"></script>
-    <script src="classes/coin.class.js"></script> <!-- Coin muss bekannt sein -->
+    <script src="classes/coin.class.js"></script>
     <script src="classes/bottle.class.js"></script>
     <script src="classes/health-bar.class.js"></script>
     <script src="classes/coin-bar.class.js"></script>
@@ -36,9 +36,12 @@
 <body onload="init()">
     <h1>EL_POLLO_LOCO</h1>
 
-    <canvas id="canvas" width="720px" height="480px">
+    <div id="overlay">
+        <canvas id="canvas" width="720px" height="480px">
 
-    </canvas>
+        </canvas>
+    </div>
+    
 
     <!-- canvas.requestFullscreen() -- ins onclick für den fullscreen integrieren -->
     <footer>

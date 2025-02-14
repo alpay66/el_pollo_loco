@@ -23,11 +23,11 @@ class World {
         this.character.world = this;
         this.level.enemies.forEach(enemy => {
             if (enemy instanceof Endboss) {
-                enemy.world = this; // Endboss bekommt Zugriff auf die World
+                enemy.world = this; 
             }
         });
     }
-    
+
 
     run() {
         setInterval(() => {
@@ -69,44 +69,49 @@ class World {
                 } else {
                     this.character.hit();
                 }
+
+                if (this.character.energie <= 0) {
+                    showEndscreen(false);
+                }
                 this.healthBar.setPercentage(this.character.energie);
             }
         });
     }
-    
+
     checkThrowableObjectCollisions() {
         this.throwableObjects.forEach((bottle) => {
             let hitEnemyIndex = this.level.enemies.findIndex(enemy => bottle.isColliding(enemy));
-    
+
             if (hitEnemyIndex !== -1) {
                 let hitEnemy = this.level.enemies[hitEnemyIndex];
-    
+
                 if (hitEnemy instanceof Chicken || hitEnemy instanceof SmallChicken) {
                     this.handleChickenHit(bottle, hitEnemy);
                 }
-    
+
                 if (hitEnemy instanceof Endboss) {
-                    this.handleEndbossHit(bottle, hitEnemy);
+                    this.handleEndbossHit(bottle, hitEnemy);                 
+                }
+
+                if (isEndbossDefeated(this.level.enemies)) {
+                    showEndscreen(true); 
                 }
             }
         });
     }
 
     handleChickenHit(bottle, chicken) {
-        console.log("💥 Flasche trifft Chicken!");
         bottle.splash();
         chicken.die();
         setTimeout(() => {
             this.removeEnemy(chicken);
         }, 500);
     }
-    
+
     handleEndbossHit(bottle, endboss) {
-        console.log("🔥 Flasche trifft Endboss!");
         bottle.splash();
         endboss.takeDamage();
     }
-    
 
     removeEnemy(enemy) {
         let indexToRemove = this.level.enemies.indexOf(enemy);
@@ -160,7 +165,7 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        /* mo.drawFrame(this.ctx); */
 
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
 
@@ -180,5 +185,4 @@ class World {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
-
 }

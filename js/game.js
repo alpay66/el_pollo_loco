@@ -10,6 +10,25 @@ function init() {
     
 }
 
+function showEndscreen(hasWon) {
+    const endscreenOverlay = document.getElementById('overlay');
+    endscreenOverlay.innerHTML = ''; 
+    endscreenOverlay.style.display = 'block';
+
+    const endscreenImg = document.createElement('img');
+    endscreenImg.src = hasWon 
+        ? 'img/9_intro_outro_screens/win/won_2.png' 
+        : 'img/9_intro_outro_screens/game_over/you lost.png';
+    endscreenImg.classList.add('endscreen-img');
+
+    endscreenOverlay.appendChild(endscreenImg);
+}
+
+
+function isEndbossDefeated(enemies) {
+    return enemies.find(e => e instanceof Endboss)?.isDead;
+}
+
 // UHR IST NUR FÜR MICH EINFACH SO GEMACHT 
 setInterval(() => 
     document.getElementById('clock').innerText = new Date().toLocaleTimeString(), 1000);

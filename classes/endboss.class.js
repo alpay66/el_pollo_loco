@@ -38,8 +38,8 @@ class Endboss extends MovableObject {
     height = 350;
     width = 250;
     y = 120;
-    energie = 100;
-    speed = 2.5;
+    energie = 30;
+    speed = 10.5;
     lastAttackTime = 0;
     lastDamageTime = 0; 
     isAlerted = false;
@@ -64,7 +64,7 @@ class Endboss extends MovableObject {
         setInterval(() => {
             this.checkPlayerDistance();
             this.updateAnimationState();
-        }, 100);
+        }, 150);
     }
 
     updateAnimationState() {
@@ -94,7 +94,7 @@ class Endboss extends MovableObject {
                 this.otherDirection = true;
             }
         } else {
-            this.attack(); // if its close then attack
+            this.attack(); 
         }
     }
     
@@ -113,7 +113,7 @@ class Endboss extends MovableObject {
         this.isAlerted = true;
         this.playAnimation(this.ENDBOSS_ALERT);
 
-        this.lastAttackTime = new Date().getTime(); // saved the first attack
+        this.lastAttackTime = new Date().getTime(); 
     }
     
 
@@ -127,7 +127,7 @@ class Endboss extends MovableObject {
 
             setTimeout(() => {
                 if (this.isAttacking) {
-                    this.isAttacking = false; // reset after attack
+                    this.isAttacking = false; 
                 }
             }, 700);
         }
@@ -138,7 +138,6 @@ class Endboss extends MovableObject {
             this.energie -= 20;
             this.isHurt = true;
             this.endbossBar.setPercentage(this.energie);
-            console.log("⚔️ Endboss getroffen! Energie:", this.energie);
 
             setTimeout(() => {
                 this.isHurt = false;
@@ -151,22 +150,21 @@ class Endboss extends MovableObject {
     }
 
     die() {
-        if (!this.isDead) { // get safe that played once time
+        if (!this.isDead) { 
             this.isDead = true;
             this.speed = 0;
-            console.log("💀 Endboss besiegt!");
     
-            this.playAnimation(this.ENDBOSS_DEAD); // play one time
+            this.playAnimation(this.ENDBOSS_DEAD);
     
             setTimeout(() => {
                 this.removeEndboss();
-            }, 1000); // wait 1 sec denn remove
+            }, 1000); 
         }
     }
     
 
     removeEndboss() {
-        if (this.world && this.world.level) { // check if world exists
+        if (this.world && this.world.level) {
             let index = this.world.level.enemies.indexOf(this);
             if (index !== -1) {
                 this.world.level.enemies.splice(index, 1);

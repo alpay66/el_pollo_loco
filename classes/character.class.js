@@ -57,7 +57,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-20.png'
     ];
     x = 120;
-    y = 100;
+    y = 180;
     height = 260;
     width = 110;
     speed = 10;
@@ -126,7 +126,7 @@ class Character extends MovableObject {
             let bottleY = this.y + 100;
             let bottleSpeed = this.otherDirection ? -7 : 7;
     
-            let bottle = new ThrowableObject(bottleX, bottleY, bottleSpeed, this.world); // `this.world` übergeben
+            let bottle = new ThrowableObject(bottleX, bottleY, bottleSpeed, this.world);
             this.world.throwableObjects.push(bottle);
     
             this.world.bottleBar.setBottles(this.world.bottleBar.collectedBottles - 1);
@@ -136,6 +136,12 @@ class Character extends MovableObject {
             }, 500);
         }
     }
+
+    stopMovement() {
+        this.speed = 0;
+        this.world.keyboard = {};
+    }
+    
     
 
     resetIdleTimer() {

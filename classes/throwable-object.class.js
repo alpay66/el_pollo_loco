@@ -14,7 +14,7 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
 
-    rotationSpeed = 0.5; // for bottle rotation
+    rotationSpeed = 0.5;
     height = 90;
     width = 70;
 
@@ -33,7 +33,7 @@ class ThrowableObject extends MovableObject {
         this.speedY = 30;
         this.applyGravity();
         this.startThrowMovement();
-        this.startRotationAnimation();
+        this.startBottleRotate();
     }
 
     startThrowMovement() {
@@ -46,7 +46,7 @@ class ThrowableObject extends MovableObject {
         }, 25);
     }
 
-    startRotationAnimation() {
+    startBottleRotate() {
         let rotationIndex = 0;
         this.rotationInterval = setInterval(() => {
             if (this.y < 360) { 
