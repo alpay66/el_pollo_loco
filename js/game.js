@@ -11,7 +11,7 @@ function init() {
 }
 
 function showEndscreen(hasWon) {
-    const endscreenOverlay = document.getElementById('overlay');
+    const endscreenOverlay = document.getElementById('endScreenOverlay');
     endscreenOverlay.innerHTML = ''; 
     endscreenOverlay.style.display = 'block';
 
