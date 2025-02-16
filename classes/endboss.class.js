@@ -38,7 +38,7 @@ class Endboss extends MovableObject {
     height = 350;
     width = 250;
     y = 120;
-    energie = 30;
+    energie = 100;
     speed = 10.5;
     lastAttackTime = 0;
     lastDamageTime = 0; 
@@ -68,16 +68,20 @@ class Endboss extends MovableObject {
     }
 
     updateAnimationState() {
-        if (this.isDead) this.playAnimation(this.ENDBOSS_DEAD);
-        else if (this.isHurt) this.playAnimation(this.ENDBOSS_HURT);
-        else if (this.isAttacking) this.playAnimation(this.ENDBOSS_ATTACK);
-        else if (this.isAlerted) {
+        if (this.isDead) {
+            this.playAnimation(this.ENDBOSS_DEAD);
+        } else if (this.isHurt) {
+            this.playAnimation(this.ENDBOSS_HURT);
+        } else if (this.isAttacking) {
+            this.playAnimation(this.ENDBOSS_ATTACK);
+        } else if (this.isAlerted) {
             this.playAnimation(this.ENDBOSS_WALKING);
             this.moveToPlayer();
         } else {
             this.playAnimation(this.ENDBOSS_ALERT);
         }
     }
+    
     
     moveToPlayer() {
         if (!this.world || !this.world.character) return;
@@ -150,19 +154,18 @@ class Endboss extends MovableObject {
     }
 
     die() {
-        if (!this.isDead) { 
+        if (!this.isDead) {
             this.isDead = true;
             this.speed = 0;
     
-            this.playAnimation(this.ENDBOSS_DEAD);
-    
+            this.playAnimation(this.ENDBOSS_DEAD); 
+
             setTimeout(() => {
                 this.removeEndboss();
-            }, 1000); 
+            }, 1500);
         }
     }
     
-
     removeEndboss() {
         if (this.world && this.world.level) {
             let index = this.world.level.enemies.indexOf(this);

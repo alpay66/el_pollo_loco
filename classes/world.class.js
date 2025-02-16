@@ -19,6 +19,13 @@ class World {
         this.run();
     }
 
+    stopAllMovement(world) {
+        world.character.speed = 0;
+        world.character.world.keyboard = {}; // Steuerung deaktivieren
+        world.level.enemies.forEach(enemy => enemy.speed = 0); // Gegner stoppen
+        world.throwableObjects = []; // Flaschen entfernen
+    }
+
     setWorld() {
         this.character.world = this;
         this.level.enemies.forEach(enemy => {
@@ -72,6 +79,8 @@ class World {
 
                 if (this.character.energie <= 0) {
                     showEndscreen(false);
+                    endGame(this);
+                    showEndscreen(false);
                 }
                 this.healthBar.setPercentage(this.character.energie);
             }
@@ -94,10 +103,20 @@ class World {
                 }
 
                 if (isEndbossDefeated(this.level.enemies)) {
-                    showEndscreen(true); 
+                    setTimeout(() => {
+                        this.endGame(this);
+                        showEndscreen(true);
+                    }, 2000);
                 }
             }
         });
+    }
+
+    endGame(world) {
+        this.stopAllMovement(world);
+        cancelAnimationFrame(world.animationFrame);
+        clearInterval(world.gameLoop); 
+        world.level.enemies = [];
     }
 
     handleChickenHit(bottle, chicken) {
@@ -111,7 +130,14 @@ class World {
     handleEndbossHit(bottle, endboss) {
         bottle.splash();
         endboss.takeDamage();
+    
+        if (endboss.energie <= 0 && !endboss.isDead) {
+            endboss.die(); 
+        }
     }
+    
+    
+    
 
     removeEnemy(enemy) {
         let indexToRemove = this.level.enemies.indexOf(enemy);
