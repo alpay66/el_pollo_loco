@@ -21,9 +21,9 @@ class World {
 
     stopAllMovement(world) {
         world.character.speed = 0;
-        world.character.world.keyboard = {}; // Steuerung deaktivieren
-        world.level.enemies.forEach(enemy => enemy.speed = 0); // Gegner stoppen
-        world.throwableObjects = []; // Flaschen entfernen
+        world.character.world.keyboard = {};
+        world.level.enemies.forEach(enemy => enemy.speed = 0); 
+        world.throwableObjects = [];
     }
 
     setWorld() {

@@ -12,21 +12,28 @@ function init() {
 
 function startGame() {
     document.getElementById('startscreen').style.display = 'none';
-    init(); // Erst hier wird das Spiel gestartet
+    init();
 }
 
 function showEndscreen(hasWon) {
-    const endscreenOverlay = document.getElementById('overlay');
-    endscreenOverlay.innerHTML = ''; 
-    endscreenOverlay.style.display = 'block';
+    const overlay = document.getElementById('overlay');
+    overlay.innerHTML = /* html */ `
+        <div id="endscreen" class="endscreen">
+            <img src="${hasWon ? 'img/9_intro_outro_screens/win/won_2.png' : 'img/9_intro_outro_screens/game_over/you lost.png'}" class="endscreen-img">
+            <div class="button-container">
+                <button class="btn" onclick="restartGame()">Neustarten</button>
+                <button class="btn" onclick="goToStartScreen()">Zum Start</button>
+            </div>
+        </div>
+    `;
+    overlay.style.display = 'block';
+}
 
-    const endscreenImg = document.createElement('img');
-    endscreenImg.src = hasWon 
-        ? 'img/9_intro_outro_screens/win/won_2.png' 
-        : 'img/9_intro_outro_screens/game_over/you lost.png';
-    endscreenImg.classList.add('endscreen-img');
+function goToStartScreen() {
+    location.reload();
+}
 
-    endscreenOverlay.appendChild(endscreenImg);
+function restartGame() {
 }
 
 
