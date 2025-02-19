@@ -44,3 +44,99 @@ span {
     object-fit: cover;
 }
 
+.screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 720px;
+    height: 480px;
+    background-color: black;
+    z-index: 10;
+}
+
+.screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hidden {
+    display: none;
+}
+
+
+.start-btn {
+    padding: 15px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 20px;
+}
+
+.start-btn:hover {
+    background-color: #45A049;
+    transform: scale(1.1);
+}
+
+.endscreen-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+#overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+
+#startscreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.95));
+    justify-content: center;
+    text-align: center;
+    border: 5px solid red;
+    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.7);
+}
+
+#startscreen img {
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.5);
+}
+
+#startscreen button {
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, red, darkred);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
+    text-transform: uppercase;
+}
+
+#startscreen button:hover {
+    background: linear-gradient(45deg, darkred, black);
+    transform: scale(1.1);
+    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7);
+}
+
+

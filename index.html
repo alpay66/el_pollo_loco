@@ -11,7 +11,6 @@
 
     <script src="classes/drawable-object.class.js"></script>
     <script src="classes/movable-object.class.js"></script>
-
     <script src="classes/character.class.js"></script>
     <script src="classes/chicken.class.js"></script>
     <script src="classes/small-chicken-class.js"></script>
@@ -33,22 +32,21 @@
     <script src="js/game.js"></script>
 </head>
 
-<body onload="init()">
+<body>
     <h1>EL_POLLO_LOCO</h1>
 
-    <div id="endScreenOverlay">
-        <canvas id="canvas" width="720px" height="480px">
-
-        </canvas>
+    <div id="overlay">
+        <div id="startscreen">
+            <img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="Startscreen">
+            <button onclick="startGame()">Start Game</button>
+        </div>
+        <canvas id="canvas" width="720px" height="480px"></canvas>
     </div>
     
-
     <!-- canvas.requestFullscreen() -- ins onclick für den fullscreen integrieren -->
     <footer>
         <h1>
-            TO DO: Implementiere das wenn man gegner mit der flasche hittet 
-            das die dann sterben . <br>
-            jetzt für den endboss
+
         </h1>
         <span></span>
         <div id="clock"></div>

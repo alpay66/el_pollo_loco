@@ -42,6 +42,7 @@ class Endboss extends MovableObject {
     speed = 10.5;
     lastAttackTime = 0;
     lastDamageTime = 0; 
+    damageAmount = 20;
     isAlerted = false;
     isAttacking = false;
     isHurt = false;
@@ -82,7 +83,6 @@ class Endboss extends MovableObject {
         }
     }
     
-    
     moveToPlayer() {
         if (!this.world || !this.world.character) return;
 
@@ -102,6 +102,9 @@ class Endboss extends MovableObject {
         }
     }
     
+    dealDamage(character) {
+        character.hit(this.damageAmount);
+    }
 
     checkPlayerDistance() {
         if (!this.world || !this.world.character) return;
@@ -112,15 +115,12 @@ class Endboss extends MovableObject {
         }
     }
     
-
     alert() {
         this.isAlerted = true;
         this.playAnimation(this.ENDBOSS_ALERT);
-
         this.lastAttackTime = new Date().getTime(); 
     }
     
-
     attack() {
         if (!this.isDead && !this.isAttacking) {
             this.isAttacking = true;

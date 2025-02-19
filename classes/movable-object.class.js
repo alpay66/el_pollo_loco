@@ -14,15 +14,15 @@ class MovableObject extends DrawableObject {
             (this.y + this.offsetY) <= (mo.y + mo.height);
     }
 
-    hit() {
-        this.energie -= 5;
+    hit(damage = 5) { 
+        this.energie -= damage;
         if (this.energie < 0) {
             this.energie = 0;
         } else {
             this.lastHit = new Date().getTime();
         }
     }
-
+    
     isDead() {
         return this.energie == 0;
     }

@@ -71,18 +71,18 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 if (enemy instanceof Endboss) {
-                    this.character.hit();
-                    console.log("💥 Endboss trifft den Spieler! Schaden genommen!");
+                    enemy.dealDamage(this.character);
                 } else {
                     this.character.hit();
                 }
 
+                this.healthBar.setPercentage(this.character.energie);
+                console.log('Character hat noch', this.character.energie, 'Leben');
+
                 if (this.character.energie <= 0) {
-                    showEndscreen(false);
-                    endGame(this);
+                    this.endGame(this);
                     showEndscreen(false);
                 }
-                this.healthBar.setPercentage(this.character.energie);
             }
         });
     }
@@ -136,9 +136,6 @@ class World {
         }
     }
     
-    
-    
-
     removeEnemy(enemy) {
         let indexToRemove = this.level.enemies.indexOf(enemy);
         if (indexToRemove !== -1) {

@@ -10,8 +10,13 @@ function init() {
     
 }
 
+function startGame() {
+    document.getElementById('startscreen').style.display = 'none';
+    init(); // Erst hier wird das Spiel gestartet
+}
+
 function showEndscreen(hasWon) {
-    const endscreenOverlay = document.getElementById('endScreenOverlay');
+    const endscreenOverlay = document.getElementById('overlay');
     endscreenOverlay.innerHTML = ''; 
     endscreenOverlay.style.display = 'block';
 
