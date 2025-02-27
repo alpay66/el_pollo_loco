@@ -13,7 +13,7 @@ class Coinbar extends DrawableObject {
         super();
         this.loadImages(this.COIN_BAR_IMAGES);
         this.x = 150;
-        this.y = 20; // Unter Healthbar
+        this.y = 20;
         this.width = 120;
         this.height = 40;
         this.setCoins(0);

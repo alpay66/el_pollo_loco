@@ -7,7 +7,7 @@ class Coin extends DrawableObject {
     constructor(minX, maxX, y) {
         super();
         let randomCoin = this.COIN_IMAGES[Math.floor(Math.random() * this.COIN_IMAGES.length)];
-        this.loadImage(randomCoin); // Zufälliges Coin-Bild laden
+        this.loadImage(randomCoin);
         this.x = Math.floor(Math.random() * (maxX - minX)) + minX;
         this.y = y;
         this.width = 100;
@@ -22,6 +22,7 @@ class Coin extends DrawableObject {
 
     startCoinAnimation() {
         setInterval(() => {
+            console.log('1');
             this.animateCoin();
         }, 1000);
     }

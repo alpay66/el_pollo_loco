@@ -176,4 +176,6 @@ span {
     background-color: darkred;
 }
 
-
+.visible {
+    display: block;
+}

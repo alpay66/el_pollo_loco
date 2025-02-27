@@ -22,6 +22,7 @@ class SmallChicken extends MovableObject {
     
     animateSmallChicken() {
         this.walkingInterval = setInterval(() => {
+            console.log('1');
             this.moveLeft();
         }, 1000 / 60);
         
@@ -33,6 +34,6 @@ class SmallChicken extends MovableObject {
     die() {
         clearInterval(this.walkingInterval);
         clearInterval(this.animationInterval);
-        this.loadImage(this.SMALL_CHICKEN_DEAD[0]); // Todesbild setzen
+        this.loadImage(this.SMALL_CHICKEN_DEAD[0]);
     }
 }

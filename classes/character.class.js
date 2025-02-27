@@ -80,6 +80,8 @@ class Character extends MovableObject {
 
     animateCharacter() {
         setInterval(() => {
+            
+            
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
@@ -97,11 +99,13 @@ class Character extends MovableObject {
             if (this.world.keyboard.D) { 
                 this.throwBottle();
             }
+            
 
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
         setInterval(() => {
+            
             if (this.isHurt()) {
                 this.playAnimation(this.CHARACTER_HURT);
             } else
@@ -114,6 +118,7 @@ class Character extends MovableObject {
                         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                             this.playAnimation(this.CHARACTER_WALKING);
                         }
+                        console.log('1');
         }, 50);
         this.startIdleCheck();
     }
