@@ -30,7 +30,7 @@
     <script src="classes/keyboard.class.js"></script>
     <script src="js/template.js"></script>
     <script src="js/game.js"></script>
-    
+
 </head>
 
 <body>
@@ -41,17 +41,18 @@
             <img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="Startscreen">
             <button onclick="startGame()">Start Game</button>
         </div>
-        <canvas id="canvas" width="720px" height="480px"></canvas>
+
+        <div id="game-container">
+            <canvas id="canvas" width="720px" height="480px"></canvas>
+            <button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button>
+        </div>
     </div>
-    
-    
-    <!-- canvas.requestFullscreen() -- ins onclick für den fullscreen integrieren -->
+
     <footer>
         <h1>
 
         </h1>
         <span></span>
-        <div id="clock"></div>
     </footer>
 </body>
 

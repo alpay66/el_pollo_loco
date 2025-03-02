@@ -38,8 +38,8 @@ function stopGame() {
 }
 
 function resetWorld() {
-    if (!world) return; // wenn woirld nicht exestiert dann funktion beenden 
-
+    if (!world) return;
+    
     world = null;
     world = new World(canvas, keyboard);
 }
@@ -60,38 +60,30 @@ function goToStartScreen() {
     location.reload();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function toggleFullscreen() {
+    let canvas = document.getElementById('canvas');
+    if (!document.fullscreenElement) {
+        if (canvas.requestFullscreen) {
+            canvas.requestFullscreen();
+        } else if (canvas.mozRequestFullScreen) {
+            canvas.mozRequestFullScreen();
+        } else if (canvas.webkitRequestFullscreen) {
+            canvas.webkitRequestFullscreen();
+        } else if (canvas.msRequestFullscreen) {
+            canvas.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+}
 
 
 function isEndbossDefeated(enemies) {
     return enemies.find(e => e instanceof Endboss)?.isDead;
 }
 
-// UHR IST NUR FÜR MICH EINFACH SO GEMACHT 
-setInterval(() =>
-    document.getElementById('clock').innerText = new Date().toLocaleTimeString(), 1000);
-
-// Taste gedrückt
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39) keyboard.RIGHT = true;
     if (event.keyCode == 37) keyboard.LEFT = true;
@@ -101,7 +93,6 @@ window.addEventListener("keydown", (event) => {
     if (event.keyCode == 68) keyboard.D = true;
 });
 
-// Taste losgelassen
 window.addEventListener("keyup", (event) => {
     if (event.keyCode == 39) keyboard.RIGHT = false;
     if (event.keyCode == 37) keyboard.LEFT = false;
