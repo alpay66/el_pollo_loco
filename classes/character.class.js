@@ -118,7 +118,6 @@ class Character extends MovableObject {
                         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                             this.playAnimation(this.CHARACTER_WALKING);
                         }
-                        console.log('1');
         }, 50);
         this.startIdleCheck();
     }

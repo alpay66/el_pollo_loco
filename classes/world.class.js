@@ -37,7 +37,6 @@ class World {
 
     run() {
         setInterval(() => {
-            console.log('1');
             this.checkCollisions();
         }, 500);
     }

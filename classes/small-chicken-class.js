@@ -22,7 +22,6 @@ class SmallChicken extends MovableObject {
     
     animateSmallChicken() {
         this.walkingInterval = setInterval(() => {
-            console.log('1');
             this.moveLeft();
         }, 1000 / 60);
         

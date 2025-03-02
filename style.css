@@ -1,4 +1,5 @@
 body {
+    font-family: 'Western', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,6 +10,16 @@ body {
     background-repeat: no-repeat;
     height: 98vh;
 }
+
+@font-face {
+    font-family: 'Western';
+    src: url('fonts/WEST____.TTF') format('truetype');
+}
+
+h1, button {
+    font-family: 'Western', sans-serif;
+}
+
 
 canvas {
     background-color: black;
@@ -117,7 +128,7 @@ span {
 }
 
 #startscreen img {
-    width: 53%;
+    width: 37%;
     max-width: 600px;
     border-radius: 10px;
 }

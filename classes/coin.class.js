@@ -22,7 +22,6 @@ class Coin extends DrawableObject {
 
     startCoinAnimation() {
         setInterval(() => {
-            console.log('1');
             this.animateCoin();
         }, 1000);
     }

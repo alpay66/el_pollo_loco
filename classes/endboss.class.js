@@ -63,7 +63,6 @@ class Endboss extends MovableObject {
 
     animateEndboss() {
         setInterval(() => {
-            console.log('1');
             this.checkPlayerDistance();
             this.updateAnimationState();
         }, 150);

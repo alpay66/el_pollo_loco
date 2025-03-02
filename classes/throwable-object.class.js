@@ -38,7 +38,6 @@ class ThrowableObject extends MovableObject {
 
     startThrowMovement() {
         this.throwInterval = setInterval(() => {
-            console.log('1');
             if (this.y < 360) { 
                 this.x += this.speedX;
             } else {
