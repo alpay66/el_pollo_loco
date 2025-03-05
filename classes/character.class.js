@@ -65,6 +65,11 @@ class Character extends MovableObject {
     idleTimer = 0;
     idleInterval;
     canThrow = true;
+    isWalking = false;
+    walkSound = new Audio('audio/walk.mp3');
+    jumpSound = new Audio('audio/jump.mp3');
+    hurtSound = new Audio('audio/hurt_sound.mp3');
+
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -74,38 +79,41 @@ class Character extends MovableObject {
         this.loadImages(this.CHARACTER_DEAD);
         this.loadImages(this.CHARACTER_IDLE);
         this.loadImages(this.CHARACTER_LONG_IDLE);
+        this.hurtSound.volume = 0.5;
         this.applyGravity();
         this.animateCharacter();
     }
 
     animateCharacter() {
         setInterval(() => {
-            
-            
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
+                this.playWalkSound();
                 this.resetIdleTimer();
             }
-            if (this.world.keyboard.LEFT && this.x > 0) {
+            else if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
+                this.playWalkSound();
                 this.resetIdleTimer();
+            } else {
+                this.stopWalkSound(); // Stoppt den Sound, wenn nicht mehr gelaufen wird
             }
+
             if (this.world.keyboard.UP && !this.isAboveGround()) {
                 this.jump();
+                this.playJumpSound();
                 this.resetIdleTimer();
             }
-            if (this.world.keyboard.D) { 
+            if (this.world.keyboard.D) {
                 this.throwBottle();
             }
-            
-
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
         setInterval(() => {
-            
+
             if (this.isHurt()) {
                 this.playAnimation(this.CHARACTER_HURT);
             } else
@@ -125,16 +133,16 @@ class Character extends MovableObject {
     throwBottle() {
         if (this.canThrow && this.world.bottleBar.collectedBottles > 0) {
             this.canThrow = false;
-    
+
             let bottleX = this.x + (this.otherDirection ? -20 : 20);
             let bottleY = this.y + 100;
             let bottleSpeed = this.otherDirection ? -7 : 7;
-    
+
             let bottle = new ThrowableObject(bottleX, bottleY, bottleSpeed, this.world);
             this.world.throwableObjects.push(bottle);
-    
+
             this.world.bottleBar.setBottles(this.world.bottleBar.collectedBottles - 1);
-    
+
             setTimeout(() => {
                 this.canThrow = true;
             }, 500);
@@ -145,8 +153,6 @@ class Character extends MovableObject {
         this.speed = 0;
         this.world.keyboard = {};
     }
-    
-    
 
     resetIdleTimer() {
         this.idleTime = 0;
@@ -163,4 +169,32 @@ class Character extends MovableObject {
             }
         }, 500);
     }
+
+    playWalkSound() {
+        if (!this.isWalking) {
+            this.isWalking = true;
+            this.walkSound.play();
+        }
+    }
+
+    stopWalkSound() {
+        if (this.isWalking) {
+            this.isWalking = false;
+            this.walkSound.pause();
+            this.walkSound.currentTime = 0;
+        }
+    }
+
+    playJumpSound() {
+        if (!this.isJumping) {
+            this.isJumping = true;
+            this.jumpSound.currentTime = 0;
+            this.jumpSound.play();
+            
+            setTimeout(() => {
+                this.isJumping = false;
+            }, 500);
+        }
+    }
+
 }

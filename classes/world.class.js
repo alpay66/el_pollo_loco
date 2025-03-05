@@ -69,6 +69,7 @@ class World {
     checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
+                this.character.hit();
                 if (enemy instanceof Endboss) {
                     enemy.dealDamage(this.character);
                 } else {

@@ -10,6 +10,8 @@ class Chicken extends MovableObject {
     CHICKEN_DEAD = [
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
+    chickenSound = new Audio('audio/chicken.mp3');
+    /* deadChickenSound = new Audio('audio/'); */
 
     constructor() {
         super().loadImage(this.CHICKEN_WALKING[0]);
@@ -34,6 +36,6 @@ class Chicken extends MovableObject {
     die() {
         clearInterval(this.walkingInterval);
         clearInterval(this.animationInterval);
-        this.loadImage(this.CHICKEN_DEAD[0]); // Todesbild setzen
+        this.loadImage(this.CHICKEN_DEAD[0]);
     }
 }
