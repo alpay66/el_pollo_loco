@@ -17,7 +17,7 @@ class MovableObject extends DrawableObject {
     hit(damage = 5) { 
         this.energie -= damage;
         
-        if (this instanceof Character) { // Nur für den Character den Sound abspielen
+        if (this instanceof Character) {
             this.hurtSound.currentTime = 0;
             this.hurtSound.play();
         }

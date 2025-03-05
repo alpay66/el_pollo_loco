@@ -17,6 +17,7 @@ class ThrowableObject extends MovableObject {
     rotationSpeed = 0.5;
     height = 90;
     width = 70;
+    hitSound = new Audio('audio/bottle-crack.mp3');
 
     constructor(x, y, speedX = 7) {
         super().loadImage(this.ROTATED_SALSA_BOTTLE[0]);
@@ -26,7 +27,7 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.speedX = speedX;
         this.world = world;
-        this.throwBottle(); 
+        this.throwBottle();
     }
 
     throwBottle() {
@@ -38,7 +39,7 @@ class ThrowableObject extends MovableObject {
 
     startThrowMovement() {
         this.throwInterval = setInterval(() => {
-            if (this.y < 360) { 
+            if (this.y < 360) {
                 this.x += this.speedX;
             } else {
                 this.splash();
@@ -49,7 +50,7 @@ class ThrowableObject extends MovableObject {
     startBottleRotate() {
         let rotationIndex = 0;
         this.rotationInterval = setInterval(() => {
-            if (this.y < 360) { 
+            if (this.y < 360) {
                 rotationIndex = (rotationIndex + this.rotationSpeed) % this.ROTATED_SALSA_BOTTLE.length;
                 this.loadImage(this.ROTATED_SALSA_BOTTLE[Math.floor(rotationIndex)]);
             } else {
@@ -61,10 +62,11 @@ class ThrowableObject extends MovableObject {
     splash() {
         this.clearBottleIntervals();
         this.playAnimation(this.SALSA_BOTTLE_SPLASH);
-    
+        this.splashSound();
+
         setTimeout(() => {
             this.loadImage(this.SALSA_BOTTLE_SPLASH[this.SALSA_BOTTLE_SPLASH.length - 1]);
-            
+
             if (this.world) {
                 let bottleIndex = this.world.throwableObjects.indexOf(this);
                 if (bottleIndex !== -1) {
@@ -73,12 +75,17 @@ class ThrowableObject extends MovableObject {
             }
         }, 400);
     }
-    
+
+    splashSound() {
+        this.hitSound.currentTime = 0;
+        this.hitSound.play();
+    }
+
     clearBottleIntervals() {
         this.speedX = 0;
         this.speedY = 0;
         clearInterval(this.throwInterval);
         clearInterval(this.rotationInterval);
     }
-    
+
 }

@@ -69,6 +69,7 @@ class Character extends MovableObject {
     walkSound = new Audio('audio/walk.mp3');
     jumpSound = new Audio('audio/jump.mp3');
     hurtSound = new Audio('audio/hurt_sound.mp3');
+    throwSound = new Audio('audio/throw.mp3');
 
 
     constructor() {
@@ -143,6 +144,9 @@ class Character extends MovableObject {
 
             this.world.bottleBar.setBottles(this.world.bottleBar.collectedBottles - 1);
 
+            this.throwSound.currentTime = 0;
+            this.throwSound.play();
+
             setTimeout(() => {
                 this.canThrow = true;
             }, 500);
@@ -190,7 +194,7 @@ class Character extends MovableObject {
             this.isJumping = true;
             this.jumpSound.currentTime = 0;
             this.jumpSound.play();
-            
+
             setTimeout(() => {
                 this.isJumping = false;
             }, 500);
