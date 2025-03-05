@@ -99,7 +99,7 @@ class Character extends MovableObject {
                 this.playWalkSound();
                 this.resetIdleTimer();
             } else {
-                this.stopWalkSound(); // Stoppt den Sound, wenn nicht mehr gelaufen wird
+                this.stopWalkSound();
             }
 
             if (this.world.keyboard.UP && !this.isAboveGround()) {
