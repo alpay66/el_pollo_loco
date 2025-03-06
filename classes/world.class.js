@@ -56,7 +56,7 @@ class World {
             this.checkEnemyCollisions();
         }, 50);
     }
-    
+
     checkCoinCollisions() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
@@ -99,7 +99,6 @@ class World {
         });
     }
     
-    
     killEnemy(enemy) {
         if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
             let stompSound = new Audio('audio/enemie_dead.mp3');
@@ -113,9 +112,7 @@ class World {
         }
     }
     
-
     checkThrowableObjectCollisions() {
-        // Prüfe nur für Chicken und SmallChicken
         this.throwableObjects.forEach((bottle) => {
             let hitEnemyIndex = this.level.enemies.findIndex(enemy =>
                 bottle.isColliding(enemy) && !(enemy instanceof Endboss)
@@ -148,8 +145,6 @@ class World {
         }
     }
     
-    
-
     endGame(world) {
         this.stopAllMovement(world);
         cancelAnimationFrame(world.animationFrame);
@@ -203,7 +198,6 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
-
 
         this.addToMap(this.character);
 

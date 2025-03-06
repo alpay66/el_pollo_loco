@@ -27,7 +27,7 @@ class Coin extends DrawableObject {
     }
 
     animateCoin() {
-        let growSize = 10; // change how big the coin can grow 
+        let growSize = 10;
         this.growCoin(growSize);
 
         setTimeout(() => {
@@ -48,6 +48,4 @@ class Coin extends DrawableObject {
         this.x += size / 2;
         this.y += size / 2;
     }
-
-    
 }

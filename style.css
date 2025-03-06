@@ -1,3 +1,4 @@
+/* Bestehender Code */
 body {
     font-family: 'Western', sans-serif;
     display: flex;
@@ -8,25 +9,81 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 98vh;
+    height: 100vh;
+    width: 100vw;
+    /* Fix: Hier war zuvor width: 100vh, was falsch war */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
+/* Schriftart einbinden */
 @font-face {
     font-family: 'Western';
     src: url('fonts/WEST____.TTF') format('truetype');
 }
 
-h1, button {
+h1,
+button {
     font-family: 'Western', sans-serif;
 }
 
-
 canvas {
     background-color: black;
+    width: 720px;
+    height: 480px;
+}
+
+@media (max-width: 720px) {
+    canvas {
+        width: 640px !important;
+        height: 360px !important;
+    }
+}
+
+@media (max-width: 640px) {
+    canvas {
+        width: 480px !important;
+        height: 320px !important;
+    }
+}
+
+@media (max-width: 500px) {
+    canvas {
+        width: 320px !important;
+        height: 240px !important;
+    }
+
+    #startscreen button {
+        padding: 3px 15px !important;
+        font-size: 18px !important;
+    }
+
+    #fullscreen-btn {
+        padding: 6px 25px !important;
+        font-size: 18px !important;
+    }
+}
+
+@media (max-width: 320px) {
+    canvas {
+        width: 240px !important;
+        height: 160px !important;
+    }
+
+    #startscreen button {
+        padding: 3px 10px !important;
+        font-size: 13px !important;
+    }
+
+    #fullscreen-btn {
+        padding: 4px 20px !important;
+        font-size: 13px !important;
+    }
 }
 
 h1 {
-    color : red;
+    color: red;
 }
 
 footer {
@@ -36,22 +93,6 @@ footer {
 
 span {
     color: green;
-}
-
-#clock {
-    font-size: 24px;
-    font-family: Arial, sans-serif;
-    font-weight: bold;
-    color: rgb(239, 5, 5);
-    text-align: center;
-    background: black;
-    padding: 10px;
-    width: 150px;
-    border-radius: 10px;
-    position: absolute;
-    top: 700px;
-    right: 300px;
-    background-color: azure;
 }
 
 .endscreen-img {
@@ -79,7 +120,6 @@ span {
 .hidden {
     display: none;
 }
-
 
 .start-btn {
     padding: 15px 30px;
@@ -195,6 +235,7 @@ span {
     display: block;
 }
 
+/* 🔹 Vollbild-Button bleibt responsive */
 #fullscreen-btn {
     position: absolute;
     bottom: 10px;
@@ -218,7 +259,32 @@ span {
     box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7);
 }
 
-#fullscreen-btn:hover {
-    background: rgba(255, 140, 0, 0.8); /* Orange Hover-Effekt */
+/* 🔹 Querformat-Warnung */
+#rotate-warning {
+    display: none;
+    /* Standardmäßig versteckt */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 20px;
+    text-align: center;
+    z-index: 9999;
 }
 
+/* 🔹 Querformat-Warnung aktivieren, wenn das Gerät hochkant ist */
+/* @media screen and (max-aspect-ratio: 1/1) {
+    #rotate-warning {
+        display: block;
+    }
+} */
+
+@media screen and (max-width: 735px) {
+    #rotate-warning {
+        display: block;
+    }
+}
