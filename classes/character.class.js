@@ -153,6 +153,14 @@ class Character extends MovableObject {
         }
     }
 
+    isAboveEnemy(enemy) {
+        return this.y + this.height < enemy.y + enemy.height && this.speedY < 0;  // Der Charakter ist über dem Feind
+    }
+
+    bounceOff() {
+        this.speedY = 15;  // Lasse den Charakter nach dem Aufprall abprallen
+    }
+
     stopMovement() {
         this.speed = 0;
         this.world.keyboard = {};

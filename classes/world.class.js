@@ -16,7 +16,9 @@ class World {
         this.keyboard = keyboard;
         this.drawInWorld();
         this.setWorld();
-        this.run();
+        this.runCollisionCheck();
+        this.runEndbossCollisionCheck();
+        this.runChickenCollisionCheck();
     }
 
     stopAllMovement(world) {
@@ -35,19 +37,26 @@ class World {
         });
     }
 
-    run() {
+    runCollisionCheck() {
         setInterval(() => {
-            this.checkCollisions();
+            this.checkCoinCollisions();
+            this.checkBottleCollisions();
+            this.checkThrowableObjectCollisions();
+        }, 50);
+    }
+
+    runEndbossCollisionCheck() {
+        setInterval(() => {
+            this.checkEndbossThrowableCollisions();
         }, 500);
     }
 
-    checkCollisions() {
-        this.checkCoinCollisions();
-        this.checkBottleCollisions();
-        this.checkEnemyCollisions();
-        this.checkThrowableObjectCollisions();
+    runChickenCollisionCheck() {
+        setInterval(() => {
+            this.checkEnemyCollisions();
+        }, 50);
     }
-
+    
     checkCoinCollisions() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
@@ -69,16 +78,19 @@ class World {
     checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                if (enemy instanceof Endboss) {
+                if (this.character.isAboveEnemy(enemy) && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
+                    this.killEnemy(enemy);
+                    this.character.bounceOff();
+                } 
+                else if (enemy instanceof Endboss) {
                     enemy.dealDamage(this.character);
-                } else {
+                } 
+                else {
                     this.character.hit();
                 }
-
+    
                 this.healthBar.setPercentage(this.character.energie);
-                console.log('Character hat noch', this.character.energie, 'Leben');
-
+    
                 if (this.character.energie <= 0) {
                     this.endGame(this);
                     showEndscreen(false);
@@ -86,31 +98,57 @@ class World {
             }
         });
     }
+    
+    
+    killEnemy(enemy) {
+        if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
+            let stompSound = new Audio('audio/enemie_dead.mp3');
+            stompSound.currentTime = 0;
+            stompSound.play();
+    
+            enemy.die();
+            setTimeout(() => {
+                this.removeEnemy(enemy);
+            }, 500);
+        }
+    }
+    
 
     checkThrowableObjectCollisions() {
+        // Prüfe nur für Chicken und SmallChicken
         this.throwableObjects.forEach((bottle) => {
-            let hitEnemyIndex = this.level.enemies.findIndex(enemy => bottle.isColliding(enemy));
-
+            let hitEnemyIndex = this.level.enemies.findIndex(enemy =>
+                bottle.isColliding(enemy) && !(enemy instanceof Endboss)
+            );
             if (hitEnemyIndex !== -1) {
                 let hitEnemy = this.level.enemies[hitEnemyIndex];
-
                 if (hitEnemy instanceof Chicken || hitEnemy instanceof SmallChicken) {
                     this.handleChickenHit(bottle, hitEnemy);
-                }
-
-                if (hitEnemy instanceof Endboss) {
-                    this.handleEndbossHit(bottle, hitEnemy);                 
-                }
-
-                if (isEndbossDefeated(this.level.enemies)) {
-                    setTimeout(() => {
-                        this.endGame(this);
-                        showEndscreen(true);
-                    }, 2000);
                 }
             }
         });
     }
+
+    checkEndbossThrowableCollisions() {
+        let endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
+        if (endboss) {
+            this.throwableObjects.forEach((bottle) => {
+                if (bottle.isColliding(endboss)) {
+                    this.handleEndbossHit(bottle, endboss);
+                    
+                    // NEU: Überprüfung, ob der Endboss besiegt wurde
+                    if (endboss.energie <= 0) {
+                        setTimeout(() => {
+                            this.endGame(this);
+                            showEndscreen(true);
+                        }, 2000);
+                    }
+                }
+            });
+        }
+    }
+    
+    
 
     endGame(world) {
         this.stopAllMovement(world);
@@ -165,7 +203,8 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
-        
+
+
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0);
