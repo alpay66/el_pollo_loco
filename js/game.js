@@ -61,24 +61,69 @@ function goToStartScreen() {
 }
 
 function toggleFullscreen() {
-    let canvas = document.getElementById('canvas');
+    let elem = document.documentElement; // Setzt den gesamten Body in Fullscreen
+
     if (!document.fullscreenElement) {
-        if (canvas.requestFullscreen) {
-            canvas.requestFullscreen();
-        } else if (canvas.mozRequestFullScreen) {
-            canvas.mozRequestFullScreen();
-        } else if (canvas.webkitRequestFullscreen) {
-            canvas.webkitRequestFullscreen();
-        } else if (canvas.msRequestFullscreen) {
-            canvas.msRequestFullscreen();
-        }
+        elem.requestFullscreen().then(() => {
+            adjustScreenForFullscreen();
+        }).catch(err => {
+            console.error(`Fehler beim Wechsel in den Fullscreen-Modus: ${err.message}`);
+        });
     } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        }
+        document.exitFullscreen();
+        resetScreenSize();
     }
 }
 
+function toggleFullscreen() {
+    let elem = document.documentElement; 
+
+    if (!document.fullscreenElement) {
+        elem.requestFullscreen().then(() => {
+            adjustScreenForFullscreen();
+        }).catch(err => {
+            console.error(`Fehler beim Wechsel in den Fullscreen-Modus: ${err.message}`);
+        });
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+function adjustScreenForFullscreen() {
+    let overlay = document.getElementById('overlay');
+    let canvas = document.getElementById('canvas');
+    let startscreen = document.getElementById('startscreen');
+
+    overlay.style.width = "100vw";
+    overlay.style.height = "100vh";
+
+    startscreen.style.width = "100vw";
+    startscreen.style.height = "100vh";
+
+    canvas.style.width = "100vw";
+    canvas.style.height = "100vh";
+}
+
+document.addEventListener("fullscreenchange", () => {
+    if (!document.fullscreenElement) {
+        resetScreenSize();
+    }
+});
+
+function resetScreenSize() {
+    let overlay = document.getElementById('overlay');
+    let canvas = document.getElementById('canvas');
+    let startscreen = document.getElementById('startscreen');
+
+    overlay.style.width = "";
+    overlay.style.height = "";
+
+    startscreen.style.width = "";
+    startscreen.style.height = "";
+
+    canvas.style.width = "720px";
+    canvas.style.height = "480px";
+}
 
 function isEndbossDefeated(enemies) {
     return enemies.find(e => e instanceof Endboss)?.isDead;
