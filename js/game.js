@@ -20,6 +20,7 @@ function restartGame() {
     document.getElementById('startscreen').style.display = 'none';
     stopGame(); 
     resetGame();
+    enableMobileButtons();
 }
 
 function resetGame() {
@@ -53,6 +54,7 @@ function showEndscreen(hasWon) {
     const overlay = document.getElementById('startscreen');
     overlay.innerHTML = getEndscreenTemplate(hasWon);
     overlay.style.display = 'block';
+    disableMobileButtons();
     stopGame();
 }
 
@@ -146,3 +148,45 @@ window.addEventListener("keyup", (event) => {
     if (event.keyCode == 32) keyboard.SPACE = false;
     if (event.keyCode == 68) keyboard.D = false;
 });	
+
+function setupMobileControls() {
+    document.getElementById('left-btn').addEventListener('touchstart', () => keyboard.LEFT = true);
+    document.getElementById('left-btn').addEventListener('touchend', () => keyboard.LEFT = false);
+
+    document.getElementById('right-btn').addEventListener('touchstart', () => keyboard.RIGHT = true);
+    document.getElementById('right-btn').addEventListener('touchend', () => keyboard.RIGHT = false);
+
+    document.getElementById('jump-btn').addEventListener('touchstart', () => keyboard.UP = true);
+    document.getElementById('jump-btn').addEventListener('touchend', () => keyboard.UP = false);
+
+    document.getElementById('throw-btn').addEventListener('touchstart', () => keyboard.D = true);
+    document.getElementById('throw-btn').addEventListener('touchend', () => keyboard.D = false);
+}
+
+function isMobileDevice() {
+    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+function handleMobileControls() {
+    let mobileControls = document.getElementById('mobile-controls');
+
+    if (isMobileDevice()) {
+        mobileControls.style.display = 'flex'; 
+    } else {
+        mobileControls.style.display = 'none';
+    }
+}
+
+function disableMobileButtons() {
+    let mobileControls = document.getElementById('mobile-controls');
+    if (mobileControls) {
+        mobileControls.style.display = 'none';
+    }
+}
+
+function enableMobileButtons() {
+    let mobileControls = document.getElementById('mobile-controls');
+    if (isMobileDevice() && mobileControls) {
+        mobileControls.style.display = 'flex'; 
+    }
+}
