@@ -47,6 +47,8 @@ class Endboss extends MovableObject {
     isAttacking = false;
     isHurt = false;
     isDead = false;
+    endbossHurt = new Audio('audio/Endboss_hurt.mp3');
+    endbossDead = new Audio('audio/endboss_defeat.mp3');
 
     constructor() {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
@@ -143,6 +145,11 @@ class Endboss extends MovableObject {
             this.isHurt = true;
             this.endbossBar.setPercentage(this.energie);
 
+            if (this.endbossHurt.paused || this.endbossHurt.ended) {
+                this.endbossHurt.currentTime = 0;
+                this.endbossHurt.play().catch(error => console.log("Sound-Fehler:", error));
+            }
+            
             setTimeout(() => {
                 this.isHurt = false;
             }, 500);
@@ -159,6 +166,9 @@ class Endboss extends MovableObject {
             this.speed = 0;
     
             this.playAnimation(this.ENDBOSS_DEAD); 
+
+            this.endbossDead.currentTime = 0;
+            this.endbossDead.play().catch(error => console.log("Sound-Fehler:", error));
 
             setTimeout(() => {
                 this.removeEndboss();

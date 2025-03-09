@@ -18,23 +18,43 @@ class Chicken extends MovableObject {
         this.loadImages(this.CHICKEN_DEAD);
         this.x = 350 + Math.random() * 1600;
         this.speed = 0.15 + Math.random() * 0.5;
+        this.chickenSound.loop = true;
+        this.chickenSound.volume = 0.2;
         this.animateChicken();
     }
-    
+
     animateChicken() {
         this.walkingInterval = setInterval(() => {
+            if (!this.chickenSoundPlaying) { 
+                this.playChickenSound(); 
+            }
             this.moveLeft();
         }, 1000 / 60);
         
         this.animationInterval = setInterval(() => {
             this.playAnimation(this.CHICKEN_WALKING);
         }, 150);
-        
+    }
+
+    playChickenSound() {
+        this.chickenSound.play().catch(error => console.error('Audio-Fehler:', error)); // Falls Autoplay blockiert wird
+        this.chickenSoundPlaying = true;
+    }
+
+    stopChickenSound() {
+        this.chickenSound.pause();
+        this.chickenSound.currentTime = 0;
+        this.chickenSoundPlaying = false;
     }
 
     die() {
+        this.stopChickenSound();
         clearInterval(this.walkingInterval);
         clearInterval(this.animationInterval);
         this.loadImage(this.CHICKEN_DEAD[0]);
+    }
+
+    stopAllSounds() {
+        this.stopChickenSound();
     }
 }

@@ -2,6 +2,8 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let intervalIds = [];
+backgroundMusic = new Audio('audio/background-musik-pollo.mp3');
+backgroundMusic.volume = 0.1;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -21,6 +23,7 @@ function restartGame() {
     stopGame(); 
     resetGame();
     enableMobileButtons();
+    manageBackgroundMusic('play'); 
 }
 
 function resetGame() {
@@ -32,6 +35,8 @@ function resetGame() {
 function stopGame() {
     intervalIds.forEach(clearInterval);
     intervalIds = [];
+
+    manageBackgroundMusic('stop');
 
     for (let i = 1; i < 9999; i++) {
         window.clearInterval(i);
@@ -47,7 +52,18 @@ function resetWorld() {
 
 function startGame() {
     document.getElementById('startscreen').style.display = 'none';
+    manageBackgroundMusic('play');
     init();
+}
+
+function manageBackgroundMusic(action) {
+    if (action === 'play') {
+        backgroundMusic.currentTime = 0;
+        backgroundMusic.play().catch(error => console.error('Audio-Fehler:', error)); // Falls Autoplay blockiert wird
+    } else if (action === 'stop') {
+        backgroundMusic.pause();
+        backgroundMusic.currentTime = 0;
+    }
 }
 
 function showEndscreen(hasWon) {
