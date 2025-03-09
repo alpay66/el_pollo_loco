@@ -3,8 +3,8 @@ let world;
 let keyboard = new Keyboard();
 let intervalIds = [];
 
-let isMuted = false; // Status: Ist Ton an oder aus?
-let allSounds = []; // Array für alle Sounds
+let isMuted = false; 
+let allSounds = []; 
 
 backgroundMusic = new Audio('audio/background-musik-pollo.mp3');
 backgroundMusic.volume = 0.1;
@@ -12,7 +12,7 @@ backgroundMusic.loop = true;
 
 function toggleMute() {
     isMuted = !isMuted;
-    
+
     allSounds.forEach(sound => {
         sound.volume = isMuted ? 0 : 1;
     });

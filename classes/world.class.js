@@ -133,7 +133,6 @@ class World {
                 if (bottle.isColliding(endboss)) {
                     this.handleEndbossHit(bottle, endboss);
                     
-                    // NEU: Überprüfung, ob der Endboss besiegt wurde
                     if (endboss.energie <= 0) {
                         setTimeout(() => {
                             this.endGame(this);
