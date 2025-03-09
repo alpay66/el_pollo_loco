@@ -17,7 +17,7 @@ class ThrowableObject extends MovableObject {
     rotationSpeed = 0.5;
     height = 90;
     width = 70;
-    hitSound = new Audio('audio/bottle-crack.mp3');
+    splashSound = new Audio('audio/bottle-crack.mp3');
 
     constructor(x, y, speedX = 7) {
         super().loadImage(this.ROTATED_SALSA_BOTTLE[0]);
@@ -28,6 +28,8 @@ class ThrowableObject extends MovableObject {
         this.speedX = speedX;
         this.world = world;
         this.throwBottle();
+        this.splashSound = new Audio('audio/bottle-crack.mp3'); // 🔊 Sound erst hier setzen
+        registerSound(this.splashSound);
     }
 
     throwBottle() {
@@ -62,7 +64,7 @@ class ThrowableObject extends MovableObject {
     splash() {
         this.clearBottleIntervals();
         this.playAnimation(this.SALSA_BOTTLE_SPLASH);
-        this.splashSound();
+        this.playSplashSound();
 
         setTimeout(() => {
             this.loadImage(this.SALSA_BOTTLE_SPLASH[this.SALSA_BOTTLE_SPLASH.length - 1]);
@@ -76,9 +78,11 @@ class ThrowableObject extends MovableObject {
         }, 400);
     }
 
-    splashSound() {
-        this.hitSound.currentTime = 0;
-        this.hitSound.play();
+    playSplashSound() { 
+        if (!isMuted) {
+            this.splashSound.currentTime = 0;
+            this.splashSound.play();
+        }
     }
 
     clearBottleIntervals() {

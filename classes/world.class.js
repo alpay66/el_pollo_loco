@@ -9,6 +9,7 @@ class World {
     keyboard;
     camera_x = 0;
     throwableObjects = [];
+    stompSound = new Audio('audio/enemie_dead.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -101,10 +102,9 @@ class World {
     
     killEnemy(enemy) {
         if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
-            let stompSound = new Audio('audio/enemie_dead.mp3');
-            stompSound.currentTime = 0;
-            stompSound.play();
-    
+            this.stompSound.currentTime = 0;
+            this.stompSound.play();
+
             enemy.die();
             setTimeout(() => {
                 this.removeEnemy(enemy);

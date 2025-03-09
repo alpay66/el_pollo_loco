@@ -2,8 +2,68 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let intervalIds = [];
+
+let isMuted = false; // Status: Ist Ton an oder aus?
+let allSounds = []; // Array für alle Sounds
+
 backgroundMusic = new Audio('audio/background-musik-pollo.mp3');
 backgroundMusic.volume = 0.1;
+backgroundMusic.loop = true; 
+
+function toggleMute() {
+    isMuted = !isMuted;
+
+    allSounds.forEach(sound => {
+        sound.volume = isMuted ? 0 : 1;
+    });
+
+    if (isMuted) {
+        backgroundMusic.pause(); 
+    } else {
+        backgroundMusic.play().catch(error => console.error('Audio-Fehler:', error));
+    }
+
+    document.getElementById("mute-btn").innerText = isMuted ? "🔇" : "🔊";
+}
+
+function registerSound(audioElement) {
+    allSounds.push(audioElement);
+}
+
+function registerSounds() {
+    registerSound(backgroundMusic); 
+
+    if (world) {
+        registerSound(world.stompSound); // 🛠 Stomp-Sound für Mute-Button hinzufügen
+    }
+
+    if (world && world.character) {
+        registerSound(world.character.hurtSound);
+        registerSound(world.character.jumpSound);
+        registerSound(world.character.throwSound);
+        registerSound(world.character.walkSound);
+    }
+
+    if (world && world.level && world.level.enemies) {
+        world.level.enemies.forEach(enemy => {
+            if (enemy instanceof Chicken) {
+                registerSound(enemy.chickenSound);
+            }
+            if (enemy instanceof Endboss) {
+                registerSound(enemy.endbossHurt);
+                registerSound(enemy.endbossDead);
+            }
+        });
+    }
+
+    if (world && world.throwableObjects) {
+        world.throwableObjects.forEach(bottle => {
+            registerSound(bottle.splashSound);
+        });
+    }
+}
+
+
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -11,6 +71,7 @@ function init() {
     world = new World(canvas, keyboard);
     console.log('My World ist', world);
     console.log('My Character ist', world.character);
+    registerSounds(); 
 }
 
 function setStoppableInterval(fn, time) {
@@ -37,9 +98,21 @@ function stopGame() {
     intervalIds = [];
 
     manageBackgroundMusic('stop');
+    stopAllChickenSounds();
+
 
     for (let i = 1; i < 9999; i++) {
         window.clearInterval(i);
+    }
+}
+
+function stopAllChickenSounds() {
+    if (world && world.level && world.level.enemies) {
+        world.level.enemies.forEach(enemy => {
+            if (enemy instanceof Chicken) {
+                enemy.stopChickenSound();
+            }
+        });
     }
 }
 

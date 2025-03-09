@@ -269,6 +269,25 @@ span {
     100% { transform: rotate(0deg); }
 }
 
+#mute-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 15px;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    background: #ff4444;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#mute-btn:hover {
+    background: #cc0000;
+}
+
+
 
 
 
