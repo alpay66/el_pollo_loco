@@ -208,23 +208,6 @@ span {
     box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7);
 }
 
-/* 🔹 Querformat-Warnung */
-#rotate-warning {
-    display: none;
-    /* Standardmäßig versteckt */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 20px;
-    text-align: center;
-    z-index: 9999;
-}
-
 #mobile-controls {
     display: none;
     position: absolute;

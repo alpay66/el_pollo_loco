@@ -42,9 +42,9 @@
     }
 } */
 
-@media screen and (max-width: 735px) {
+@media screen and (max-width: 920px) and (orientation: portrait) {
     #rotate-warning {
-        display: block;
+        display: flex;
     }
 }
 
