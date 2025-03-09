@@ -28,7 +28,7 @@ class ThrowableObject extends MovableObject {
         this.speedX = speedX;
         this.world = world;
         this.throwBottle();
-        this.splashSound = new Audio('audio/bottle-crack.mp3'); // 🔊 Sound erst hier setzen
+        this.splashSound = new Audio('audio/bottle-crack.mp3');
         registerSound(this.splashSound);
     }
 

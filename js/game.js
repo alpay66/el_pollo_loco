@@ -12,11 +12,10 @@ backgroundMusic.loop = true;
 
 function toggleMute() {
     isMuted = !isMuted;
-
+    
     allSounds.forEach(sound => {
         sound.volume = isMuted ? 0 : 1;
     });
-
     if (isMuted) {
         backgroundMusic.pause(); 
     } else {
@@ -34,7 +33,7 @@ function registerSounds() {
     registerSound(backgroundMusic); 
 
     if (world) {
-        registerSound(world.stompSound); // 🛠 Stomp-Sound für Mute-Button hinzufügen
+        registerSound(world.stompSound);
     }
 
     if (world && world.character) {
@@ -62,8 +61,6 @@ function registerSounds() {
         });
     }
 }
-
-
 
 function init() {
     canvas = document.getElementById('canvas');
