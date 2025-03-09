@@ -1,4 +1,3 @@
-/* Bestehender Code */
 body {
     font-family: 'Western', sans-serif;
     display: flex;
@@ -11,19 +10,17 @@ body {
     background-repeat: no-repeat;
     height: 100vh;
     width: 100vw;
-    /* Fix: Hier war zuvor width: 100vh, was falsch war */
     overflow: hidden;
     margin: 0;
     padding: 0;
 }
 
-/* Schriftart einbinden */
 @font-face {
     font-family: 'Western';
     src: url('../fonts/WEST____.TTF') format('truetype');
 }
 
-h1,
+h1, 
 button {
     font-family: 'Western', sans-serif;
 }
@@ -228,21 +225,8 @@ span {
     z-index: 9999;
 }
 
-/* 🔹 Querformat-Warnung aktivieren, wenn das Gerät hochkant ist */
-/* @media screen and (max-aspect-ratio: 1/1) {
-    #rotate-warning {
-        display: block;
-    }
-} */
-
-@media screen and (max-width: 735px) {
-    #rotate-warning {
-        display: block;
-    }
-}
-
 #mobile-controls {
-    display: none; /* Standardmäßig ausblenden */
+    display: none;
     position: absolute;
     bottom: 20px;
     width: 100%;
@@ -271,11 +255,11 @@ span {
 }
 
 #rotate-warning {
-    display: none; /* Standardmäßig versteckt */
+    display: none; 
     position: fixed;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.95); /* Dunkler Hintergrund */
+    background: rgba(0, 0, 0, 0.95);
     color: white;
     font-size: 24px;
     font-weight: bold;
@@ -287,7 +271,6 @@ span {
     z-index: 9999;
 }
 
-/* 🔄 Icon-Animation für die Rotation */
 #rotate-icon {
     width: 100px;
     height: 100px;
@@ -295,7 +278,6 @@ span {
     animation: rotateAnimation 2s infinite ease-in-out;
 }
 
-/* 🌀 Animation für das Drehsymbol */
 @keyframes rotateAnimation {
     0% { transform: rotate(0deg); }
     25% { transform: rotate(-15deg); }
