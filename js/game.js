@@ -3,7 +3,7 @@ let world;
 let keyboard = new Keyboard();
 let intervalIds = [];
 
-let isMuted = false; 
+let isMuted = false;
 let allSounds = []; 
 
 backgroundMusic = new Audio('audio/background-musik-pollo.mp3');
@@ -14,12 +14,14 @@ function toggleMute() {
     isMuted = !isMuted;
 
     allSounds.forEach(sound => {
-        sound.volume = isMuted ? 0 : 1;
+        sound.volume = isMuted ? 0 : 0.1;
     });
     if (isMuted) {
         backgroundMusic.pause(); 
+        allSounds.forEach(sound => sound.pause());
     } else {
         backgroundMusic.play().catch(error => console.error('Audio-Fehler:', error));
+        allSounds.forEach(sound => sound.play());
     }
 
     document.getElementById("mute-btn").innerText = isMuted ? "🔇" : "🔊";
