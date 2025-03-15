@@ -12,7 +12,7 @@ class Bottlebar extends DrawableObject {
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/green/100.png'
     ];
     
-    collectedBottles = 50;
+    collectedBottles = 0;
 
     /**
      * Erstellt die Bottlebar.
@@ -24,7 +24,7 @@ class Bottlebar extends DrawableObject {
         this.y = 20;
         this.width = 120;
         this.height = 40;
-        this.setBottles(50);
+        this.setBottles(0);
     }
 
     /**

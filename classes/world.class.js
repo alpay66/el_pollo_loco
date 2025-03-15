@@ -1,46 +1,52 @@
 /**
- * Represents the game world, managing all game objects, collisions, and rendering.
+ * Repräsentiert die Spielwelt, verwaltet alle Spielobjekte, Kollisionen und das Rendering.
  * @class
  */
 class World {
-    /** @type {Character} The main character of the game. */
+    /** @type {Character} Der Hauptcharakter des Spiels. */
     character = new Character();
 
-    /** @type {Healthbar} The health bar displaying the character's health. */
+    /** @type {Healthbar} Die Gesundheitsleiste, die die Gesundheit des Charakters anzeigt. */
     healthBar = new Healthbar();
 
-    /** @type {Coinbar} The coin bar displaying the collected coins. */
+    /** @type {Coinbar} Die Münzenleiste, die die gesammelten Münzen anzeigt. */
     coinBar = new Coinbar();
 
-    /** @type {Bottlebar} The bottle bar displaying the collected bottles. */
+    /** @type {Bottlebar} Die Flaschenleiste, die die gesammelten Flaschen anzeigt. */
     bottleBar = new Bottlebar();
 
-    /** @type {Level} The current level of the game. */
+    /** @type {Level} Das aktuelle Level des Spiels. */
     level = level_1;
 
-    /** @type {HTMLCanvasElement} The canvas element for rendering the game. */
+    /** @type {HTMLCanvasElement} Das Canvas-Element für das Rendering des Spiels. */
     canvas;
 
-    /** @type {CanvasRenderingContext2D} The 2D rendering context of the canvas. */
+    /** @type {CanvasRenderingContext2D} Der 2D-Rendering-Kontext des Canvas. */
     ctx;
 
-    /** @type {Object} The keyboard input handler. */
+    /** @type {Object} Der Tastatur-Eingabehandler. */
     keyboard;
 
-    /** @type {number} The camera's x-coordinate for scrolling the view. */
+    /** @type {number} Die x-Koordinate der Kamera für das Scrollen der Ansicht. */
     camera_x = 0;
 
-    /** @type {Array<ThrowableObject>} The list of throwable objects (e.g., bottles). */
+    /** @type {Array<ThrowableObject>} Die Liste der werfbaren Objekte (z.B. Flaschen). */
     throwableObjects = [];
 
-    /** @type {HTMLAudioElement} The sound played when an enemy is stomped. */
+    /** @type {HTMLAudioElement} Der Sound, der abgespielt wird, wenn ein Gegner zerstampft wird. */
     stompSound = new Audio('audio/enemie_dead.mp3');
 
+    /** @type {HTMLAudioElement} Der Sound, der abgespielt wird, wenn eine Flaschen gesammelt wird. */
+    collectBottleSound = new Audio('audio/collect_bottle.mp3');
+
+    /** @type {HTMLAudioElement} Der Sound, der abgespielt wird, wenn eine Münze gesammelt wird. */
+    collectCoinSound = new Audio('audio/collect_coin.mp3');
+
     /**
-     * Creates a new World instance.
+     * Erstellt eine neue World-Instanz.
      * @constructor
-     * @param {HTMLCanvasElement} canvas - The canvas element for rendering.
-     * @param {Object} keyboard - The keyboard input handler.
+     * @param {HTMLCanvasElement} canvas - Das Canvas-Element für das Rendering.
+     * @param {Object} keyboard - Der Tastatur-Eingabehandler.
      */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -54,8 +60,8 @@ class World {
     }
 
     /**
-     * Stops all movement in the game world.
-     * @param {World} world - The game world to stop.
+     * Stoppt alle Bewegungen in der Spielwelt.
+     * @param {World} world - Die Spielwelt, die gestoppt werden soll.
      */
     stopAllMovement(world) {
         world.character.speed = 0;
@@ -65,7 +71,7 @@ class World {
     }
 
     /**
-     * Sets the world reference for the character and enemies.
+     * Setzt die Weltreferenz für den Charakter und die Gegner.
      */
     setWorld() {
         this.character.world = this;
@@ -77,7 +83,7 @@ class World {
     }
 
     /**
-     * Runs the collision check for coins, bottles, and throwable objects.
+     * Führt die Kollisionsprüfung für Münzen, Flaschen und werfbare Objekte durch.
      */
     runCollisionCheck() {
         setInterval(() => {
@@ -88,7 +94,7 @@ class World {
     }
 
     /**
-     * Runs the collision check for the endboss and throwable objects.
+     * Führt die Kollisionsprüfung für den Endboss und werfbare Objekte durch.
      */
     runEndbossCollisionCheck() {
         setInterval(() => {
@@ -97,7 +103,7 @@ class World {
     }
 
     /**
-     * Runs the collision check for chickens and the character.
+     * Führt die Kollisionsprüfung für Hühner und den Charakter durch.
      */
     runChickenCollisionCheck() {
         setInterval(() => {
@@ -106,31 +112,33 @@ class World {
     }
 
     /**
-     * Checks for collisions between the character and coins.
+     * Überprüft Kollisionen zwischen dem Charakter und Münzen.
      */
     checkCoinCollisions() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
                 this.level.coins.splice(index, 1);
                 this.coinBar.setCoins(this.coinBar.collectedCoins + 1);
+                this.playCollectCoinSound();
             }
         });
     }
 
     /**
-     * Checks for collisions between the character and bottles.
+     * Überprüft Kollisionen zwischen dem Charakter und Flaschen.
      */
     checkBottleCollisions() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
                 this.level.bottles.splice(index, 1);
                 this.bottleBar.setBottles(this.bottleBar.collectedBottles + 1);
+                this.playCollectBottleSound();
             }
         });
     }
 
     /**
-     * Checks for collisions between the character and enemies.
+     * Überprüft Kollisionen zwischen dem Charakter und Gegnern.
      */
     checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
@@ -157,8 +165,8 @@ class World {
     }
     
     /**
-     * Kills an enemy and plays the stomp sound.
-     * @param {Enemy} enemy - The enemy to kill.
+     * Tötet einen Gegner und spielt den Stomp-Sound ab.
+     * @param {Enemy} enemy - Der Gegner, der getötet werden soll.
      */
     killEnemy(enemy) {
         if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
@@ -173,7 +181,7 @@ class World {
     }
     
     /**
-     * Checks for collisions between throwable objects and enemies.
+     * Überprüft Kollisionen zwischen werfbaren Objekten und Gegnern.
      */
     checkThrowableObjectCollisions() {
         this.throwableObjects.forEach((bottle) => {
@@ -190,7 +198,7 @@ class World {
     }
 
     /**
-     * Checks for collisions between throwable objects and the endboss.
+     * Überprüft Kollisionen zwischen werfbaren Objekten und dem Endboss.
      */
     checkEndbossThrowableCollisions() {
         let endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
@@ -209,10 +217,26 @@ class World {
             });
         }
     }
+
+    /**
+     * Spielt den Sound ab, wenn eine Flasche gesammelt wird.
+     */
+    playCollectBottleSound() {
+        this.collectBottleSound.currentTime = 0; // Setzt den Sound zurück
+        this.collectBottleSound.play().catch(error => console.log("Sound-Fehler:", error));
+    }
+
+    /**
+     * Spielt den Sound ab, wenn eine Münze gesammelt wird.
+     */
+    playCollectCoinSound() {
+        this.collectCoinSound.currentTime = 0; // Setzt den Sound zurück
+        this.collectCoinSound.play().catch(error => console.log("Sound-Fehler:", error));
+    }
     
     /**
-     * Ends the game and stops all movement and animations.
-     * @param {World} world - The game world to end.
+     * Beendet das Spiel und stoppt alle Bewegungen und Animationen.
+     * @param {World} world - Die Spielwelt, die beendet werden soll.
      */
     endGame(world) {
         this.stopAllMovement(world);
@@ -223,9 +247,9 @@ class World {
     }
 
     /**
-     * Handles the collision between a throwable object and a chicken.
-     * @param {ThrowableObject} bottle - The throwable object.
-     * @param {Chicken} chicken - The chicken hit by the throwable object.
+     * Verarbeitet die Kollision zwischen einem werfbaren Objekt und einem Huhn.
+     * @param {ThrowableObject} bottle - Das werfbare Objekt.
+     * @param {Chicken} chicken - Das Huhn, das vom werfbaren Objekt getroffen wurde.
      */
     handleChickenHit(bottle, chicken) {
         bottle.splash();
@@ -236,9 +260,9 @@ class World {
     }
 
     /**
-     * Handles the collision between a throwable object and the endboss.
-     * @param {ThrowableObject} bottle - The throwable object.
-     * @param {Endboss} endboss - The endboss hit by the throwable object.
+     * Verarbeitet die Kollision zwischen einem werfbaren Objekt und dem Endboss.
+     * @param {ThrowableObject} bottle - Das werfbare Objekt.
+     * @param {Endboss} endboss - Der Endboss, der vom werfbaren Objekt getroffen wurde.
      */
     handleEndbossHit(bottle, endboss) {
         bottle.splash();
@@ -250,8 +274,8 @@ class World {
     }
     
     /**
-     * Removes an enemy from the level.
-     * @param {Enemy} enemy - The enemy to remove.
+     * Entfernt einen Gegner aus dem Level.
+     * @param {Enemy} enemy - Der Gegner, der entfernt werden soll.
      */
     removeEnemy(enemy) {
         let indexToRemove = this.level.enemies.indexOf(enemy);
@@ -261,7 +285,7 @@ class World {
     }
 
     /**
-     * Draws all game objects on the canvas.
+     * Zeichnet alle Spielobjekte auf das Canvas.
      */
     drawInWorld() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -290,8 +314,8 @@ class World {
     }
 
     /**
-     * Adds multiple objects to the map.
-     * @param {Array<Object>} objects - The objects to add to the map.
+     * Fügt mehrere Objekte zur Karte hinzu.
+     * @param {Array<Object>} objects - Die Objekte, die zur Karte hinzugefügt werden sollen.
      */
     addObjectsToMap(objects) {
         objects.forEach(obj => {
@@ -300,8 +324,8 @@ class World {
     }
 
     /**
-     * Adds a single object to the map.
-     * @param {Object} mo - The object to add to the map.
+     * Fügt ein einzelnes Objekt zur Karte hinzu.
+     * @param {Object} mo - Das Objekt, das zur Karte hinzugefügt werden soll.
      */
     addToMap(mo) {
         if (mo.otherDirection) {
@@ -315,8 +339,8 @@ class World {
     }
 
     /**
-     * Flips the image horizontally.
-     * @param {Object} mo - The object whose image should be flipped.
+     * Spiegelt das Bild horizontal.
+     * @param {Object} mo - Das Objekt, dessen Bild gespiegelt werden soll.
      */
     flipImage(mo) {
         this.ctx.save();
@@ -326,8 +350,8 @@ class World {
     }
 
     /**
-     * Restores the image to its original orientation after flipping.
-     * @param {Object} mo - The object whose image should be restored.
+     * Stellt das Bild nach dem Spiegeln wieder in seine ursprüngliche Ausrichtung zurück.
+     * @param {Object} mo - Das Objekt, dessen Bild wiederhergestellt werden soll.
      */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
