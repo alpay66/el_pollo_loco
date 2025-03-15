@@ -361,3 +361,93 @@ span {
 #mute-btn:hover {
     background: #cc0000; /* Dunklere Hintergrundfarbe */
 }
+
+/**
+ * Stil für das Steuerungsfenster.
+ * Das Fenster ist standardmäßig ausgeblendet und wird zentriert dargestellt.
+ * Es hat eine halbtransparente schwarze Hintergrundfarbe, abgerundete Ecken und einen Schatten.
+ */
+#controls-screen {
+    display: none; /* Standardmäßig ausgeblendet */
+    position: absolute; /* Positionierung relativ zum nächsten positionierten Elternelement */
+    top: 50%; /* Vertikale Zentrierung */
+    left: 50%; /* Horizontale Zentrierung */
+    transform: translate(-50%, -50%); /* Zentrierung durch Verschiebung */
+    width: 80%; /* Breite des Fensters */
+    max-width: 600px; /* Maximale Breite */
+    background: rgba(0, 0, 0, 0.9); /* Halbtransparenter schwarzer Hintergrund */
+    color: white; /* Textfarbe */
+    padding: 20px; /* Innenabstand */
+    border-radius: 10px; /* Abgerundete Ecken */
+    text-align: center; /* Text zentrieren */
+    box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.3); /* Schatten */
+}
+
+/**
+ * Stil für den Container innerhalb des Steuerungsfensters.
+ * Definiert den Hintergrund, den Innenabstand und den Schatten.
+ */
+.controls-box {
+    max-width: 600px; /* Maximale Breite */
+    padding: 20px; /* Innenabstand */
+    background-color: rgba(0, 0, 0, 0.8); /* Halbtransparenter schwarzer Hintergrund */
+    border-radius: 10px; /* Abgerundete Ecken */
+    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.7); /* Schatten */
+}
+
+/**
+ * Stil für die Tabelle im Steuerungsfenster.
+ * Definiert die Breite, den Abstand und das Zusammenfallen der Rahmen.
+ */
+table {
+    width: 100%; /* Volle Breite */
+    margin-top: 20px; /* Abstand nach oben */
+    border-collapse: collapse; /* Rahmen zusammenfallen lassen */
+}
+
+/**
+ * Stil für Tabellenkopf- und Tabellenzellen.
+ * Definiert den Innenabstand und die Rahmenfarbe.
+ */
+th, td {
+    padding: 10px; /* Innenabstand */
+    border: 1px solid #555; /* Rahmenfarbe */
+}
+
+/**
+ * Stil für den Tabellenkopf.
+ * Definiert die Hintergrundfarbe und die Textfarbe.
+ */
+th {
+    background-color: #444; /* Hintergrundfarbe */
+    color: white; /* Textfarbe */
+}
+
+/**
+ * Stil für den Zurück-Button.
+ * Definiert das Aussehen, die Größe und die Animation beim Hovern.
+ */
+.back-button {
+    padding: 15px 30px; /* Innenabstand */
+    font-size: 22px; /* Schriftgröße */
+    font-weight: bold; /* Fettschrift */
+    color: white; /* Textfarbe */
+    background: linear-gradient(45deg, red, darkred); /* Hintergrundverlauf */
+    border: none; /* Kein Rahmen */
+    border-radius: 10px; /* Abgerundete Ecken */
+    cursor: pointer; /* Zeiger-Cursor */
+    transition: all 0.3s ease-in-out; /* Animation beim Hovern */
+    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5); /* Schatten */
+    text-transform: uppercase; /* Großbuchstaben */
+    margin-top: 20px; /* Abstand nach oben */
+}
+
+/**
+ * Stil für den Zurück-Button beim Hovern.
+ * Ändert den Hintergrundverlauf, vergrößert den Button und fügt einen stärkeren Schatten hinzu.
+ */
+.back-button:hover {
+    background: linear-gradient(45deg, darkred, black); /* Dunklerer Hintergrundverlauf */
+    transform: scale(1.1); /* Vergrößerung */
+    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7); /* Stärkerer Schatten */
+}

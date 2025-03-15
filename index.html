@@ -43,6 +43,42 @@
         <div id="startscreen">
             <img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="Startscreen">
             <button onclick="startGame()">Start Game</button>
+            <button onclick="showControls()">Spielsteuerung</button> <!-- Neuer Button für Steuerung -->
+        </div>
+
+        <!-- Steuerungsseite (ausgeblendet) -->
+        <div id="controls-screen" style="display: none;">
+            <div class="controls-box">
+                <h1>Spielsteuerung</h1>
+                <table>
+                    <tr>
+                        <th>Aktion</th>
+                        <th>Tastatur</th>
+                        <th>Mobil</th>
+                    </tr>
+                    <tr>
+                        <td>Nach links bewegen</td>
+                        <td>⬅️ Pfeiltaste</td>
+                        <td>⬅️ Linker Button</td>
+                    </tr>
+                    <tr>
+                        <td>Nach rechts bewegen</td>
+                        <td>➡️ Pfeiltaste</td>
+                        <td>➡️ Rechter Button</td>
+                    </tr>
+                    <tr>
+                        <td>Springen</td>
+                        <td>⬆️ Pfeiltaste</td>
+                        <td>🆙 Sprung-Button</td>
+                    </tr>
+                    <tr>
+                        <td>Flasche werfen</td>
+                        <td>D</td>
+                        <td>🥤 Wurf-Button</td>
+                    </tr>
+                </table>
+                <button class="back-button" onclick="hideControls()">Zurück</button> <!-- Zurück zum Startscreen -->
+            </div>
         </div>
 
         <div id="game-container">
@@ -60,12 +96,10 @@
 
     <button id="mute-btn" onclick="toggleMute()">🔊</button>
 
-
     <div id="rotate-warning">
         Bitte drehe dein Gerät ins Querformat, um zu spielen!
         <img id="rotate-icon" src="img/rotate.png" alt="Rotate Icon">
     </div>
-    
 
     <footer>
         <h1></h1>

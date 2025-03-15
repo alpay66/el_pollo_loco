@@ -1,4 +1,4 @@
-/** 
+/**
  * Globale Variablen für das Spiel.
  * @type {HTMLCanvasElement} canvas - Das Canvas-Element für das Spiel.
  * @type {World} world - Die Spielwelt.
@@ -11,17 +11,16 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let intervalIds = [];
-
 let isMuted = false;
-let allSounds = []; 
+let allSounds = [];
 
-/** 
+/**
  * Hintergrundmusik für das Spiel.
  * @type {HTMLAudioElement}
  */
-backgroundMusic = new Audio('audio/background-musik-pollo.mp3');
+let backgroundMusic = new Audio('audio/background-musik-pollo.mp3');
 backgroundMusic.volume = 0.1;
-backgroundMusic.loop = true; 
+backgroundMusic.loop = true;
 
 /**
  * Schaltet die Stummschaltung des Spiels um.
@@ -334,4 +333,20 @@ function enableMobileButtons() {
     if (isMobileDevice() && mobileControls) {
         mobileControls.style.display = 'flex'; 
     }
+}
+
+/**
+ * Zeigt die Steuerungsseite an.
+ */
+function showControls() {
+    document.getElementById("startscreen").style.display = "none";
+    document.getElementById("controls-screen").style.display = "block";
+}
+
+/**
+ * Blendet die Steuerungsseite aus und zeigt den Startbildschirm an.
+ */
+function hideControls() {
+    document.getElementById("controls-screen").style.display = "none";
+    document.getElementById("startscreen").style.display = "flex";
 }
