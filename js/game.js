@@ -1,3 +1,12 @@
+/** 
+ * Globale Variablen für das Spiel.
+ * @type {HTMLCanvasElement} canvas - Das Canvas-Element für das Spiel.
+ * @type {World} world - Die Spielwelt.
+ * @type {Keyboard} keyboard - Das Tastatur-Objekt zur Steuerung.
+ * @type {Array<number>} intervalIds - Speichert die IDs der Intervalle, um sie später zu stoppen.
+ * @type {boolean} isMuted - Gibt an, ob das Spiel stummgeschaltet ist.
+ * @type {Array<HTMLAudioElement>} allSounds - Speichert alle Sounds des Spiels.
+ */
 let canvas;
 let world;
 let keyboard = new Keyboard();
@@ -6,10 +15,18 @@ let intervalIds = [];
 let isMuted = false;
 let allSounds = []; 
 
+/** 
+ * Hintergrundmusik für das Spiel.
+ * @type {HTMLAudioElement}
+ */
 backgroundMusic = new Audio('audio/background-musik-pollo.mp3');
 backgroundMusic.volume = 0.1;
 backgroundMusic.loop = true; 
 
+/**
+ * Schaltet die Stummschaltung des Spiels um.
+ * Pausiert oder spielt alle Sounds und aktualisiert den Mute-Button.
+ */
 function toggleMute() {
     isMuted = !isMuted;
     allSounds.forEach(sound => {
@@ -21,10 +38,17 @@ function toggleMute() {
     document.getElementById("mute-btn").innerText = isMuted ? "🔇" : "🔊";
 }
 
+/**
+ * Registriert einen Sound im `allSounds`-Array.
+ * @param {HTMLAudioElement} audioElement - Der Sound, der registriert werden soll.
+ */
 function registerSound(audioElement) {
     allSounds.push(audioElement);
 }
 
+/**
+ * Registriert alle Sounds des Spiels.
+ */
 function registerSounds() {
     registerSound(backgroundMusic);
 
@@ -36,6 +60,9 @@ function registerSounds() {
     registerBottleSounds();
 }
 
+/**
+ * Registriert die Sounds des Charakters.
+ */
 function registerCharacterSounds() {
     if (!world.character) return;
 
@@ -44,6 +71,9 @@ function registerCharacterSounds() {
     );
 }
 
+/**
+ * Registriert die Sounds der Gegner.
+ */
 function registerEnemySounds() {
     if (!world.level || !world.level.enemies) return;
 
@@ -58,12 +88,19 @@ function registerEnemySounds() {
     });
 }
 
+/**
+ * Registriert die Sounds der Flaschen.
+ */
 function registerBottleSounds() {
     if (!world.throwableObjects) return;
 
     world.throwableObjects.forEach(bottle => registerSound(bottle.splashSound));
 }
 
+/**
+ * Initialisiert das Spiel.
+ * Setzt das Canvas, das Level und die Spielwelt.
+ */
 function init() {
     canvas = document.getElementById('canvas');
     levelInit();
@@ -73,11 +110,20 @@ function init() {
     registerSounds(); 
 }
 
+/**
+ * Erstellt ein stoppbares Intervall und speichert die ID.
+ * @param {Function} fn - Die Funktion, die in einem Intervall ausgeführt wird.
+ * @param {number} time - Das Intervall in Millisekunden.
+ */
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
     intervalIds.push(id);
 }
 
+/**
+ * Startet das Spiel neu.
+ * Blendet den Startbildschirm aus, stoppt das Spiel, setzt es zurück und aktiviert die mobilen Buttons.
+ */
 function restartGame() {
     document.getElementById('startscreen').style.display = 'none';
     stopGame(); 
@@ -90,24 +136,32 @@ function restartGame() {
     }
 }
 
+/**
+ * Setzt das Spiel zurück.
+ */
 function resetGame() {
     levelInit();
     resetWorld();
-    
 }
 
+/**
+ * Stoppt das Spiel.
+ * Beendet alle Intervalle und pausiert die Hintergrundmusik.
+ */
 function stopGame() {
     intervalIds.forEach(clearInterval);
     intervalIds = [];
 
     manageBackgroundMusic('stop');
 
-
     for (let i = 1; i < 9999; i++) {
         window.clearInterval(i);
     }
 }
 
+/**
+ * Stoppt alle Sounds der Hühner.
+ */
 function stopAllChickenSounds() {
     if (world && world.level && world.level.enemies) {
         world.level.enemies.forEach(enemy => {
@@ -115,10 +169,12 @@ function stopAllChickenSounds() {
                 enemy.stopChickenSound();
             }
         });
-        
     }
 }
 
+/**
+ * Setzt die Spielwelt zurück.
+ */
 function resetWorld() {
     if (!world) return;
     
@@ -126,12 +182,20 @@ function resetWorld() {
     world = new World(canvas, keyboard);
 }
 
+/**
+ * Startet das Spiel.
+ * Blendet den Startbildschirm aus und spielt die Hintergrundmusik.
+ */
 function startGame() {
     document.getElementById('startscreen').style.display = 'none';
     manageBackgroundMusic('play');
     init();
 }
 
+/**
+ * Steuert die Hintergrundmusik.
+ * @param {string} letsGo - 'play' zum Abspielen, 'stop' zum Stoppen.
+ */
 function manageBackgroundMusic(letsGo) {
     if (letsGo === 'play') {
         backgroundMusic.currentTime = 0;
@@ -142,6 +206,10 @@ function manageBackgroundMusic(letsGo) {
     }
 }
 
+/**
+ * Zeigt den Endbildschirm an.
+ * @param {boolean} hasWon - Gibt an, ob der Spieler gewonnen hat.
+ */
 function showEndscreen(hasWon) {
     const overlay = document.getElementById('startscreen');
     overlay.innerHTML = getEndscreenTemplate(hasWon);
@@ -150,10 +218,16 @@ function showEndscreen(hasWon) {
     stopGame();
 }
 
+/**
+ * Lädt die Startseite neu.
+ */
 function goToStartScreen() {
     location.reload();
 }
 
+/**
+ * Schaltet den Vollbildmodus um.
+ */
 function toggleFullscreen() {
     let elem = document.documentElement; 
 
@@ -169,6 +243,9 @@ function toggleFullscreen() {
     }
 }
 
+/**
+ * Passt die Bildschirmgröße für den Vollbildmodus an.
+ */
 function adjustScreenForFullscreen() {
     let overlay = document.getElementById('overlay');
     let canvas = document.getElementById('canvas');
@@ -184,12 +261,18 @@ function adjustScreenForFullscreen() {
     canvas.style.height = "100vh";
 }
 
+/**
+ * Event-Listener für Änderungen im Vollbildmodus.
+ */
 document.addEventListener("fullscreenchange", () => {
     if (!document.fullscreenElement) {
         resetScreenSize();
     }
 });
 
+/**
+ * Setzt die Bildschirmgröße zurück.
+ */
 function resetScreenSize() {
     let overlay = document.getElementById('overlay');
     let canvas = document.getElementById('canvas');
@@ -205,14 +288,26 @@ function resetScreenSize() {
     canvas.style.height = "480px";
 }
 
+/**
+ * Überprüft, ob der Endboss besiegt wurde.
+ * @param {Array<Enemy>} enemies - Die Liste der Gegner.
+ * @returns {boolean} - True, wenn der Endboss besiegt wurde, sonst false.
+ */
 function isEndbossDefeated(enemies) {
     return enemies.find(e => e instanceof Endboss)?.isDead;
 }
 
+/**
+ * Überprüft, ob das Gerät ein mobiles Gerät ist.
+ * @returns {boolean} - True, wenn es sich um ein mobiles Gerät handelt, sonst false.
+ */
 function isMobileDevice() {
     return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
+/**
+ * Aktiviert oder deaktiviert die mobilen Steuerelemente basierend auf dem Gerätetyp.
+ */
 function handleMobileControls() {
     let mobileControls = document.getElementById('mobile-controls');
 
@@ -223,6 +318,9 @@ function handleMobileControls() {
     }
 }
 
+/**
+ * Deaktiviert die mobilen Buttons.
+ */
 function disableMobileButtons() {
     let mobileControls = document.getElementById('mobile-controls');
     if (mobileControls) {
@@ -230,6 +328,9 @@ function disableMobileButtons() {
     }
 }
 
+/**
+ * Aktiviert die mobilen Buttons, wenn das Gerät ein mobiles Gerät ist.
+ */
 function enableMobileButtons() {
     let mobileControls = document.getElementById('mobile-controls');
     if (isMobileDevice() && mobileControls) {

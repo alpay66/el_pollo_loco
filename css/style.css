@@ -1,99 +1,148 @@
-body {
-    font-family: 'Western', sans-serif;
+/* 
+ * Stil für das body-Element.
+ * Definiert das Layout, Hintergrund und Schriftart der Seite.
+ */
+ body {
+    font-family: 'Western', sans-serif; /* Verwendet die benutzerdefinierte Schriftart 'Western' */
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: black;
-    background-image: url('../img/5_background/cartoon_desert_background.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
+    background-color: black; /* Hintergrundfarbe */
+    background-image: url('../img/5_background/cartoon_desert_background.png'); /* Hintergrundbild */
+    background-size: cover; /* Deckt den gesamten Hintergrund ab */
+    background-position: center; /* Zentriert das Hintergrundbild */
+    background-repeat: no-repeat; /* Verhindert Wiederholung des Hintergrundbilds */
+    height: 100vh; /* Volle Höhe des Viewports */
+    width: 100vw; /* Volle Breite des Viewports */
+    overflow: hidden; /* Verhindert Scrollen */
     margin: 0;
     padding: 0;
 }
 
+/* 
+ * Definiert die benutzerdefinierte Schriftart 'Western'.
+ */
 @font-face {
     font-family: 'Western';
-    src: url('../fonts/WEST____.TTF') format('truetype');
+    src: url('../fonts/WEST____.TTF') format('truetype'); /* Pfad zur Schriftartdatei */
 }
 
+/* 
+ * Stil für h1- und button-Elemente.
+ * Verwendet die Schriftart 'Western'.
+ */
 h1, 
 button {
     font-family: 'Western', sans-serif;
 }
 
+/* 
+ * Stil für das canvas-Element.
+ * Definiert die Hintergrundfarbe und Größe.
+ */
 canvas {
-    background-color: black;
-    width: 720px;
-    height: 480px;
+    background-color: black; /* Hintergrundfarbe */
+    width: 720px; /* Breite */
+    height: 480px; /* Höhe */
 }
 
+/* 
+ * Stil für h1-Elemente.
+ * Definiert die Textfarbe.
+ */
 h1 {
-    color: red;
+    color: red; /* Textfarbe */
 }
 
+/* 
+ * Stil für das footer-Element.
+ * Definiert das Layout.
+ */
 footer {
     display: flex;
     flex-direction: column;
 }
 
+/* 
+ * Stil für span-Elemente.
+ * Definiert die Textfarbe.
+ */
 span {
-    color: green;
+    color: green; /* Textfarbe */
 }
 
+/* 
+ * Stil für Bilder in der Endscreen-Ansicht.
+ * Definiert die Größe und das Verhalten des Bildes.
+ */
 .endscreen-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Deckt den gesamten Bereich ab */
 }
 
+/* 
+ * Stil für die Screen-Container (z. B. Start- und Endscreen).
+ * Definiert das Layout und die Hintergrundfarbe.
+ */
 .screen {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 720px;
     height: 480px;
-    background-color: black;
-    z-index: 10;
+    background-color: black; /* Hintergrundfarbe */
+    z-index: 10; /* Position in der Z-Achse */
 }
 
+/* 
+ * Stil für Bilder in den Screen-Containern.
+ * Definiert die Größe und das Verhalten des Bildes.
+ */
 .screen img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Deckt den gesamten Bereich ab */
 }
 
+/* 
+ * Stil für versteckte Elemente.
+ * Blendet Elemente aus.
+ */
 .hidden {
     display: none;
 }
 
+/* 
+ * Stil für den Start-Button.
+ * Definiert das Aussehen und die Animation beim Hovern.
+ */
 .start-btn {
     padding: 15px 30px;
     font-size: 20px;
     font-weight: bold;
     color: white;
-    background-color: #4CAF50;
+    background-color: #4CAF50; /* Hintergrundfarbe */
     border: none;
-    border-radius: 10px;
+    border-radius: 10px; /* Abgerundete Ecken */
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.3s; /* Animation beim Hovern */
     margin-top: 20px;
 }
 
+/* 
+ * Stil für den Start-Button beim Hovern.
+ * Ändert die Hintergrundfarbe und vergrößert den Button.
+ */
 .start-btn:hover {
-    background-color: #45A049;
-    transform: scale(1.1);
+    background-color: #45A049; /* Dunklere Hintergrundfarbe */
+    transform: scale(1.1); /* Vergrößert den Button */
 }
 
-.endscreen-img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
+/* 
+ * Stil für das Overlay-Element.
+ * Definiert das Layout und die Position.
+ */
 #overlay {
     display: flex;
     justify-content: center;
@@ -102,6 +151,10 @@ span {
     position: relative;
 }
 
+/* 
+ * Stil für den Startscreen.
+ * Definiert das Layout, Hintergrund und Rahmen.
+ */
 #startscreen {
     display: flex;
     flex-direction: column;
@@ -109,40 +162,56 @@ span {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, rgba(0, 226, 255, 0.9), rgba(7, 6, 6, 0.95));
+    background: linear-gradient(180deg, rgba(0, 226, 255, 0.9), rgba(7, 6, 6, 0.95)); /* Hintergrundverlauf */
     justify-content: center;
     text-align: center;
-    border: 5px solid red;
-    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.7);
+    border: 5px solid red; /* Rahmen */
+    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.7); /* Schatten */
 }
 
+/* 
+ * Stil für Bilder im Startscreen.
+ * Definiert die Größe und abgerundete Ecken.
+ */
 #startscreen img {
     width: 37%;
     max-width: 600px;
-    border-radius: 10px;
+    border-radius: 10px; /* Abgerundete Ecken */
 }
 
+/* 
+ * Stil für Buttons im Startscreen.
+ * Definiert das Aussehen und die Animation beim Hovern.
+ */
 #startscreen button {
     margin-top: 20px;
     padding: 15px 30px;
     font-size: 22px;
     font-weight: bold;
     color: white;
-    background: linear-gradient(45deg, red, darkred);
+    background: linear-gradient(45deg, red, darkred); /* Hintergrundverlauf */
     border: none;
-    border-radius: 10px;
+    border-radius: 10px; /* Abgerundete Ecken */
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
-    text-transform: uppercase;
+    transition: all 0.3s ease-in-out; /* Animation beim Hovern */
+    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5); /* Schatten */
+    text-transform: uppercase; /* Großbuchstaben */
 }
 
+/* 
+ * Stil für Buttons im Startscreen beim Hovern.
+ * Ändert den Hintergrundverlauf und vergrößert den Button.
+ */
 #startscreen button:hover {
-    background: linear-gradient(45deg, darkred, black);
-    transform: scale(1.1);
-    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7);
+    background: linear-gradient(45deg, darkred, black); /* Dunklerer Hintergrundverlauf */
+    transform: scale(1.1); /* Vergrößert den Button */
+    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7); /* Größerer Schatten */
 }
 
+/* 
+ * Stil für den Endscreen.
+ * Definiert das Layout.
+ */
 .endscreen {
     display: flex;
     flex-direction: column;
@@ -152,39 +221,10 @@ span {
     height: 100%;
 }
 
-.endscreen-img {
-    width: 100%;
-    height: auto;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.btn {
-    padding: 15px 30px;
-    font-size: 18px;
-    border: none;
-    background-color: red;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-.btn:hover {
-    transform: scale(1.1);
-    background-color: darkred;
-}
-
-.visible {
-    display: block;
-}
-
-/* 🔹 Vollbild-Button bleibt responsive */
+/* 
+ * Stil für den Vollbild-Button.
+ * Definiert die Position, das Aussehen und die Animation beim Hovern.
+ */
 #fullscreen-btn {
     position: absolute;
     bottom: 10px;
@@ -193,21 +233,29 @@ span {
     font-size: 22px;
     font-weight: bold;
     color: white;
-    background: linear-gradient(45deg, red, darkred);
+    background: linear-gradient(45deg, red, darkred); /* Hintergrundverlauf */
     border: none;
-    border-radius: 10px;
+    border-radius: 10px; /* Abgerundete Ecken */
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
-    text-transform: uppercase;
+    transition: all 0.3s ease-in-out; /* Animation beim Hovern */
+    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5); /* Schatten */
+    text-transform: uppercase; /* Großbuchstaben */
 }
 
+/* 
+ * Stil für den Vollbild-Button beim Hovern.
+ * Ändert den Hintergrundverlauf und vergrößert den Button.
+ */
 #fullscreen-btn:hover {
-    background: linear-gradient(45deg, darkred, red);
-    transform: scale(1.05);
-    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7);
+    background: linear-gradient(45deg, darkred, red); /* Dunklerer Hintergrundverlauf */
+    transform: scale(1.05); /* Vergrößert den Button */
+    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7); /* Größerer Schatten */
 }
 
+/* 
+ * Stil für die mobilen Steuerelemente.
+ * Definiert das Layout und die Position.
+ */
 #mobile-controls {
     display: none;
     position: absolute;
@@ -218,31 +266,43 @@ span {
     gap: 10px;
 }
 
+/* 
+ * Stil für die mobilen Buttons.
+ * Definiert das Aussehen und die Animation beim Klicken.
+ */
 .mobile-btn {
     width: 60px;
     height: 60px;
     font-size: 24px;
     font-weight: bold;
-    background: linear-gradient(45deg, red, darkred);
+    background: linear-gradient(45deg, red, darkred); /* Hintergrundverlauf */
     color: white;
     border: none;
-    border-radius: 50%;
+    border-radius: 50%; /* Runde Form */
     cursor: pointer;
-    transition: 0.2s ease-in-out;
-    box-shadow: 0px 4px 10px rgba(255, 0, 0, 0.5);
+    transition: 0.2s ease-in-out; /* Animation beim Klicken */
+    box-shadow: 0px 4px 10px rgba(255, 0, 0, 0.5); /* Schatten */
 }
 
+/* 
+ * Stil für die mobilen Buttons beim Klicken.
+ * Verkleinert den Button und ändert die Hintergrundfarbe.
+ */
 .mobile-btn:active {
-    transform: scale(0.9);
-    background: darkred;
+    transform: scale(0.9); /* Verkleinert den Button */
+    background: darkred; /* Dunklere Hintergrundfarbe */
 }
 
+/* 
+ * Stil für die Drehwarnung.
+ * Definiert das Layout, Hintergrund und Text.
+ */
 #rotate-warning {
     display: none; 
     position: fixed;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0, 0.95); /* Halbtransparenter Hintergrund */
     color: white;
     font-size: 24px;
     font-weight: bold;
@@ -251,16 +311,23 @@ span {
     align-items: center;
     justify-content: center;
     text-align: center;
-    z-index: 9999;
+    z-index: 9999; /* Position in der Z-Achse */
 }
 
+/* 
+ * Stil für das Drehsymbol in der Drehwarnung.
+ * Definiert die Größe und Animation.
+ */
 #rotate-icon {
     width: 100px;
     height: 100px;
     margin-top: 20px;
-    animation: rotateAnimation 2s infinite ease-in-out;
+    animation: rotateAnimation 2s infinite ease-in-out; /* Drehanimation */
 }
 
+/* 
+ * Keyframes für die Drehanimation.
+ */
 @keyframes rotateAnimation {
     0% { transform: rotate(0deg); }
     25% { transform: rotate(-15deg); }
@@ -269,6 +336,10 @@ span {
     100% { transform: rotate(0deg); }
 }
 
+/* 
+ * Stil für den Stummschaltungs-Button.
+ * Definiert die Position, das Aussehen und die Animation beim Hovern.
+ */
 #mute-btn {
     position: absolute;
     top: 20px;
@@ -276,20 +347,17 @@ span {
     padding: 10px 15px;
     font-size: 20px;
     border: none;
-    border-radius: 5px;
-    background: #ff4444;
+    border-radius: 5px; /* Abgerundete Ecken */
+    background: #ff4444; /* Hintergrundfarbe */
     color: white;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.3s; /* Animation beim Hovern */
 }
 
+/* 
+ * Stil für den Stummschaltungs-Button beim Hovern.
+ * Ändert die Hintergrundfarbe.
+ */
 #mute-btn:hover {
-    background: #cc0000;
+    background: #cc0000; /* Dunklere Hintergrundfarbe */
 }
-
-
-
-
-
-
-

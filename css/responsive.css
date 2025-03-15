@@ -1,99 +1,121 @@
-@media (max-width: 1024px) { 
+/* 
+ * Media Query für Bildschirme mit einer maximalen Breite von 1024px.
+ * Versteckt den horizontalen Scrollbalken und blendet das h1-Element aus.
+ * Passt das Spiel-Container-Layout und die Canvas-Größe an.
+ */
+ @media (max-width: 1024px) { 
     body {
-        overflow: hidden; 
+        overflow: hidden; /* Verhindert das Scrollen auf der Seite */
     }
 
     h1 {
-        display: none; 
+        display: none; /* Blendet das h1-Element aus */
     }
 
     #game-container {
-        width: 100vw;
-        height: 100vh;
+        width: 100vw; /* Volle Breite des Viewports */
+        height: 100vh; /* Volle Höhe des Viewports */
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: center; /* Zentriert den Inhalt horizontal */
+        align-items: center; /* Zentriert den Inhalt vertikal */
     }
 
     canvas {
-        width: 100vw !important;
-        height: 100vh !important;
+        width: 100vw !important; /* Volle Breite des Viewports */
+        height: 100vh !important; /* Volle Höhe des Viewports */
     }
 }
 
-/* Mobile-Ansicht aktivieren */
+/* 
+ * Media Query für Bildschirme mit einer maximalen Breite von 800px.
+ * Aktiviert die mobilen Steuerelemente.
+ */
 @media (max-width: 800px) {
     #mobile-controls {
-        display: flex;
+        display: flex; /* Zeigt die mobilen Steuerelemente an */
     }
 }
 
-
+/* 
+ * Media Query für Bildschirme mit einer maximalen Breite von 760px.
+ * Blendet das h1-Element aus.
+ */
 @media (max-width: 760px) {
     h1 {
-        display: none;
+        display: none; /* Blendet das h1-Element aus */
     }
 }
 
-/* 🔹 Querformat-Warnung aktivieren, wenn das Gerät hochkant ist */
-/* @media screen and (max-aspect-ratio: 1/1) {
-    #rotate-warning {
-        display: block;
-    }
-} */
-
+/* 
+ * Media Query für Bildschirme mit einer maximalen Breite von 920px im Hochformat.
+ * Zeigt eine Warnung an, das Gerät zu drehen.
+ */
 @media screen and (max-width: 920px) and (orientation: portrait) {
     #rotate-warning {
-        display: flex;
+        display: flex; /* Zeigt die Drehwarnung an */
     }
 }
 
+/* 
+ * Media Query für Bildschirme mit einer maximalen Breite von 720px.
+ * Passt die Canvas-Größe an.
+ */
 @media (max-width: 720px) {
     canvas {
-        width: 640px !important;
-        height: 360px !important;
+        width: 640px !important; /* Setzt die Canvas-Breite auf 640px */
+        height: 360px !important; /* Setzt die Canvas-Höhe auf 360px */
     }
 }
 
+/* 
+ * Media Query für Bildschirme mit einer maximalen Breite von 640px.
+ * Passt die Canvas-Größe an.
+ */
 @media (max-width: 640px) {
     canvas {
-        width: 480px !important;
-        height: 320px !important;
+        width: 480px !important; /* Setzt die Canvas-Breite auf 480px */
+        height: 320px !important; /* Setzt die Canvas-Höhe auf 320px */
     }
 }
 
+/* 
+ * Media Query für Bildschirme mit einer maximalen Breite von 500px.
+ * Passt die Canvas-Größe und die Größe der Buttons an.
+ */
 @media (max-width: 500px) {
     canvas {
-        width: 320px !important;
-        height: 240px !important;
+        width: 320px !important; /* Setzt die Canvas-Breite auf 320px */
+        height: 240px !important; /* Setzt die Canvas-Höhe auf 240px */
     }
 
     #startscreen button {
-        padding: 3px 15px !important;
-        font-size: 18px !important;
+        padding: 3px 15px !important; /* Passt den Button-Padding an */
+        font-size: 18px !important; /* Passt die Schriftgröße der Buttons an */
     }
 
     #fullscreen-btn {
-        padding: 6px 25px !important;
-        font-size: 18px !important;
+        padding: 6px 25px !important; /* Passt den Padding des Vollbild-Buttons an */
+        font-size: 18px !important; /* Passt die Schriftgröße des Vollbild-Buttons an */
     }
 }
 
+/* 
+ * Media Query für Bildschirme mit einer maximalen Breite von 320px.
+ * Passt die Canvas-Größe und die Größe der Buttons weiter an.
+ */
 @media (max-width: 320px) {
     canvas {
-        width: 240px !important;
-        height: 160px !important;
+        width: 240px !important; /* Setzt die Canvas-Breite auf 240px */
+        height: 160px !important; /* Setzt die Canvas-Höhe auf 160px */
     }
 
     #startscreen button {
-        padding: 3px 10px !important;
-        font-size: 13px !important;
+        padding: 3px 10px !important; /* Passt den Button-Padding an */
+        font-size: 13px !important; /* Passt die Schriftgröße der Buttons an */
     }
 
     #fullscreen-btn {
-        padding: 4px 20px !important;
-        font-size: 13px !important;
+        padding: 4px 20px !important; /* Passt den Padding des Vollbild-Buttons an */
+        font-size: 13px !important; /* Passt die Schriftgröße des Vollbild-Buttons an */
     }
 }
-
-
