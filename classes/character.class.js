@@ -1,3 +1,6 @@
+/**
+ * Repräsentiert den spielbaren Charakter.
+ */
 class Character extends MovableObject {
     CHARACTER_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -74,26 +77,41 @@ class Character extends MovableObject {
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
-        this.loadImages(this.CHARACTER_WALKING);
-        this.loadImages(this.CHARACTER_JUMPING);
-        this.loadImages(this.CHARACTER_HURT);
-        this.loadImages(this.CHARACTER_DEAD);
-        this.loadImages(this.CHARACTER_IDLE);
-        this.loadImages(this.CHARACTER_LONG_IDLE);
+        this.loadCharacterAnimations();
         this.hurtSound.volume = 0.5;
         this.applyGravity();
         this.animateCharacter();
     }
 
+    /**
+     * Lädt alle Animationsbilder des Charakters.
+     */
+    loadCharacterAnimations() {
+        [this.CHARACTER_WALKING, this.CHARACTER_JUMPING, this.CHARACTER_HURT,
+        this.CHARACTER_DEAD, this.CHARACTER_IDLE, this.CHARACTER_LONG_IDLE]
+            .forEach(animation => this.loadImages(animation));
+    }
+
+    /**
+     * Animiert den Charakter (Bewegung und Aktionen).
+     */
     animateCharacter() {
+        this.controlMovement();
+        this.controlAnimations();
+        this.startIdleCheck();
+    }
+
+    /**
+     * Steuert die Charakterbewegung basierend auf Tasteneingaben.
+     */
+    controlMovement() {
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
                 this.playWalkSound();
                 this.resetIdleTimer();
-            }
-            else if (this.world.keyboard.LEFT && this.x > 0) {
+            } else if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
                 this.playWalkSound();
@@ -112,76 +130,83 @@ class Character extends MovableObject {
             }
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
-
-        setInterval(() => {
-
-            if (this.isHurt()) {
-                this.playAnimation(this.CHARACTER_HURT);
-            } else
-                if (this.isDead()) {
-                    this.playAnimation(this.CHARACTER_DEAD);
-                } else
-                    if (this.isAboveGround()) {
-                        this.playAnimation(this.CHARACTER_JUMPING);
-                    } else
-                        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                            this.playAnimation(this.CHARACTER_WALKING);
-                        }
-        }, 50);
-        this.startIdleCheck();
     }
 
+    /**
+     * Steuert die Animationen je nach Zustand des Charakters.
+     */
+    controlAnimations() {
+        setInterval(() => {
+            if (this.isHurt()) this.playAnimation(this.CHARACTER_HURT);
+            else if (this.isDead()) this.playAnimation(this.CHARACTER_DEAD);
+            else if (this.isAboveGround()) this.playAnimation(this.CHARACTER_JUMPING);
+            else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) this.playAnimation(this.CHARACTER_WALKING);
+        }, 50);
+    }
+
+    /**
+     * Lässt den Charakter eine Flasche werfen.
+     */
     throwBottle() {
         if (this.canThrow && this.world.bottleBar.collectedBottles > 0) {
             this.canThrow = false;
-
             let bottleX = this.x + (this.otherDirection ? -20 : 20);
-            let bottleY = this.y + 100;
-            let bottleSpeed = this.otherDirection ? -7 : 7;
-
-            let bottle = new ThrowableObject(bottleX, bottleY, bottleSpeed, this.world);
+            let bottle = new ThrowableObject(bottleX, this.y + 100, this.otherDirection ? -7 : 7, this.world);
             this.world.throwableObjects.push(bottle);
 
             this.world.bottleBar.setBottles(this.world.bottleBar.collectedBottles - 1);
-
             this.throwSound.currentTime = 0;
             this.throwSound.play();
 
-            setTimeout(() => {
-                this.canThrow = true;
-            }, 500);
+            setTimeout(() => this.canThrow = true, 500);
         }
     }
 
+    /**
+     * Prüft, ob der Charakter über einem Gegner ist.
+     * @param {MovableObject} enemy - Der gegnerische Charakter.
+     * @returns {boolean} True, wenn über dem Gegner.
+     */
     isAboveEnemy(enemy) {
-        return this.y + this.height < enemy.y + enemy.height && this.speedY < 0;  // Der Charakter ist über dem Feind
+        return this.y + this.height < enemy.y + enemy.height && this.speedY < 0;
     }
 
+    /**
+     * Lässt den Charakter vom Gegner abprallen.
+     */
     bounceOff() {
-        this.speedY = 15;  // Lasse den Charakter nach dem Aufprall abprallen
+        this.speedY = 15;
     }
 
+    /**
+     * Stoppt die Bewegung des Charakters.
+     */
     stopMovement() {
         this.speed = 0;
         this.world.keyboard = {};
     }
 
+    /**
+     * Setzt den Idle-Timer zurück.
+     */
     resetIdleTimer() {
         this.idleTime = 0;
     }
 
+    /**
+     * Startet die Idle-Animation nach einer gewissen Zeit.
+     */
     startIdleCheck() {
         this.idleInterval = setInterval(() => {
             this.idleTime += 1;
-
-            if (this.idleTime >= 15) {
-                this.playAnimation(this.CHARACTER_LONG_IDLE);
-            } else if (this.idleTime >= 5) {
-                this.playAnimation(this.CHARACTER_IDLE);
-            }
+            if (this.idleTime >= 15) this.playAnimation(this.CHARACTER_LONG_IDLE);
+            else if (this.idleTime >= 5) this.playAnimation(this.CHARACTER_IDLE);
         }, 500);
     }
 
+    /**
+     * Spielt das Laufgeräusch.
+     */
     playWalkSound() {
         if (!this.isWalking) {
             this.isWalking = true;
@@ -189,6 +214,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Stoppt das Laufgeräusch.
+     */
     stopWalkSound() {
         if (this.isWalking) {
             this.isWalking = false;
@@ -197,15 +225,15 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Spielt das Sprunggeräusch.
+     */
     playJumpSound() {
         if (!this.isJumping) {
             this.isJumping = true;
             this.jumpSound.currentTime = 0;
             this.jumpSound.play();
-
-            setTimeout(() => {
-                this.isJumping = false;
-            }, 500);
+            setTimeout(() => this.isJumping = false, 500);
         }
     }
 }

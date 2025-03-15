@@ -1,3 +1,6 @@
+/**
+ * Repräsentiert das Chicken als Gegner im Spiel.
+ */
 class Chicken extends MovableObject {
     y = 335;
     height = 110;
@@ -12,6 +15,9 @@ class Chicken extends MovableObject {
     ];
     chickenSound = new Audio('audio/chicken.mp3');
 
+    /**
+     * Erstellt ein neues Chicken mit zufälliger Position und Geschwindigkeit.
+     */
     constructor() {
         super().loadImage(this.CHICKEN_WALKING[0]);
         this.loadImages(this.CHICKEN_WALKING);
@@ -21,6 +27,9 @@ class Chicken extends MovableObject {
         this.animateChicken();
     }
 
+    /**
+     * Startet die Animation und Bewegung des Chickens.
+     */
     animateChicken() {
         this.walkingInterval = setInterval(() => {
             if (!this.chickenSoundPlaying) { 
@@ -33,19 +42,30 @@ class Chicken extends MovableObject {
             this.playAnimation(this.CHICKEN_WALKING);
         }, 150);
     }
+
+    /**
+     * Spielt das Chicken-Sound ab.
+     */
     playChickenSound() {
         this.chickenSound.volume = 0.2;
         this.chickenSound.loop = true;
         this.chickenSound.play();
         this.chickenSoundPlaying = true;
+        console.log('Chicken sound playing');
     }
-    
+
+    /**
+     * Stoppt das Chicken-Sound.
+     */
     stopChickenSound() {
         this.chickenSound.pause();
         this.chickenSound.currentTime = 0;
         this.chickenSoundPlaying = false;
     }
-    
+
+    /**
+     * Beendet die Bewegung des Chickens und spielt die Sterbeanimation ab.
+     */
     die() {
         this.stopChickenSound();
         clearInterval(this.walkingInterval);

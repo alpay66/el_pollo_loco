@@ -1,4 +1,8 @@
+/**
+ * Statusleiste für gesammelte Flaschen.
+ */
 class Bottlebar extends DrawableObject {
+    
     BOTLLE_BAR_IMAGE = [
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/green/0.png',
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/green/20.png',
@@ -10,6 +14,9 @@ class Bottlebar extends DrawableObject {
     
     collectedBottles = 50;
 
+    /**
+     * Erstellt die Bottlebar.
+     */
     constructor() {
         super();
         this.loadImages(this.BOTLLE_BAR_IMAGE);
@@ -20,25 +27,21 @@ class Bottlebar extends DrawableObject {
         this.setBottles(50);
     }
 
+    /**
+     * Aktualisiert die Flaschenanzahl und das Bild.
+     * @param {number} bottles - Anzahl der gesammelten Flaschen.
+     */
     setBottles(bottles) {
         this.collectedBottles = bottles;
         let path = this.BOTLLE_BAR_IMAGE[this.resolveImageIndex()];
         this.img = this.imgCache[path];
     }
 
+    /**
+     * Bestimmt das passende Bild für die Flaschenanzeige.
+     * @returns {number} Index des Bildes.
+     */
     resolveImageIndex() {
-        if (this.collectedBottles >= 5) {
-            return 5;
-        } else if (this.collectedBottles >= 4) {
-            return 4;
-        } else if (this.collectedBottles >= 3) {
-            return 3;
-        } else if (this.collectedBottles >= 2) {
-            return 2;
-        } else if (this.collectedBottles >= 1) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return Math.min(5, Math.max(0, this.collectedBottles));
     }
 }

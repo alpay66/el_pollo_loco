@@ -1,10 +1,17 @@
+/**
+ * Repräsentiert ein werfbares Salsa-Flaschen-Objekt im Spiel.
+ * Erbt von MovableObject und implementiert Wurfbewegung, Rotation und Zersplittern.
+ */
 class ThrowableObject extends MovableObject {
+    /** @type {string[]} Animation für die drehende Flasche. */
     ROTATED_SALSA_BOTTLE = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png'
     ];
+
+    /** @type {string[]} Animation für das Zersplittern der Flasche. */
     SALSA_BOTTLE_SPLASH = [
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png',
@@ -14,11 +21,24 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
 
+    /** @type {number} Geschwindigkeit der Rotation. */
     rotationSpeed = 0.5;
+
+    /** @type {number} Höhe der Flasche. */
     height = 90;
+
+    /** @type {number} Breite der Flasche. */
     width = 70;
+
+    /** @type {Audio} Sound für das Zersplittern der Flasche. */
     splashSound = new Audio('audio/bottle-crack.mp3');
 
+    /**
+     * Erstellt ein neues ThrowableObject mit Startposition und Geschwindigkeit.
+     * @param {number} x - Startposition X-Achse.
+     * @param {number} y - Startposition Y-Achse.
+     * @param {number} [speedX=7] - Horizontale Geschwindigkeit der Flasche.
+     */
     constructor(x, y, speedX = 7) {
         super().loadImage(this.ROTATED_SALSA_BOTTLE[0]);
         this.loadImages(this.ROTATED_SALSA_BOTTLE);
@@ -32,6 +52,9 @@ class ThrowableObject extends MovableObject {
         registerSound(this.splashSound);
     }
 
+    /**
+     * Löst den Wurf der Flasche aus, aktiviert Schwerkraft, Bewegung und Rotation.
+     */
     throwBottle() {
         this.speedY = 30;
         this.applyGravity();
@@ -39,6 +62,9 @@ class ThrowableObject extends MovableObject {
         this.startBottleRotate();
     }
 
+    /**
+     * Bewegt die Flasche nach vorne, bis sie auf den Boden trifft.
+     */
     startThrowMovement() {
         this.throwInterval = setInterval(() => {
             if (this.y < 360) {
@@ -49,6 +75,9 @@ class ThrowableObject extends MovableObject {
         }, 25);
     }
 
+    /**
+     * Lässt die Flasche rotieren, solange sie sich bewegt.
+     */
     startBottleRotate() {
         let rotationIndex = 0;
         this.rotationInterval = setInterval(() => {
@@ -61,6 +90,9 @@ class ThrowableObject extends MovableObject {
         }, 25);
     }
 
+    /**
+     * Beendet die Bewegung und spielt die Splash-Animation ab.
+     */
     splash() {
         this.clearBottleIntervals();
         this.playAnimation(this.SALSA_BOTTLE_SPLASH);
@@ -78,6 +110,9 @@ class ThrowableObject extends MovableObject {
         }, 400);
     }
 
+    /**
+     * Spielt den Sound für das Zersplittern der Flasche.
+     */
     playSplashSound() { 
         if (!isMuted) {
             this.splashSound.currentTime = 0;
@@ -85,11 +120,13 @@ class ThrowableObject extends MovableObject {
         }
     }
 
+    /**
+     * Stoppt alle Bewegungen der Flasche und beendet ihre Intervalls.
+     */
     clearBottleIntervals() {
         this.speedX = 0;
         this.speedY = 0;
         clearInterval(this.throwInterval);
         clearInterval(this.rotationInterval);
     }
-
 }

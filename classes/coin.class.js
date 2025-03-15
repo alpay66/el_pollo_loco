@@ -1,9 +1,18 @@
+/**
+ * Repräsentiert eine Münze im Spiel, die vom Spieler gesammelt werden kann.
+ */
 class Coin extends DrawableObject {
     COIN_IMAGES = [
         'img/8_coin/coin_1.png',
         'img/8_coin/coin_2.png'
     ];
 
+    /**
+     * Erstellt eine neue Münze mit zufälligem Erscheinungsbild und Position.
+     * @param {number} minX - Die minimale X-Position der Münze.
+     * @param {number} maxX - Die maximale X-Position der Münze.
+     * @param {number} y - Die Y-Position der Münze.
+     */
     constructor(minX, maxX, y) {
         super();
         let randomCoin = this.COIN_IMAGES[Math.floor(Math.random() * this.COIN_IMAGES.length)];
@@ -20,12 +29,18 @@ class Coin extends DrawableObject {
         this.startCoinAnimation();
     }
 
+    /**
+     * Startet die Animationsschleife für die Münze.
+     */
     startCoinAnimation() {
         setInterval(() => {
             this.animateCoin();
         }, 1000);
     }
 
+    /**
+     * Lässt die Münze kurz größer und dann wieder kleiner werden.
+     */
     animateCoin() {
         let growSize = 10;
         this.growCoin(growSize);
@@ -35,6 +50,10 @@ class Coin extends DrawableObject {
         }, 200);
     }
 
+    /**
+     * Vergrößert die Münze um die angegebene Größe.
+     * @param {number} size - Die Vergrößerung in Pixeln.
+     */
     growCoin(size) {
         this.width += size;
         this.height += size;
@@ -42,6 +61,10 @@ class Coin extends DrawableObject {
         this.y -= size / 2;
     }
 
+    /**
+     * Verkleinert die Münze um die angegebene Größe.
+     * @param {number} size - Die Verkleinerung in Pixeln.
+     */
     shrinkCoin(size) {
         this.width -= size;
         this.height -= size;

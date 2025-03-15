@@ -1,3 +1,6 @@
+/**
+ * Repräsentiert den Endboss im Spiel, der verschiedene Animationen, Bewegungen und Angriffe hat.
+ */
 class Endboss extends MovableObject {
     ENDBOSS_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -50,6 +53,9 @@ class Endboss extends MovableObject {
     endbossHurt = new Audio('audio/Endboss_hurt.mp3');
     endbossDead = new Audio('audio/endboss_defeat.mp3');
 
+    /**
+     * Erstellt einen neuen Endboss mit vordefinierten Animationen und setzt ihn in die Welt.
+     */
     constructor() {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
         this.loadImages(this.ENDBOSS_WALKING);
@@ -60,9 +66,12 @@ class Endboss extends MovableObject {
         this.x = 1200;
         this.world = null;
         this.endbossBar = new EndbossBar();
-        this.animateEndboss(); 
+        this.animateEndboss();
     }
 
+    /**
+     * Startet die Animation und überprüft den Abstand zum Spieler.
+     */
     animateEndboss() {
         setInterval(() => {
             this.checkPlayerDistance();
@@ -70,21 +79,22 @@ class Endboss extends MovableObject {
         }, 150);
     }
 
+    /**
+     * Aktualisiert den aktuellen Zustand des Endbosses und setzt die richtige Animation.
+     */
     updateAnimationState() {
-        if (this.isDead) {
-            this.playAnimation(this.ENDBOSS_DEAD);
-        } else if (this.isHurt) {
-            this.playAnimation(this.ENDBOSS_HURT);
-        } else if (this.isAttacking) {
-            this.playAnimation(this.ENDBOSS_ATTACK);
-        } else if (this.isAlerted) {
+        if (this.isDead) this.playAnimation(this.ENDBOSS_DEAD);
+        else if (this.isHurt) this.playAnimation(this.ENDBOSS_HURT);
+        else if (this.isAttacking) this.playAnimation(this.ENDBOSS_ATTACK);
+        else if (this.isAlerted) {
             this.playAnimation(this.ENDBOSS_WALKING);
             this.moveToPlayer();
-        } else {
-            this.playAnimation(this.ENDBOSS_ALERT);
-        }
+        } else this.playAnimation(this.ENDBOSS_ALERT);
     }
-    
+
+    /**
+     * Bewegt den Endboss auf den Spieler zu, falls er nah genug ist.
+     */
     moveToPlayer() {
         if (!this.world || !this.world.character) return;
 
@@ -92,90 +102,144 @@ class Endboss extends MovableObject {
         let distance = Math.abs(playerX - this.x);
 
         if (distance > 50) {
-            if (playerX < this.x) {
-                this.x -= this.speed;
-                this.otherDirection = false;
-            } else {
-                this.x += this.speed;
-                this.otherDirection = true;
-            }
+            this.x += playerX < this.x ? -this.speed : this.speed;
+            this.otherDirection = playerX > this.x;
         } else {
-            this.attack(); 
+            this.attack();
         }
     }
-    
+
+    /**
+     * Fügt dem Spieler Schaden zu.
+     * @param {Character} character - Das Charakterobjekt, das getroffen wird.
+     */
     dealDamage(character) {
         character.hit(this.damageAmount);
     }
 
+    /**
+     * Überprüft die Entfernung zum Spieler und löst eine Alarmanimation aus.
+     */
     checkPlayerDistance() {
         if (!this.world || !this.world.character) return;
 
         let distance = Math.abs(this.world.character.x - this.x);
-        if (distance < 300 && !this.isAlerted) {
-            this.alert();
-        }
+        if (distance < 300 && !this.isAlerted) this.alert();
     }
-    
+
+    /**
+     * Setzt den Endboss in den Alarmzustand.
+     */
     alert() {
         this.isAlerted = true;
         this.playAnimation(this.ENDBOSS_ALERT);
-        this.lastAttackTime = new Date().getTime(); 
+        this.lastAttackTime = new Date().getTime();
     }
-    
+
+    /**
+     * Führt einen Angriff aus, wenn der Endboss sich im Angriffsbereich befindet.
+     */
     attack() {
         if (!this.isDead && !this.isAttacking) {
             this.isAttacking = true;
             this.isAlerted = false;
             this.isHurt = false;
-
             this.playAnimation(this.ENDBOSS_ATTACK);
-
-            setTimeout(() => {
-                if (this.isAttacking) {
-                    this.isAttacking = false; 
-                }
-            }, 700);
+            this.endAttackAfterDelay();
         }
     }
 
+    /**
+     * Beendet den Angriff nach einer bestimmten Zeit.
+     */
+    endAttackAfterDelay() {
+        setTimeout(() => this.isAttacking = false, 700);
+    }
+
+    /**
+     * Der Endboss nimmt Schaden und spielt die entsprechende Animation ab.
+     */
     takeDamage() {
         if (!this.isDead) {
             this.energie -= 20;
             this.isHurt = true;
             this.endbossBar.setPercentage(this.energie);
+        }
+        this.playHurtSound();
+        this.setHurtState();
+        this.checkDeath();
+    }
 
-            if (this.endbossHurt.paused || this.endbossHurt.ended) {
-                this.endbossHurt.currentTime = 0;
-                this.endbossHurt.play().catch(error => console.log("Sound-Fehler:", error));
-            }
-            
-            setTimeout(() => {
-                this.isHurt = false;
-            }, 500);
+    /**
+     * Setzt den Endboss in den Verletzungszustand für eine kurze Zeit.
+     */
+    setHurtState() {
+        this.isHurt = true;
+        setTimeout(() => this.isHurt = false, 500);
+    }
 
-            if (this.energie <= 0) {
-                this.die();
-            }
+    /**
+     * Überprüft, ob der Endboss besiegt wurde.
+     */
+    checkDeath() {
+        if (this.energie <= 0) this.die();
+    }
+
+    /**
+     * Spielt den Verletzungssound des Endbosses ab.
+     */
+    playHurtSound() {
+        if (this.endbossHurt.paused || this.endbossHurt.ended) {
+            this.endbossHurt.currentTime = 0;
+            this.endbossHurt.play().catch(error => console.log("Sound-Fehler:", error));
         }
     }
 
+    /**
+     * Markiert den Endboss als besiegt und entfernt ihn nach einer Verzögerung.
+     */
     die() {
-        if (!this.isDead) {
-            this.isDead = true;
-            this.speed = 0;
-    
-            this.playAnimation(this.ENDBOSS_DEAD); 
+        if (this.isDead) return;
 
-            this.endbossDead.currentTime = 0;
-            this.endbossDead.play().catch(error => console.log("Sound-Fehler:", error));
-
-            setTimeout(() => {
-                this.removeEndboss();
-            }, 1500);
-        }
+        this.markAsDead();
+        this.playDeathAnimation();
+        this.playDeathSound();
+        this.removeeEndboss();
     }
-    
+
+    /**
+     * Markiert den Endboss als tot und stoppt seine Bewegung.
+     */
+    markAsDead() {
+        this.isDead = true;
+        this.speed = 0;
+    }
+
+    /**
+     * Spielt die Todesanimation des Endbosses.
+     */
+    playDeathAnimation() {
+        this.playAnimation(this.ENDBOSS_DEAD);
+    }
+
+    /**
+     * Spielt den Sound ab, wenn der Endboss besiegt wird.
+     */
+    playDeathSound() {
+        this.endbossDead.currentTime = 0;
+        this.endbossDead.play().catch(error => console.log("Sound-Fehler:", error));
+    }
+
+    /**
+     * Entfernt den Endboss nach einer Verzögerung.
+     */
+    removeeEndboss() {
+        setTimeout(() => this.removeEndboss(), 1500);
+    }
+
+    /**
+     * Löscht den Endboss aus der Welt.
+     */
     removeEndboss() {
         if (this.world && this.world.level) {
             let index = this.world.level.enemies.indexOf(this);
