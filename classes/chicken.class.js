@@ -47,7 +47,7 @@ class Chicken extends MovableObject {
      * Spielt das Chicken-Sound ab.
      */
     playChickenSound() {
-        this.chickenSound.volume = 0.2;
+        this.chickenSound.volume = 0.1;
         this.chickenSound.loop = true;
         this.chickenSound.play();
         this.chickenSoundPlaying = true;
