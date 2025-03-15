@@ -105,8 +105,6 @@ function init() {
     canvas = document.getElementById('canvas');
     levelInit();
     world = new World(canvas, keyboard);
-    console.log('My World ist', world);
-    console.log('My Character ist', world.character);
     registerSounds(); 
 }
 

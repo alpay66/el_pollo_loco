@@ -51,7 +51,6 @@ class Chicken extends MovableObject {
         this.chickenSound.loop = true;
         this.chickenSound.play();
         this.chickenSoundPlaying = true;
-        console.log('Chicken sound playing');
     }
 
     /**
