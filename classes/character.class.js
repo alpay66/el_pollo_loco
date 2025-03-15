@@ -1,7 +1,9 @@
 /**
  * Repräsentiert den spielbaren Charakter.
+ * @extends MovableObject
  */
 class Character extends MovableObject {
+    /** @type {Array<string>} Bilder für die Geh-Animation. */
     CHARACTER_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -10,6 +12,8 @@ class Character extends MovableObject {
         'img/2_character_pepe/2_walk/W-25.png',
         'img/2_character_pepe/2_walk/W-26.png'
     ];
+
+    /** @type {Array<string>} Bilder für die Sprung-Animation. */
     CHARACTER_JUMPING = [
         'img/2_character_pepe/3_jump/J-31.png',
         'img/2_character_pepe/3_jump/J-32.png',
@@ -21,11 +25,15 @@ class Character extends MovableObject {
         'img/2_character_pepe/3_jump/J-38.png',
         'img/2_character_pepe/3_jump/J-39.png'
     ];
+
+    /** @type {Array<string>} Bilder für die Verletzungs-Animation. */
     CHARACTER_HURT = [
         'img/2_character_pepe/4_hurt/H-41.png',
         'img/2_character_pepe/4_hurt/H-42.png',
         'img/2_character_pepe/4_hurt/H-43.png'
     ];
+
+    /** @type {Array<string>} Bilder für die Todes-Animation. */
     CHARACTER_DEAD = [
         'img/2_character_pepe/5_dead/D-51.png',
         'img/2_character_pepe/5_dead/D-52.png',
@@ -35,6 +43,8 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-56.png',
         'img/2_character_pepe/5_dead/D-57.png'
     ];
+
+    /** @type {Array<string>} Bilder für die Idle-Animation. */
     CHARACTER_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -47,6 +57,8 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/idle/I-9.png',
         'img/2_character_pepe/1_idle/idle/I-10.png'
     ];
+
+    /** @type {Array<string>} Bilder für die lange Idle-Animation. */
     CHARACTER_LONG_IDLE = [
         'img/2_character_pepe/1_idle/long_idle/I-11.png',
         'img/2_character_pepe/1_idle/long_idle/I-12.png',
@@ -59,22 +71,56 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-19.png',
         'img/2_character_pepe/1_idle/long_idle/I-20.png'
     ];
+
+    /** @type {number} Die x-Position des Charakters. */
     x = 120;
+
+    /** @type {number} Die y-Position des Charakters. */
     y = 180;
+
+    /** @type {number} Die Höhe des Charakters. */
     height = 260;
+
+    /** @type {number} Die Breite des Charakters. */
     width = 110;
+
+    /** @type {number} Die Geschwindigkeit des Charakters. */
     speed = 5;
+
+    /** @type {World} Die Welt, in der sich der Charakter befindet. */
     world;
+
+    /** @type {number} Timer für die Idle-Animation. */
     idleTimer = 0;
+
+    /** @type {number} Intervall für die Idle-Animation. */
     idleInterval;
+
+    /** @type {boolean} Gibt an, ob der Charakter eine Flasche werfen kann. */
     canThrow = true;
+
+    /** @type {boolean} Gibt an, ob der Charakter gerade läuft. */
     isWalking = false;
+
+    /** @type {number} Zeitpunkt des letzten Schadens. */
     lastDamageTime = 0;
+
+    /** @type {HTMLAudioElement} Sound, der beim Laufen abgespielt wird. */
     walkSound = new Audio('audio/walk.mp3');
+
+    /** @type {HTMLAudioElement} Sound, der beim Springen abgespielt wird. */
     jumpSound = new Audio('audio/jump.mp3');
+
+    /** @type {HTMLAudioElement} Sound, der bei Verletzungen abgespielt wird. */
     hurtSound = new Audio('audio/hurt_sound.mp3');
+
+    /** @type {HTMLAudioElement} Sound, der beim Werfen einer Flasche abgespielt wird. */
     throwSound = new Audio('audio/throw.mp3');
 
+    /**
+     * Erstellt eine neue Character-Instanz.
+     * @constructor
+     */
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadCharacterAnimations();
