@@ -42,7 +42,7 @@ class Endboss extends MovableObject {
     width = 250;
     y = 120;
     energie = 100;
-    speed = 10.5;
+    speed = 15.5;
     lastAttackTime = 0;
     lastDamageTime = 0; 
     damageAmount = 20;
@@ -63,7 +63,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.ENDBOSS_ATTACK);
         this.loadImages(this.ENDBOSS_HURT);
         this.loadImages(this.ENDBOSS_DEAD);
-        this.x = 1200;
+        this.x = 2200;
         this.world = null;
         this.endbossBar = new EndbossBar();
         this.animateEndboss();

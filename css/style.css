@@ -2,7 +2,7 @@
  * Stil für das body-Element.
  * Definiert das Layout, Hintergrund und Schriftart der Seite.
  */
- body {
+body {
     font-family: 'Western', sans-serif; /* Verwendet die benutzerdefinierte Schriftart 'Western' */
     display: flex;
     flex-direction: column;
@@ -77,7 +77,7 @@ span {
  */
 .endscreen-img {
     width: 100%;
-    height: 100%;
+    height: 40%;
     object-fit: cover; /* Deckt den gesamten Bereich ab */
 }
 
