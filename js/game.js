@@ -54,9 +54,20 @@ function registerSounds() {
     if (!world) return;
 
     registerSound(world.stompSound);
+    registerWorldSounds();
     registerCharacterSounds();
     registerEnemySounds();
     registerBottleSounds();
+}
+
+/**
+ * Registriert Sounds, die in der World-Klasse definiert sind.
+ */
+function registerWorldSounds() {
+    if (!world) return;
+
+    registerSound(world.collectBottleSound);
+    registerSound(world.collectCoinSound);
 }
 
 /**
@@ -93,7 +104,9 @@ function registerEnemySounds() {
 function registerBottleSounds() {
     if (!world.throwableObjects) return;
 
-    world.throwableObjects.forEach(bottle => registerSound(bottle.splashSound));
+    world.throwableObjects.forEach(bottle => 
+        registerSound(bottle.splashSound)
+    );
 }
 
 /**
