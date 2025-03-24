@@ -13,6 +13,19 @@ function levelInit() {
         // Gegner im Level
         [
             new Chicken(),       // Ein normales Huhn
+/*             new SmallChicken(),  // Ein kleines Huhn
+            new Chicken(),       // Ein normales Huhn
+            new SmallChicken(),  // Ein kleines Huhn
+            new Chicken(),       // Ein normales Huhn
+            new SmallChicken(),  // Ein kleines Huhn
+            new Chicken(),       // Ein normales Huhn */
+/*             new SmallChicken(),  // Ein kleines Huhn
+            new Chicken(),       // Ein normales Huhn
+            new SmallChicken(),  // Ein kleines Huhn
+            new Chicken(),       // Ein normales Huhn
+            new SmallChicken(),  // Ein kleines Huhn
+            new Chicken(),       // Ein normales Huhn
+            new Chicken(),       // Ein normales Huhn
             new SmallChicken(),  // Ein kleines Huhn
             new Chicken(),       // Ein normales Huhn
             new SmallChicken(),  // Ein kleines Huhn
@@ -21,20 +34,7 @@ function levelInit() {
             new Chicken(),       // Ein normales Huhn
             new SmallChicken(),  // Ein kleines Huhn
             new Chicken(),       // Ein normales Huhn
-            new SmallChicken(),  // Ein kleines Huhn
-            new Chicken(),       // Ein normales Huhn
-            new SmallChicken(),  // Ein kleines Huhn
-            new Chicken(),       // Ein normales Huhn
-            new Chicken(),       // Ein normales Huhn
-            new SmallChicken(),  // Ein kleines Huhn
-            new Chicken(),       // Ein normales Huhn
-            new SmallChicken(),  // Ein kleines Huhn
-            new Chicken(),       // Ein normales Huhn
-            new SmallChicken(),  // Ein kleines Huhn
-            new Chicken(),       // Ein normales Huhn
-            new SmallChicken(),  // Ein kleines Huhn
-            new Chicken(),       // Ein normales Huhn
-            new Endboss()        // Der Endboss
+            new Endboss()        // Der Endboss */
         ],
         // Wolken im Level
         [

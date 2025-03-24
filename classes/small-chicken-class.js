@@ -3,13 +3,8 @@
  * Erbt von MovableObject.
  */
 class SmallChicken extends MovableObject {
-    /** @type {number} Vertikale Position des SmallChickens. */
     y = 343;
-
-    /** @type {number} Höhe des SmallChickens. */
     height = 100;
-
-    /** @type {number} Breite des SmallChickens. */
     width = 70;
 
     /** @type {string[]} Bilder für die Geh-Animation. */
@@ -34,6 +29,8 @@ class SmallChicken extends MovableObject {
         this.x = 550 + Math.random() * 4800;
         this.speed = 1.35 + Math.random() * 3.8;
         this.animateSmallChicken();
+        this.offsetX = 10; // Beispielwert, anpassen nach Bedarf
+        this.offsetY = 10; 
     }
     
     /**

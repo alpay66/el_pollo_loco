@@ -22,9 +22,13 @@ class Chicken extends MovableObject {
         super().loadImage(this.CHICKEN_WALKING[0]);
         this.loadImages(this.CHICKEN_WALKING);
         this.loadImages(this.CHICKEN_DEAD);
-        this.x = 550 + Math.random() * 3600;
-        this.speed = 0.85 + Math.random() * 1.9;
+/*         this.x = 550 + Math.random() * 3600; */
+        this.x = 400 + Math.random() * 0;
+        /*         this.speed = 0.85 + Math.random() * 1.9; */
+        this.speed = 0.0 + Math.random() * 0;
         this.animateChicken();
+        this.offsetX = 0.2; 
+        this.offsetY = 0.2;
     }
 
     /**
@@ -32,12 +36,12 @@ class Chicken extends MovableObject {
      */
     animateChicken() {
         this.walkingInterval = setInterval(() => {
-            if (!this.chickenSoundPlaying) { 
-                this.playChickenSound(); 
+            if (!this.chickenSoundPlaying) {
+                this.playChickenSound();
             }
             this.moveLeft();
         }, 1000 / 30);
-        
+
         this.animationInterval = setInterval(() => {
             this.playAnimation(this.CHICKEN_WALKING);
         }, 150);

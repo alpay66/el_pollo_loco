@@ -3,25 +3,13 @@
  * Erbt von DrawableObject.
  */
 class MovableObject extends DrawableObject {
-    /** @type {number} Bewegungsgeschwindigkeit des Objekts. */
     speed = 0.15;
-
-    /** @type {boolean} Gibt an, ob das Objekt in die entgegengesetzte Richtung schaut. */
     otherDirection = false;
-
-    /** @type {number} Vertikale Geschwindigkeit für Sprünge und Gravitation. */
     speedY = 0;
-
-    /** @type {number} Beschleunigung für die Gravitation. */
     acceleration = 2;
-
-    /** @type {number} Vertikaler Versatz für die Kollisionsberechnung. */
+    offsetX = 0; 
     offsetY = 0;
-
-    /** @type {number} Lebenspunkte des Objekts. */
     energie = 100;
-
-    /** @type {number} Zeitpunkt des letzten Treffers. */
     lastHit = 0;
 
     /**
@@ -30,10 +18,15 @@ class MovableObject extends DrawableObject {
      * @returns {boolean} `true`, wenn eine Kollision vorliegt, sonst `false`.
      */
     isColliding(mo) {
-        return (this.x + this.width) >= mo.x &&
-            this.x <= (mo.x + mo.width) &&
+        return (this.x + this.offsetX + this.width) >= mo.x &&
+            (this.x + this.offsetX) <= (mo.x + mo.width) &&
             (this.y + this.offsetY + this.height) >= mo.y &&
             (this.y + this.offsetY) <= (mo.y + mo.height);
+    }
+
+    drawCollisionBox(ctx) {
+        ctx.strokeStyle = 'red';
+        ctx.strokeRect(this.x + this.offsetX, this.y + this.offsetY, this.width, this.height);
     }
 
     /**

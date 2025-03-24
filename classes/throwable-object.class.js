@@ -20,17 +20,9 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
-
-    /** @type {number} Geschwindigkeit der Rotation. */
     rotationSpeed = 0.5;
-
-    /** @type {number} Höhe der Flasche. */
     height = 90;
-
-    /** @type {number} Breite der Flasche. */
     width = 70;
-
-    /** @type {Audio} Sound für das Zersplittern der Flasche. */
     splashSound = new Audio('audio/bottle-crack.mp3');
 
     /**

@@ -3,43 +3,18 @@
  * @class
  */
 class World {
-    /** @type {Character} Der Hauptcharakter des Spiels. */
     character = new Character();
-
-    /** @type {Healthbar} Die Gesundheitsleiste, die die Gesundheit des Charakters anzeigt. */
     healthBar = new Healthbar();
-
-    /** @type {Coinbar} Die Münzenleiste, die die gesammelten Münzen anzeigt. */
     coinBar = new Coinbar();
-
-    /** @type {Bottlebar} Die Flaschenleiste, die die gesammelten Flaschen anzeigt. */
     bottleBar = new Bottlebar();
-
-    /** @type {Level} Das aktuelle Level des Spiels. */
     level = level_1;
-
-    /** @type {HTMLCanvasElement} Das Canvas-Element für das Rendering des Spiels. */
     canvas;
-
-    /** @type {CanvasRenderingContext2D} Der 2D-Rendering-Kontext des Canvas. */
     ctx;
-
-    /** @type {Object} Der Tastatur-Eingabehandler. */
     keyboard;
-
-    /** @type {number} Die x-Koordinate der Kamera für das Scrollen der Ansicht. */
     camera_x = 0;
-
-    /** @type {Array<ThrowableObject>} Die Liste der werfbaren Objekte (z.B. Flaschen). */
     throwableObjects = [];
-
-    /** @type {HTMLAudioElement} Der Sound, der abgespielt wird, wenn ein Gegner zerstampft wird. */
     stompSound = new Audio('audio/enemie_dead.mp3');
-
-    /** @type {HTMLAudioElement} Der Sound, der abgespielt wird, wenn eine Flaschen gesammelt wird. */
     collectBottleSound = new Audio('audio/collect_bottle.mp3');
-
-    /** @type {HTMLAudioElement} Der Sound, der abgespielt wird, wenn eine Münze gesammelt wird. */
     collectCoinSound = new Audio('audio/collect_coin.mp3');
 
     /**
@@ -66,7 +41,7 @@ class World {
     stopAllMovement(world) {
         world.character.speed = 0;
         world.character.world.keyboard = {};
-        world.level.enemies.forEach(enemy => enemy.speed = 0); 
+        world.level.enemies.forEach(enemy => enemy.speed = 0);
         world.throwableObjects = [];
     }
 
@@ -77,7 +52,7 @@ class World {
         this.character.world = this;
         this.level.enemies.forEach(enemy => {
             if (enemy instanceof Endboss) {
-                enemy.world = this; 
+                enemy.world = this;
             }
         });
     }
@@ -143,27 +118,45 @@ class World {
     checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                if (this.character.isAboveEnemy(enemy) && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
-                    this.killEnemy(enemy);
-                    this.character.bounceOff();
-                } 
-                else if (enemy instanceof Endboss) {
-                    enemy.dealDamage(this.character);
-                } 
-                else {
-                    this.character.hit();
-                }
-    
-                this.healthBar.setPercentage(this.character.energie);
-    
-                if (this.character.energie <= 0) {
-                    this.endGame(this);
-                    showEndscreen(false);
-                }
+                this.handleEnemyCollision(enemy);
+                this.updateHealthBar();
+                this.checkGameOver();
             }
         });
     }
-    
+
+    /**
+     * Verarbeitet die Kollision zwischen dem Charakter und einem Gegner.
+     * @param {MovableObject} enemy - Der Gegner, mit dem der Charakter kollidiert.
+     */
+    handleEnemyCollision(enemy) {
+        if (this.character.isAboveEnemy(enemy) && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
+            this.killEnemy(enemy);
+            this.character.bounceOff();
+        } else if (enemy instanceof Endboss) {
+            enemy.dealDamage(this.character);
+        } else {
+            this.character.hit();
+        }
+    }
+
+    /**
+     * Aktualisiert die Lebensanzeige des Charakters.
+     */
+    updateHealthBar() {
+        this.healthBar.setPercentage(this.character.energie);
+    }
+
+    /**
+     * Prüft, ob der Charakter gestorben ist, und beendet das Spiel.
+     */
+    checkGameOver() {
+        if (this.character.energie <= 0) {
+            this.endGame(this);
+            showEndscreen(false);
+        }
+    }
+
     /**
      * Tötet einen Gegner und spielt den Stomp-Sound ab.
      * @param {Enemy} enemy - Der Gegner, der getötet werden soll.
@@ -179,7 +172,7 @@ class World {
             }, 500);
         }
     }
-    
+
     /**
      * Überprüft Kollisionen zwischen werfbaren Objekten und Gegnern.
      */
@@ -201,20 +194,44 @@ class World {
      * Überprüft Kollisionen zwischen werfbaren Objekten und dem Endboss.
      */
     checkEndbossThrowableCollisions() {
-        let endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
-        if (endboss) {
-            this.throwableObjects.forEach((bottle) => {
-                if (bottle.isColliding(endboss)) {
-                    this.handleEndbossHit(bottle, endboss);
-                    
-                    if (endboss.energie <= 0) {
-                        setTimeout(() => {
-                            this.endGame(this);
-                            showEndscreen(true);
-                        }, 2000);
-                    }
-                }
-            });
+        let endboss = this.findEndboss();
+        if (!endboss) return;
+
+        this.throwableObjects.forEach((bottle) => {
+            if (bottle.isColliding(endboss)) {
+                this.processEndbossHit(bottle, endboss);
+            }
+        });
+    }
+
+    /**
+     * Sucht den Endboss im Level.
+     * @returns {Endboss|null} Gibt den Endboss zurück oder null, wenn keiner existiert.
+     */
+    findEndboss() {
+        return this.level.enemies.find(enemy => enemy instanceof Endboss) || null;
+    }
+
+    /**
+     * Verarbeitet den Treffer eines werfbaren Objekts auf den Endboss.
+     * @param {ThrowableObject} bottle - Die geworfene Flasche.
+     * @param {Endboss} endboss - Der getroffene Endboss.
+     */
+    processEndbossHit(bottle, endboss) {
+        this.handleEndbossHit(bottle, endboss);
+        this.checkEndbossDefeat(endboss);
+    }
+
+    /**
+     * Prüft, ob der Endboss besiegt wurde und beendet das Spiel entsprechend.
+     * @param {Endboss} endboss - Der Endboss, dessen Energie geprüft wird.
+     */
+    checkEndbossDefeat(endboss) {
+        if (endboss.energie <= 0) {
+            setTimeout(() => {
+                this.endGame(this);
+                showEndscreen(true);
+            }, 2000);
         }
     }
 
@@ -233,7 +250,7 @@ class World {
         this.collectCoinSound.currentTime = 0; // Setzt den Sound zurück
         this.collectCoinSound.play().catch(error => console.log("Sound-Fehler:", error));
     }
-    
+
     /**
      * Beendet das Spiel und stoppt alle Bewegungen und Animationen.
      * @param {World} world - Die Spielwelt, die beendet werden soll.
@@ -267,12 +284,12 @@ class World {
     handleEndbossHit(bottle, endboss) {
         bottle.splash();
         endboss.takeDamage();
-    
+
         if (endboss.energie <= 0 && !endboss.isDead) {
-            endboss.die(); 
+            endboss.die();
         }
     }
-    
+
     /**
      * Entfernt einen Gegner aus dem Level.
      * @param {Enemy} enemy - Der Gegner, der entfernt werden soll.
@@ -285,28 +302,87 @@ class World {
     }
 
     /**
-     * Zeichnet alle Spielobjekte auf das Canvas.
+     * Haupt-Zeichenfunktion, die alle Spielelemente in der Welt rendert.
+     * Leert den Canvas, zeichnet Hintergrund, Spielobjekte, Charakter und UI.
+     * Handelt Kameratransformation und plant den nächsten Animationsframe.
      */
     drawInWorld() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.clearCanvas();
         this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.level.backgroundObjects);
+        this.drawBackground();
+        this.drawGameObjects();
+        this.drawCharacter();
         this.ctx.translate(-this.camera_x, 0);
+        this.drawUI();
+        this.scheduleNextFrame();
+    }
+
+    /**
+     * Leert den gesamten Canvas-Bereich.
+     */
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    /**
+     * Zeichnet alle Hintergrundobjekte des aktuellen Levels.
+     */
+    drawBackground() {
+        this.addObjectsToMap(this.level.backgroundObjects);
+    }
+
+    /**
+     * Zeichnet alle UI-Elemente:
+     * - Gesundheitsleiste
+     * - Münzen-Anzeige
+     * - Flaschen-Anzeige
+     * - Endboss-Gesundheitsleiste (falls vorhanden)
+     */
+    drawUI() {
         this.addToMap(this.healthBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
+        this.drawEndbossHealthbar();
+    }
+
+    /**
+     * Zeichnet die Gesundheitsleiste des Endbosses, falls dieser im Level existiert.
+     */
+    drawEndbossHealthbar() {
         let endboss = this.level.enemies.find(e => e instanceof Endboss);
         if (endboss) {
             this.addToMap(endboss.endbossBar);
         }
-        this.ctx.translate(this.camera_x, 0);
+    }
+
+    /**
+     * Zeichnet alle beweglichen Spielobjekte:
+     * - Wolken
+     * - Gegner
+     * - Münzen
+     * - Flaschen
+     * - Geworfene Objekte
+     */
+    drawGameObjects() {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
+    }
+
+    /**
+     * Zeichnet den Spielfigur-Charakter.
+     */
+    drawCharacter() {
         this.addToMap(this.character);
-        this.ctx.translate(-this.camera_x, 0);
+    }
+
+    /**
+     * Intern verwendete Funktion zur Planung des nächsten Animationsframes.
+     * @private
+     */
+    scheduleNextFrame() {
         let self = this;
         requestAnimationFrame(function () {
             self.drawInWorld();
@@ -333,6 +409,13 @@ class World {
         }
         mo.draw(this.ctx);
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+
+        this.ctx.beginPath();
+        this.ctx.lineWidth = "2";
+        this.ctx.strokeStyle = "red";
+        this.ctx.rect(mo.x, mo.y, mo.width, mo.height);
+        this.ctx.stroke();
+
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }

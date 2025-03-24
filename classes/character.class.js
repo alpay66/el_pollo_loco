@@ -72,49 +72,20 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-20.png'
     ];
 
-    /** @type {number} Die x-Position des Charakters. */
     x = 120;
-
-    /** @type {number} Die y-Position des Charakters. */
     y = 180;
-
-    /** @type {number} Die Höhe des Charakters. */
     height = 260;
-
-    /** @type {number} Die Breite des Charakters. */
     width = 110;
-
-    /** @type {number} Die Geschwindigkeit des Charakters. */
     speed = 5;
-
-    /** @type {World} Die Welt, in der sich der Charakter befindet. */
     world;
-
-    /** @type {number} Timer für die Idle-Animation. */
     idleTimer = 0;
-
-    /** @type {number} Intervall für die Idle-Animation. */
     idleInterval;
-
-    /** @type {boolean} Gibt an, ob der Charakter eine Flasche werfen kann. */
     canThrow = true;
-
-    /** @type {boolean} Gibt an, ob der Charakter gerade läuft. */
     isWalking = false;
-
-    /** @type {number} Zeitpunkt des letzten Schadens. */
     lastDamageTime = 0;
-
-    /** @type {HTMLAudioElement} Sound, der beim Laufen abgespielt wird. */
     walkSound = new Audio('audio/walk.mp3');
-
-    /** @type {HTMLAudioElement} Sound, der beim Springen abgespielt wird. */
     jumpSound = new Audio('audio/jump.mp3');
-
-    /** @type {HTMLAudioElement} Sound, der bei Verletzungen abgespielt wird. */
     hurtSound = new Audio('audio/hurt_sound.mp3');
-
-    /** @type {HTMLAudioElement} Sound, der beim Werfen einer Flasche abgespielt wird. */
     throwSound = new Audio('audio/throw.mp3');
 
     /**
@@ -127,6 +98,10 @@ class Character extends MovableObject {
         this.hurtSound.volume = 0.5;
         this.applyGravity();
         this.animateCharacter();
+        this.idleTime = 1;
+        this.playAnimation(this.CHARACTER_IDLE);
+        this.offsetX = 10;
+        this.offsetY = 10;
     }
 
     /**
@@ -152,30 +127,57 @@ class Character extends MovableObject {
      */
     controlMovement() {
         setInterval(() => {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.playWalkSound();
-                this.resetIdleTimer();
-            } else if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                this.playWalkSound();
-                this.resetIdleTimer();
-            } else {
-                this.stopWalkSound();
-            }
-
-            if (this.world.keyboard.UP && !this.isAboveGround()) {
-                this.jump();
-                this.playJumpSound();
-                this.resetIdleTimer();
-            }
-            if (this.world.keyboard.D) {
-                this.throwBottle();
-            }
-            this.world.camera_x = -this.x + 100;
+            this.handleHorizontalMovement();
+            this.handleJump();
+            this.handleThrow();
+            this.updateCamera();
         }, 1000 / 60);
+    }
+
+    /**
+     * Bewegt den Charakter nach links oder rechts und setzt den Idle-Timer zurück.
+     */
+    handleHorizontalMovement() {
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.moveRight();
+            this.otherDirection = false;
+            this.playWalkSound();
+            this.resetIdleTimer();
+        } else if (this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true;
+            this.playWalkSound();
+            this.resetIdleTimer();
+        } else {
+            this.stopWalkSound();
+        }
+    }
+
+    /**
+     * Lässt den Charakter springen, wenn die UP-Taste gedrückt wird.
+     */
+    handleJump() {
+        if (this.world.keyboard.UP && !this.isAboveGround()) {
+            this.jump();
+            this.playJumpSound();
+            this.resetIdleTimer();
+        }
+    }
+
+    /**
+     * Lässt den Charakter eine Flasche werfen, wenn die D-Taste gedrückt wird.
+     */
+    handleThrow() {
+        if (this.world.keyboard.D) {
+            this.throwBottle();
+        }
+    }
+
+    /**
+     * Aktualisiert die Kamera-Position basierend auf der Charakter-Position.
+     */
+    updateCamera() {
+        this.world.camera_x = -this.x + 100;
     }
 
     /**
@@ -245,10 +247,20 @@ class Character extends MovableObject {
     startIdleCheck() {
         this.idleInterval = setInterval(() => {
             this.idleTime += 1;
-            if (this.idleTime >= 15) this.playAnimation(this.CHARACTER_LONG_IDLE);
-            else if (this.idleTime >= 5) this.playAnimation(this.CHARACTER_IDLE);
+
+            // 🔥 Falls der Charakter am Anfang nicht bewegt wurde, sofort Idle setzen
+            if (this.idleTime === 1) {
+                this.playAnimation(this.CHARACTER_IDLE);
+            }
+
+            if (this.idleTime >= 10) {
+                this.playAnimation(this.CHARACTER_LONG_IDLE);
+            } else if (this.idleTime >= 2) {
+                this.playAnimation(this.CHARACTER_IDLE);
+            }
         }, 500);
     }
+
 
     /**
      * Spielt das Laufgeräusch.
