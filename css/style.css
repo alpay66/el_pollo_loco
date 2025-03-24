@@ -157,7 +157,7 @@ span {
  */
 #startscreen {
     display: flex;
-    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
     position: absolute;
     width: 100%;

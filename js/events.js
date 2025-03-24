@@ -72,3 +72,70 @@ function setupMobileControls() {
     document.getElementById('throw-btn').addEventListener('touchstart', () => keyboard.D = true);
     document.getElementById('throw-btn').addEventListener('touchend', () => keyboard.D = false);
 }
+
+
+/**
+ * Überprüft, ob der Endboss besiegt wurde.
+ * @param {Array<Enemy>} enemies - Die Liste der Gegner.
+ * @returns {boolean} - True, wenn der Endboss besiegt wurde, sonst false.
+ */
+function isEndbossDefeated(enemies) {
+    return enemies.find(e => e instanceof Endboss)?.isDead;
+}
+
+/**
+ * Überprüft, ob das Gerät ein mobiles Gerät ist.
+ * @returns {boolean} - True, wenn es sich um ein mobiles Gerät handelt, sonst false.
+ */
+function isMobileDevice() {
+    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+/**
+ * Aktiviert oder deaktiviert die mobilen Steuerelemente basierend auf dem Gerätetyp.
+ */
+function handleMobileControls() {
+    let mobileControls = document.getElementById('mobile-controls');
+
+    if (isMobileDevice()) {
+        mobileControls.style.display = 'flex'; 
+    } else {
+        mobileControls.style.display = 'none';
+    }
+}
+
+/**
+ * Deaktiviert die mobilen Buttons.
+ */
+function disableMobileButtons() {
+    let mobileControls = document.getElementById('mobile-controls');
+    if (mobileControls) {
+        mobileControls.style.display = 'none';
+    }
+}
+
+/**
+ * Aktiviert die mobilen Buttons, wenn das Gerät ein mobiles Gerät ist.
+ */
+function enableMobileButtons() {
+    let mobileControls = document.getElementById('mobile-controls');
+    if (isMobileDevice() && mobileControls) {
+        mobileControls.style.display = 'flex'; 
+    }
+}
+
+/**
+ * Zeigt die Steuerungsseite an.
+ */
+function showControls() {
+    document.getElementById("startscreen").style.display = "none";
+    document.getElementById("controls-screen").style.display = "block";
+}
+
+/**
+ * Blendet die Steuerungsseite aus und zeigt den Startbildschirm an.
+ */
+function hideControls() {
+    document.getElementById("controls-screen").style.display = "none";
+    document.getElementById("startscreen").style.display = "flex";
+}
