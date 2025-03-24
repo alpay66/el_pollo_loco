@@ -16,7 +16,7 @@ class World {
     stompSound = new Audio('audio/enemie_dead.mp3');
     collectBottleSound = new Audio('audio/collect_bottle.mp3');
     collectCoinSound = new Audio('audio/collect_coin.mp3');
-
+    
     /**
      * Erstellt eine neue World-Instanz.
      * @constructor
@@ -27,11 +27,12 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.drawInWorld();
+        this.renderer = new WorldRenderer(this, this.ctx, this.canvas); 
         this.setWorld();
         this.runCollisionCheck();
         this.runEndbossCollisionCheck();
         this.runChickenCollisionCheck();
+        this.renderer.drawInWorld();
     }
 
     /**
@@ -302,94 +303,6 @@ class World {
     }
 
     /**
-     * Haupt-Zeichenfunktion, die alle Spielelemente in der Welt rendert.
-     * Leert den Canvas, zeichnet Hintergrund, Spielobjekte, Charakter und UI.
-     * Handelt Kameratransformation und plant den nächsten Animationsframe.
-     */
-    drawInWorld() {
-        this.clearCanvas();
-        this.ctx.translate(this.camera_x, 0);
-        this.drawBackground();
-        this.drawGameObjects();
-        this.drawCharacter();
-        this.ctx.translate(-this.camera_x, 0);
-        this.drawUI();
-        this.scheduleNextFrame();
-    }
-
-    /**
-     * Leert den gesamten Canvas-Bereich.
-     */
-    clearCanvas() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-
-    /**
-     * Zeichnet alle Hintergrundobjekte des aktuellen Levels.
-     */
-    drawBackground() {
-        this.addObjectsToMap(this.level.backgroundObjects);
-    }
-
-    /**
-     * Zeichnet alle UI-Elemente:
-     * - Gesundheitsleiste
-     * - Münzen-Anzeige
-     * - Flaschen-Anzeige
-     * - Endboss-Gesundheitsleiste (falls vorhanden)
-     */
-    drawUI() {
-        this.addToMap(this.healthBar);
-        this.addToMap(this.coinBar);
-        this.addToMap(this.bottleBar);
-        this.drawEndbossHealthbar();
-    }
-
-    /**
-     * Zeichnet die Gesundheitsleiste des Endbosses, falls dieser im Level existiert.
-     */
-    drawEndbossHealthbar() {
-        let endboss = this.level.enemies.find(e => e instanceof Endboss);
-        if (endboss) {
-            this.addToMap(endboss.endbossBar);
-        }
-    }
-
-    /**
-     * Zeichnet alle beweglichen Spielobjekte:
-     * - Wolken
-     * - Gegner
-     * - Münzen
-     * - Flaschen
-     * - Geworfene Objekte
-     */
-    drawGameObjects() {
-        this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottles);
-        this.addObjectsToMap(this.throwableObjects);
-    }
-
-    /**
-     * Zeichnet den Spielfigur-Charakter.
-     */
-    drawCharacter() {
-        this.addToMap(this.character);
-    }
-
-    /**
-     * Intern verwendete Funktion zur Planung des nächsten Animationsframes.
-     * @private
-     */
-    scheduleNextFrame() {
-        let self = this;
-        requestAnimationFrame(function () {
-            self.drawInWorld();
-        });
-    }
-
-    /**
      * Fügt mehrere Objekte zur Karte hinzu.
      * @param {Array<Object>} objects - Die Objekte, die zur Karte hinzugefügt werden sollen.
      */
@@ -413,7 +326,7 @@ class World {
         this.ctx.beginPath();
         this.ctx.lineWidth = "2";
         this.ctx.strokeStyle = "red";
-        this.ctx.rect(mo.x, mo.y, mo.width, mo.height);
+        this.ctx.rect(mo.x, mo.y, mo.width, mo.height); //////////////////////////////////////////////////////////
         this.ctx.stroke();
 
         if (mo.otherDirection) {
