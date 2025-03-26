@@ -52,6 +52,12 @@ class Endboss extends MovableObject {
     isDead = false;
     endbossHurt = new Audio('audio/Endboss_hurt.mp3');
     endbossDead = new Audio('audio/endboss_defeat.mp3');
+    offset = {
+        top: 100,
+        bottom: 100,
+        left: 50,
+        right: 50
+    };
 
     /**
      * Erstellt einen neuen Endboss mit vordefinierten Animationen und setzt ihn in die Welt.

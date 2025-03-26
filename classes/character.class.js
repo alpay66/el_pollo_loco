@@ -87,6 +87,12 @@ class Character extends MovableObject {
     jumpSound = new Audio('audio/jump.mp3');
     hurtSound = new Audio('audio/hurt_sound.mp3');
     throwSound = new Audio('audio/throw.mp3');
+    offset = {
+        top: 120,
+        bottom: 20,
+        left: 30,
+        right: 30
+    };
 
     /**
      * Erstellt eine neue Character-Instanz.

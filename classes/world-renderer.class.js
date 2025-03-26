@@ -109,13 +109,37 @@ class WorldRenderer {
         if (mo.otherDirection) {
             this.flipImage(mo);
         }
+    
+        // 🔴 Roter Rahmen: Bildrahmen
+        this.ctx.beginPath();
+        this.ctx.lineWidth = "1";
+        this.ctx.strokeStyle = "red";
+        this.ctx.rect(mo.x, mo.y, mo.width, mo.height);
+        this.ctx.stroke();
+    
+        // 🟢 Grüner Rahmen: tatsächliche Kollisionsfläche
+        if (mo.offset) {
+            this.ctx.beginPath();
+            this.ctx.lineWidth = "1";
+            this.ctx.strokeStyle = "green";
+            this.ctx.rect(
+                mo.x + mo.offset.left,
+                mo.y + mo.offset.top,
+                mo.width - mo.offset.left - mo.offset.right,
+                mo.height - mo.offset.top - mo.offset.bottom
+            );
+            this.ctx.stroke();
+        }
+    
+        // Bild zeichnen
         mo.draw(this.ctx);
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-
+    
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
     }
+    
 
     /**
      * Spiegelt das Bild horizontal.

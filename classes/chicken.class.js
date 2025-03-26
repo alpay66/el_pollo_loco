@@ -14,6 +14,12 @@ class Chicken extends MovableObject {
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
     chickenSound = new Audio('audio/chicken.mp3');
+    offset = {
+        top: 5,
+        bottom: 5,
+        left: 5,
+        right: 5
+    };
 
     /**
      * Erstellt ein neues Chicken mit zufälliger Position und Geschwindigkeit.

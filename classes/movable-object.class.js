@@ -18,11 +18,19 @@ class MovableObject extends DrawableObject {
      * @returns {boolean} `true`, wenn eine Kollision vorliegt, sonst `false`.
      */
     isColliding(mo) {
-        return (this.x + this.offsetX + this.width) >= mo.x &&
-            (this.x + this.offsetX) <= (mo.x + mo.width) &&
-            (this.y + this.offsetY + this.height) >= mo.y &&
-            (this.y + this.offsetY) <= (mo.y + mo.height);
+        let a = this.offset || { top: 0, bottom: 0, left: 0, right: 0 };
+        let b = mo.offset || { top: 0, bottom: 0, left: 0, right: 0 };
+    
+        return (
+            this.x + a.left < mo.x + mo.width - b.right &&
+            this.x + this.width - a.right > mo.x + b.left &&
+            this.y + a.top < mo.y + mo.height - b.bottom &&
+            this.y + this.height - a.bottom > mo.y + b.top
+        );
     }
+    
+    
+    
 
     drawCollisionBox(ctx) {
         ctx.strokeStyle = 'red';
