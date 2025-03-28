@@ -207,11 +207,9 @@ class Character extends MovableObject {
             let bottleX = this.x + (this.otherDirection ? -20 : 20);
             let bottle = new ThrowableObject(bottleX, this.y + 100, this.otherDirection ? -7 : 7, this.world);
             this.world.throwableObjects.push(bottle);
-
             this.world.bottleBar.setBottles(this.world.bottleBar.collectedBottles - 1);
             this.throwSound.currentTime = 0;
             this.throwSound.play();
-
             setTimeout(() => this.canThrow = true, 500);
         }
     }
@@ -253,12 +251,9 @@ class Character extends MovableObject {
     startIdleCheck() {
         this.idleInterval = setInterval(() => {
             this.idleTime += 1;
-
-            // 🔥 Falls der Charakter am Anfang nicht bewegt wurde, sofort Idle setzen
             if (this.idleTime === 1) {
                 this.playAnimation(this.CHARACTER_IDLE);
             }
-
             if (this.idleTime >= 10) {
                 this.playAnimation(this.CHARACTER_LONG_IDLE);
             } else if (this.idleTime >= 2) {
@@ -266,7 +261,6 @@ class Character extends MovableObject {
             }
         }, 500);
     }
-
 
     /**
      * Spielt das Laufgeräusch.

@@ -13,7 +13,7 @@ function levelInit() {
         // Gegner im Level
         [
             new Chicken(),       // Ein normales Huhn
-/*             new SmallChicken(),  // Ein kleines Huhn
+            new SmallChicken(),  // Ein kleines Huhn
             new Chicken(),       // Ein normales Huhn
             new SmallChicken(),  // Ein kleines Huhn
             new Chicken(),       // Ein normales Huhn
@@ -33,7 +33,7 @@ function levelInit() {
             new SmallChicken(),  // Ein kleines Huhn
             new Chicken(),       // Ein normales Huhn
             new SmallChicken(),  // Ein kleines Huhn
-            new Chicken(),       // Ein normales Huhn */
+            new Chicken(),       // Ein normales Huhn
             new Endboss()        // Der Endboss 
         ],
         // Wolken im Level

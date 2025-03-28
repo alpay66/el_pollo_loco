@@ -30,7 +30,6 @@ class MovableObject extends DrawableObject {
     }
     
     
-    
 
     drawCollisionBox(ctx) {
         ctx.strokeStyle = 'red';
@@ -43,15 +42,11 @@ class MovableObject extends DrawableObject {
      */
     hit(damage = 5) { 
         let now = new Date().getTime();
-
         if (now - this.lastDamageTime < 500) return;
-    
         this.lastDamageTime = now;
         this.energie -= damage;
-    
         this.hurtSound.currentTime = 0;
         this.hurtSound.play();
-    
         if (this.energie < 0) {
             this.energie = 0;
         } else {

@@ -131,7 +131,7 @@ class World {
      * @param {MovableObject} enemy - Der Gegner, mit dem der Charakter kollidiert.
      */
     handleEnemyCollision(enemy) {
-        if (this.character.isAboveEnemy(enemy) && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
+        if (this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
             this.killEnemy(enemy);
             this.character.bounceOff();
         } else if (enemy instanceof Endboss) {
@@ -322,13 +322,6 @@ class World {
         }
         mo.draw(this.ctx);
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-
-        this.ctx.beginPath();
-        this.ctx.lineWidth = "2";
-        this.ctx.strokeStyle = "red";
-        this.ctx.rect(mo.x, mo.y, mo.width, mo.height); //////////////////////////////////////////////////////////
-        this.ctx.stroke();
-
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
