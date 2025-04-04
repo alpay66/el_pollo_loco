@@ -199,6 +199,9 @@ function resetWorld() {
 function startGame() {
     document.getElementById('startscreen').style.display = 'none';
     manageBackgroundMusic('play');
+    handleMobileControls();
+    enableMobileButtons();
+    setupMobileControls();
     init();
 }
 

@@ -158,6 +158,7 @@ span {
 #startscreen {
     display: flex;
     justify-content: space-around;
+    flex-direction: column;
     align-items: center;
     position: absolute;
     width: 100%;
@@ -264,6 +265,7 @@ span {
     display: flex;
     justify-content: center;
     gap: 10px;
+    z-index: 10;
 }
 
 /* 

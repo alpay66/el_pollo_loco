@@ -5,9 +5,11 @@
 function checkOrientation() {
     let rotateWarning = document.getElementById("rotate-warning");
     if (window.innerHeight > window.innerWidth && window.innerWidth <= 920) {
-        rotateWarning.style.display = "flex"; // Zeigt die Drehwarnung an
+        rotateWarning.style.display = "flex";
+        enableMobileButtons(); // Buttons trotzdem anzeigen
     } else {
-        rotateWarning.style.display = "none"; // Blendet die Drehwarnung aus
+        rotateWarning.style.display = "none";
+        enableMobileButtons(); // auch hier sicherstellen
     }
 }
 
@@ -15,6 +17,9 @@ function checkOrientation() {
 window.addEventListener("resize", checkOrientation);
 window.addEventListener("orientationchange", checkOrientation);
 document.addEventListener("DOMContentLoaded", checkOrientation);
+window.addEventListener("resize", handleMobileControls);
+window.addEventListener("orientationchange", handleMobileControls);
+document.addEventListener("DOMContentLoaded", handleMobileControls);
 
 /**
  * Wird ausgeführt, wenn die Seite vollständig geladen ist.
@@ -73,7 +78,6 @@ function setupMobileControls() {
     document.getElementById('throw-btn').addEventListener('touchend', () => keyboard.D = false);
 }
 
-
 /**
  * Überprüft, ob der Endboss besiegt wurde.
  * @param {Array<Enemy>} enemies - Die Liste der Gegner.
@@ -88,7 +92,11 @@ function isEndbossDefeated(enemies) {
  * @returns {boolean} - True, wenn es sich um ein mobiles Gerät handelt, sonst false.
  */
 function isMobileDevice() {
-    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const ua = navigator.userAgent;
+    const isMobileUA = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
+    const isIpadDesktopMode = navigator.maxTouchPoints > 1 && /Macintosh/.test(ua);
+    const mqNoHover = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    return isMobileUA || isIpadDesktopMode || mqNoHover;
 }
 
 /**

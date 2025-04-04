@@ -44,8 +44,10 @@
         <button id="mute-btn" onclick="toggleMute()">🔊</button>
         <div id="startscreen">
             <img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="Startscreen">
-            <button onclick="startGame()">Start Game</button>
-            <button onclick="showControls()">Spielsteuerung</button> <!-- Neuer Button für Steuerung -->
+            <div>
+                <button onclick="startGame()">Start Game</button>
+                <button onclick="showControls()">Spielsteuerung</button> <!-- Neuer Button für Steuerung -->
+            </div>
         </div>
 
         <!-- Steuerungsseite (ausgeblendet) -->
@@ -96,7 +98,7 @@
         </div>
     </div>
 
-    
+
 
     <div id="rotate-warning">
         Bitte drehe dein Gerät ins Querformat, um zu spielen!
@@ -107,8 +109,6 @@
         <h1></h1>
         <span></span>
     </footer>
-
-    <script src="game.js"></script>
 </body>
 
 

@@ -29,8 +29,6 @@ class MovableObject extends DrawableObject {
         );
     }
     
-    
-
     drawCollisionBox(ctx) {
         ctx.strokeStyle = 'red';
         ctx.strokeRect(this.x + this.offsetX, this.y + this.offsetY, this.width, this.height);
