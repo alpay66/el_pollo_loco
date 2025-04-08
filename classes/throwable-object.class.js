@@ -68,6 +68,19 @@ class ThrowableObject extends MovableObject {
     }
 
     /**
+    * Wendet die Schwerkraft auf das Objekt an und aktualisiert die vertikale Position.
+    */
+    applyGravity() {
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+        }, 1000 / 25);
+    }
+
+
+    /**
      * Lässt die Flasche rotieren, solange sie sich bewegt.
      */
     startBottleRotate() {
@@ -105,7 +118,7 @@ class ThrowableObject extends MovableObject {
     /**
      * Spielt den Sound für das Zersplittern der Flasche.
      */
-    playSplashSound() { 
+    playSplashSound() {
         if (!isMuted) {
             this.splashSound.currentTime = 0;
             this.splashSound.play();
