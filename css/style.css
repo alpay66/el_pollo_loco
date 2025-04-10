@@ -3,18 +3,27 @@
  * Definiert das Layout, Hintergrund und Schriftart der Seite.
  */
 body {
-    font-family: 'Western', sans-serif; /* Verwendet die benutzerdefinierte Schriftart 'Western' */
+    font-family: 'Western', sans-serif;
+    /* Verwendet die benutzerdefinierte Schriftart 'Western' */
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: black; /* Hintergrundfarbe */
-    background-image: url('../img/5_background/cartoon_desert_background.png'); /* Hintergrundbild */
-    background-size: cover; /* Deckt den gesamten Hintergrund ab */
-    background-position: center; /* Zentriert das Hintergrundbild */
-    background-repeat: no-repeat; /* Verhindert Wiederholung des Hintergrundbilds */
-    height: 100vh; /* Volle Höhe des Viewports */
-    width: 100vw; /* Volle Breite des Viewports */
-    overflow: hidden; /* Verhindert Scrollen */
+    background-color: black;
+    /* Hintergrundfarbe */
+    background-image: url('../img/5_background/cartoon_desert_background.png');
+    /* Hintergrundbild */
+    background-size: cover;
+    /* Deckt den gesamten Hintergrund ab */
+    background-position: center;
+    /* Zentriert das Hintergrundbild */
+    background-repeat: no-repeat;
+    /* Verhindert Wiederholung des Hintergrundbilds */
+    height: 100vh;
+    /* Volle Höhe des Viewports */
+    width: 100vw;
+    /* Volle Breite des Viewports */
+    overflow: hidden;
+    /* Verhindert Scrollen */
     margin: 0;
     padding: 0;
 }
@@ -24,14 +33,15 @@ body {
  */
 @font-face {
     font-family: 'Western';
-    src: url('../fonts/WEST____.TTF') format('truetype'); /* Pfad zur Schriftartdatei */
+    src: url('../fonts/WEST____.TTF') format('truetype');
+    /* Pfad zur Schriftartdatei */
 }
 
 /* 
  * Stil für h1- und button-Elemente.
  * Verwendet die Schriftart 'Western'.
  */
-h1, 
+h1,
 button {
     font-family: 'Western', sans-serif;
 }
@@ -41,9 +51,12 @@ button {
  * Definiert die Hintergrundfarbe und Größe.
  */
 canvas {
-    background-color: black; /* Hintergrundfarbe */
-    width: 720px; /* Breite */
-    height: 480px; /* Höhe */
+    background-color: black;
+    /* Hintergrundfarbe */
+    width: 720px;
+    /* Breite */
+    height: 480px;
+    /* Höhe */
 }
 
 /* 
@@ -51,7 +64,8 @@ canvas {
  * Definiert die Textfarbe.
  */
 h1 {
-    color: red; /* Textfarbe */
+    color: red;
+    /* Textfarbe */
 }
 
 /* 
@@ -68,7 +82,8 @@ footer {
  * Definiert die Textfarbe.
  */
 span {
-    color: green; /* Textfarbe */
+    color: green;
+    /* Textfarbe */
 }
 
 /* 
@@ -78,7 +93,8 @@ span {
 .endscreen-img {
     width: 100%;
     height: 40%;
-    object-fit: cover; /* Deckt den gesamten Bereich ab */
+    object-fit: cover;
+    /* Deckt den gesamten Bereich ab */
 }
 
 /* 
@@ -91,8 +107,10 @@ span {
     align-items: center;
     width: 720px;
     height: 480px;
-    background-color: black; /* Hintergrundfarbe */
-    z-index: 10; /* Position in der Z-Achse */
+    background-color: black;
+    /* Hintergrundfarbe */
+    z-index: 10;
+    /* Position in der Z-Achse */
 }
 
 /* 
@@ -102,7 +120,8 @@ span {
 .screen img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Deckt den gesamten Bereich ab */
+    object-fit: cover;
+    /* Deckt den gesamten Bereich ab */
 }
 
 /* 
@@ -122,11 +141,14 @@ span {
     font-size: 20px;
     font-weight: bold;
     color: white;
-    background-color: #4CAF50; /* Hintergrundfarbe */
+    background-color: #4CAF50;
+    /* Hintergrundfarbe */
     border: none;
-    border-radius: 10px; /* Abgerundete Ecken */
+    border-radius: 10px;
+    /* Abgerundete Ecken */
     cursor: pointer;
-    transition: 0.3s; /* Animation beim Hovern */
+    transition: 0.3s;
+    /* Animation beim Hovern */
     margin-top: 20px;
 }
 
@@ -135,8 +157,10 @@ span {
  * Ändert die Hintergrundfarbe und vergrößert den Button.
  */
 .start-btn:hover {
-    background-color: #45A049; /* Dunklere Hintergrundfarbe */
-    transform: scale(1.1); /* Vergrößert den Button */
+    background-color: #45A049;
+    /* Dunklere Hintergrundfarbe */
+    transform: scale(1.1);
+    /* Vergrößert den Button */
 }
 
 /* 
@@ -163,11 +187,14 @@ span {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, rgba(0, 226, 255, 0.9), rgba(7, 6, 6, 0.95)); /* Hintergrundverlauf */
+    background: linear-gradient(180deg, rgba(0, 226, 255, 0.9), rgba(7, 6, 6, 0.95));
+    /* Hintergrundverlauf */
     justify-content: center;
     text-align: center;
-    border: 5px solid red; /* Rahmen */
-    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.7); /* Schatten */
+    border: 5px solid red;
+    /* Rahmen */
+    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.7);
+    /* Schatten */
 }
 
 /* 
@@ -177,7 +204,8 @@ span {
 #startscreen img {
     width: 37%;
     max-width: 600px;
-    border-radius: 10px; /* Abgerundete Ecken */
+    border-radius: 10px;
+    /* Abgerundete Ecken */
 }
 
 /* 
@@ -190,13 +218,18 @@ span {
     font-size: 22px;
     font-weight: bold;
     color: white;
-    background: linear-gradient(45deg, red, darkred); /* Hintergrundverlauf */
+    background: linear-gradient(45deg, red, darkred);
+    /* Hintergrundverlauf */
     border: none;
-    border-radius: 10px; /* Abgerundete Ecken */
+    border-radius: 10px;
+    /* Abgerundete Ecken */
     cursor: pointer;
-    transition: all 0.3s ease-in-out; /* Animation beim Hovern */
-    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5); /* Schatten */
-    text-transform: uppercase; /* Großbuchstaben */
+    transition: all 0.3s ease-in-out;
+    /* Animation beim Hovern */
+    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
+    /* Schatten */
+    text-transform: uppercase;
+    /* Großbuchstaben */
 }
 
 /* 
@@ -204,9 +237,12 @@ span {
  * Ändert den Hintergrundverlauf und vergrößert den Button.
  */
 #startscreen button:hover {
-    background: linear-gradient(45deg, darkred, black); /* Dunklerer Hintergrundverlauf */
-    transform: scale(1.1); /* Vergrößert den Button */
-    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7); /* Größerer Schatten */
+    background: linear-gradient(45deg, darkred, black);
+    /* Dunklerer Hintergrundverlauf */
+    transform: scale(1.1);
+    /* Vergrößert den Button */
+    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7);
+    /* Größerer Schatten */
 }
 
 /* 
@@ -234,13 +270,18 @@ span {
     font-size: 22px;
     font-weight: bold;
     color: white;
-    background: linear-gradient(45deg, red, darkred); /* Hintergrundverlauf */
+    background: linear-gradient(45deg, red, darkred);
+    /* Hintergrundverlauf */
     border: none;
-    border-radius: 10px; /* Abgerundete Ecken */
+    border-radius: 10px;
+    /* Abgerundete Ecken */
     cursor: pointer;
-    transition: all 0.3s ease-in-out; /* Animation beim Hovern */
-    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5); /* Schatten */
-    text-transform: uppercase; /* Großbuchstaben */
+    transition: all 0.3s ease-in-out;
+    /* Animation beim Hovern */
+    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
+    /* Schatten */
+    text-transform: uppercase;
+    /* Großbuchstaben */
 }
 
 /* 
@@ -248,9 +289,12 @@ span {
  * Ändert den Hintergrundverlauf und vergrößert den Button.
  */
 #fullscreen-btn:hover {
-    background: linear-gradient(45deg, darkred, red); /* Dunklerer Hintergrundverlauf */
-    transform: scale(1.05); /* Vergrößert den Button */
-    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7); /* Größerer Schatten */
+    background: linear-gradient(45deg, darkred, red);
+    /* Dunklerer Hintergrundverlauf */
+    transform: scale(1.05);
+    /* Vergrößert den Button */
+    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7);
+    /* Größerer Schatten */
 }
 
 /* 
@@ -277,13 +321,17 @@ span {
     height: 60px;
     font-size: 24px;
     font-weight: bold;
-    background: linear-gradient(45deg, red, darkred); /* Hintergrundverlauf */
+    background: linear-gradient(45deg, red, darkred);
+    /* Hintergrundverlauf */
     color: white;
     border: none;
-    border-radius: 50%; /* Runde Form */
+    border-radius: 50%;
+    /* Runde Form */
     cursor: pointer;
-    transition: 0.2s ease-in-out; /* Animation beim Klicken */
-    box-shadow: 0px 4px 10px rgba(255, 0, 0, 0.5); /* Schatten */
+    transition: 0.2s ease-in-out;
+    /* Animation beim Klicken */
+    box-shadow: 0px 4px 10px rgba(255, 0, 0, 0.5);
+    /* Schatten */
 }
 
 /* 
@@ -291,8 +339,10 @@ span {
  * Verkleinert den Button und ändert die Hintergrundfarbe.
  */
 .mobile-btn:active {
-    transform: scale(0.9); /* Verkleinert den Button */
-    background: darkred; /* Dunklere Hintergrundfarbe */
+    transform: scale(0.9);
+    /* Verkleinert den Button */
+    background: darkred;
+    /* Dunklere Hintergrundfarbe */
 }
 
 /* 
@@ -300,11 +350,12 @@ span {
  * Definiert das Layout, Hintergrund und Text.
  */
 #rotate-warning {
-    display: none; 
+    display: none;
     position: fixed;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.95); /* Halbtransparenter Hintergrund */
+    background: rgba(0, 0, 0, 0.95);
+    /* Halbtransparenter Hintergrund */
     color: white;
     font-size: 24px;
     font-weight: bold;
@@ -313,7 +364,8 @@ span {
     align-items: center;
     justify-content: center;
     text-align: center;
-    z-index: 9999; /* Position in der Z-Achse */
+    z-index: 9999;
+    /* Position in der Z-Achse */
 }
 
 /* 
@@ -324,18 +376,33 @@ span {
     width: 100px;
     height: 100px;
     margin-top: 20px;
-    animation: rotateAnimation 2s infinite ease-in-out; /* Drehanimation */
+    animation: rotateAnimation 2s infinite ease-in-out;
+    /* Drehanimation */
 }
 
 /* 
  * Keyframes für die Drehanimation.
  */
 @keyframes rotateAnimation {
-    0% { transform: rotate(0deg); }
-    25% { transform: rotate(-15deg); }
-    50% { transform: rotate(15deg); }
-    75% { transform: rotate(-10deg); }
-    100% { transform: rotate(0deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-15deg);
+    }
+
+    50% {
+        transform: rotate(15deg);
+    }
+
+    75% {
+        transform: rotate(-10deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
 }
 
 /* 
@@ -349,11 +416,14 @@ span {
     padding: 10px 15px;
     font-size: 20px;
     border: none;
-    border-radius: 5px; /* Abgerundete Ecken */
-    background: #ff4444; /* Hintergrundfarbe */
+    border-radius: 5px;
+    /* Abgerundete Ecken */
+    background: #ff4444;
+    /* Hintergrundfarbe */
     color: white;
     cursor: pointer;
-    transition: 0.3s; /* Animation beim Hovern */
+    transition: 0.3s;
+    /* Animation beim Hovern */
 }
 
 /* 
@@ -361,7 +431,8 @@ span {
  * Ändert die Hintergrundfarbe.
  */
 #mute-btn:hover {
-    background: #cc0000; /* Dunklere Hintergrundfarbe */
+    background: #cc0000;
+    /* Dunklere Hintergrundfarbe */
 }
 
 /**
@@ -370,19 +441,32 @@ span {
  * Es hat eine halbtransparente schwarze Hintergrundfarbe, abgerundete Ecken und einen Schatten.
  */
 #controls-screen {
-    display: none; /* Standardmäßig ausgeblendet */
-    position: absolute; /* Positionierung relativ zum nächsten positionierten Elternelement */
-    top: 50%; /* Vertikale Zentrierung */
-    left: 50%; /* Horizontale Zentrierung */
-    transform: translate(-50%, -50%); /* Zentrierung durch Verschiebung */
-    width: 80%; /* Breite des Fensters */
-    max-width: 600px; /* Maximale Breite */
-    background: rgba(0, 0, 0, 0.9); /* Halbtransparenter schwarzer Hintergrund */
-    color: white; /* Textfarbe */
-    padding: 20px; /* Innenabstand */
-    border-radius: 10px; /* Abgerundete Ecken */
-    text-align: center; /* Text zentrieren */
-    box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.3); /* Schatten */
+    display: none;
+    /* Standardmäßig ausgeblendet */
+    position: absolute;
+    /* Positionierung relativ zum nächsten positionierten Elternelement */
+    top: 50%;
+    /* Vertikale Zentrierung */
+    left: 50%;
+    /* Horizontale Zentrierung */
+    transform: translate(-50%, -50%);
+    /* Zentrierung durch Verschiebung */
+    width: 80%;
+    /* Breite des Fensters */
+    max-width: 600px;
+    /* Maximale Breite */
+    background: rgba(0, 0, 0, 0.9);
+    /* Halbtransparenter schwarzer Hintergrund */
+    color: white;
+    /* Textfarbe */
+    padding: 20px;
+    /* Innenabstand */
+    border-radius: 10px;
+    /* Abgerundete Ecken */
+    text-align: center;
+    /* Text zentrieren */
+    box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.3);
+    /* Schatten */
 }
 
 /**
@@ -390,11 +474,16 @@ span {
  * Definiert den Hintergrund, den Innenabstand und den Schatten.
  */
 .controls-box {
-    max-width: 600px; /* Maximale Breite */
-    padding: 20px; /* Innenabstand */
-    background-color: rgba(0, 0, 0, 0.8); /* Halbtransparenter schwarzer Hintergrund */
-    border-radius: 10px; /* Abgerundete Ecken */
-    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.7); /* Schatten */
+    max-width: 600px;
+    /* Maximale Breite */
+    padding: 20px;
+    /* Innenabstand */
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Halbtransparenter schwarzer Hintergrund */
+    border-radius: 10px;
+    /* Abgerundete Ecken */
+    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.7);
+    /* Schatten */
 }
 
 /**
@@ -402,18 +491,24 @@ span {
  * Definiert die Breite, den Abstand und das Zusammenfallen der Rahmen.
  */
 table {
-    width: 100%; /* Volle Breite */
-    margin-top: 20px; /* Abstand nach oben */
-    border-collapse: collapse; /* Rahmen zusammenfallen lassen */
+    width: 100%;
+    /* Volle Breite */
+    margin-top: 20px;
+    /* Abstand nach oben */
+    border-collapse: collapse;
+    /* Rahmen zusammenfallen lassen */
 }
 
 /**
  * Stil für Tabellenkopf- und Tabellenzellen.
  * Definiert den Innenabstand und die Rahmenfarbe.
  */
-th, td {
-    padding: 10px; /* Innenabstand */
-    border: 1px solid #555; /* Rahmenfarbe */
+th,
+td {
+    padding: 10px;
+    /* Innenabstand */
+    border: 1px solid #555;
+    /* Rahmenfarbe */
 }
 
 /**
@@ -421,8 +516,10 @@ th, td {
  * Definiert die Hintergrundfarbe und die Textfarbe.
  */
 th {
-    background-color: #444; /* Hintergrundfarbe */
-    color: white; /* Textfarbe */
+    background-color: #444;
+    /* Hintergrundfarbe */
+    color: white;
+    /* Textfarbe */
 }
 
 /**
@@ -430,18 +527,30 @@ th {
  * Definiert das Aussehen, die Größe und die Animation beim Hovern.
  */
 .back-button {
-    padding: 15px 30px; /* Innenabstand */
-    font-size: 22px; /* Schriftgröße */
-    font-weight: bold; /* Fettschrift */
-    color: white; /* Textfarbe */
-    background: linear-gradient(45deg, red, darkred); /* Hintergrundverlauf */
-    border: none; /* Kein Rahmen */
-    border-radius: 10px; /* Abgerundete Ecken */
-    cursor: pointer; /* Zeiger-Cursor */
-    transition: all 0.3s ease-in-out; /* Animation beim Hovern */
-    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5); /* Schatten */
-    text-transform: uppercase; /* Großbuchstaben */
-    margin-top: 20px; /* Abstand nach oben */
+    padding: 15px 30px;
+    /* Innenabstand */
+    font-size: 22px;
+    /* Schriftgröße */
+    font-weight: bold;
+    /* Fettschrift */
+    color: white;
+    /* Textfarbe */
+    background: linear-gradient(45deg, red, darkred);
+    /* Hintergrundverlauf */
+    border: none;
+    /* Kein Rahmen */
+    border-radius: 10px;
+    /* Abgerundete Ecken */
+    cursor: pointer;
+    /* Zeiger-Cursor */
+    transition: all 0.3s ease-in-out;
+    /* Animation beim Hovern */
+    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
+    /* Schatten */
+    text-transform: uppercase;
+    /* Großbuchstaben */
+    margin-top: 20px;
+    /* Abstand nach oben */
 }
 
 /**
@@ -449,65 +558,85 @@ th {
  * Ändert den Hintergrundverlauf, vergrößert den Button und fügt einen stärkeren Schatten hinzu.
  */
 .back-button:hover {
-    background: linear-gradient(45deg, darkred, black); /* Dunklerer Hintergrundverlauf */
-    transform: scale(1.1); /* Vergrößerung */
-    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7); /* Stärkerer Schatten */
+    background: linear-gradient(45deg, darkred, black);
+    /* Dunklerer Hintergrundverlauf */
+    transform: scale(1.1);
+    /* Vergrößerung */
+    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7);
+    /* Stärkerer Schatten */
 }
 
+/* Impressum-Button im gleichen Stil wie Startscreen-Buttons */
+#impressum-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, red, darkred);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
+    text-transform: uppercase;
+    z-index: 9999;
+}
+
+#impressum-btn:hover {
+    background: linear-gradient(45deg, darkred, black);
+    transform: scale(1.1);
+    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7);
+}
+
+/* Impressum-Popup im selben Stil wie Steuerung */
 #impressum {
     display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.75); /* dunkler Hintergrund mit Transparenz */
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.impressum-box {
-    background-color: white;
-    color: #333;
-    padding: 30px;
-    border-radius: 15px;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    font-family: 'Arial', sans-serif;
+    /* Anfangszustand: versteckt */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.99);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
     text-align: center;
-    animation: fadeIn 0.3s ease-in-out;
+    box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.3);
+    z-index: 9999;
 }
 
 .impressum-box h2 {
-    margin-top: 0;
-    margin-bottom: 15px;
-}
-
-.impressum-box p {
-    margin: 10px 0;
+    padding: 20px;
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .close-impressum-btn {
     margin-top: 20px;
     padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #ffd800;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, red, darkred);
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
+    text-transform: uppercase;
 }
 
 .close-impressum-btn:hover {
-    transform: scale(1.05);
+    background: linear-gradient(45deg, darkred, black);
+    transform: scale(1.1);
+    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7);
 }
-
-/* Animation für sanftes Einblenden */
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
-
