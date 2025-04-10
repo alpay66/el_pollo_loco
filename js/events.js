@@ -147,3 +147,18 @@ function hideControls() {
     document.getElementById("controls-screen").style.display = "none";
     document.getElementById("startscreen").style.display = "flex";
 }
+
+window.addEventListener("load", () => {
+    const savedMute = localStorage.getItem("isMuted") === "true";
+    isMuted = savedMute;
+
+    document.getElementById("mute-btn").innerText = isMuted ? "🔇" : "🔊";
+
+    if (isMuted) {
+        allSounds.forEach(sound => sound.volume = 0);
+        backgroundMusic.pause();
+    } else {
+        allSounds.forEach(sound => sound.volume = 0.1);
+        backgroundMusic.play().catch(() => {});
+    }
+});

@@ -35,6 +35,7 @@ function toggleMute() {
 
     backgroundMusic[isMuted ? "pause" : "play"]();
     document.getElementById("mute-btn").innerText = isMuted ? "🔇" : "🔊";
+    localStorage.setItem("isMuted", isMuted);
 }
 
 /**
@@ -203,6 +204,7 @@ function startGame() {
     enableMobileButtons();
     setupMobileControls();
     init();
+    document.getElementById("impressum-btn").style.display = "none"; 
 }
 
 /**
