@@ -135,14 +135,14 @@ class World {
             return;
         }
         if (this.character.isAboveGround() && this.character.speedY < 0 && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
-            this.killEnemy(enemy); // Gegner töten
-            this.character.bounceOff(); // Charakter springt zurück
+            this.killEnemy(enemy);
+            this.character.bounceOff(); 
         }
         else if (enemy instanceof Endboss) {
-            enemy.dealDamage(this.character); // Endboss fügt Schaden zu
+            enemy.dealDamage(this.character); 
         }
         else {
-            this.character.hit(); // Charakter wird getroffen
+            this.character.hit(); 
         }
     }
 
