@@ -116,7 +116,6 @@ class WorldRenderer {
             this.flipImageBack(mo);
         }
     }
-    
 
     /**
      * Spiegelt das Bild horizontal.
