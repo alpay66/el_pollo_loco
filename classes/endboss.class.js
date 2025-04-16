@@ -60,7 +60,8 @@ class Endboss extends MovableObject {
     };
 
     /**
-     * Erstellt einen neuen Endboss mit vordefinierten Animationen und setzt ihn in die Welt.
+     * Erzeugt eine neue Endboss-Instanz.
+     * Lädt alle benötigten Bilder und initialisiert die Position.
      */
     constructor() {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
@@ -76,7 +77,8 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * Startet die Animation und überprüft den Abstand zum Spieler.
+     * Startet die Hauptanimation des Endbosses.
+     * Überprüft regelmäßig die Distanz zum Spieler und aktualisiert den Zustand.
      */
     animateEndboss() {
         setInterval(() => {
@@ -86,7 +88,7 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * Aktualisiert den aktuellen Zustand des Endbosses und setzt die richtige Animation.
+     * Aktualisiert den Animationszustand basierend auf dem aktuellen Status.
      */
     updateAnimationState() {
         if (this.isDead) this.playAnimation(this.ENDBOSS_DEAD);
@@ -99,32 +101,76 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * Bewegt den Endboss auf den Spieler zu, falls er nah genug ist.
+     * Bewegt den Endboss in Richtung des Spielers, wenn dieser in Reichweite ist.
+     * Führt einen Angriff aus, wenn der Spieler in Angriffsreichweite ist.
      */
     moveToPlayer() {
-        if (!this.world || !this.world.character) return;
-
-        let playerX = this.world.character.x;
-        let distance = Math.abs(playerX - this.x);
-
-        if (distance > 50) {
-            this.x += playerX < this.x ? -this.speed : this.speed;
-            this.otherDirection = playerX > this.x;
-        } else {
+        if (!this.isWorldOrCharacterMissing()) return;
+        
+        const playerX = this.world.character.x;
+        const distanceToPlayer = this.calculateDistanceTo(playerX);
+        
+        if (this.isPlayerInAttackRange(distanceToPlayer)) {
             this.attack();
+        } else {
+            this.moveTowards(playerX);
         }
     }
 
     /**
-     * Fügt dem Spieler Schaden zu.
-     * @param {Character} character - Das Charakterobjekt, das getroffen wird.
+     * Überprüft, ob die Welt oder der Spieler fehlen.
+     * @returns {boolean} True wenn Welt und Spieler existieren, sonst false
+     */
+    isWorldOrCharacterMissing() {
+        return this.world && this.world.character;
+    }
+
+    /**
+     * Berechnet die Distanz zum Spieler.
+     * @param {number} playerX - X-Position des Spielers
+     * @returns {number} Absolute Distanz zum Spieler
+     */
+    calculateDistanceTo(playerX) {
+        return Math.abs(playerX - this.x);
+    }
+
+    /**
+     * Überprüft ob der Spieler in Angriffsreichweite ist.
+     * @param {number} distance - Distanz zum Spieler
+     * @returns {boolean} True wenn in Reichweite, sonst false
+     */
+    isPlayerInAttackRange(distance) {
+        return distance <= 50;
+    }
+
+    /**
+     * Bewegt den Endboss in Richtung der gegebenen X-Position.
+     * @param {number} playerX - Ziel-X-Position
+     */
+    moveTowards(playerX) {
+        this.x += this.getMovementDirection(playerX);
+        this.otherDirection = playerX > this.x;
+    }
+
+    /**
+     * Bestimmt die Bewegungsrichtung basierend auf der Spielerposition.
+     * @param {number} playerX - X-Position des Spielers
+     * @returns {number} Bewegungsrichtung (-speed oder +speed)
+     */
+    getMovementDirection(playerX) {
+        return playerX < this.x ? -this.speed : this.speed;
+    }
+
+    /**
+     * Fügt dem Charakter Schaden zu.
+     * @param {Character} character - Der zu schädigende Charakter
      */
     dealDamage(character) {
         character.hit(this.damageAmount);
     }
 
     /**
-     * Überprüft die Entfernung zum Spieler und löst eine Alarmanimation aus.
+     * Überprüft die Distanz zum Spieler und löst Alarm aus wenn nötig.
      */
     checkPlayerDistance() {
         if (!this.world || !this.world.character) return;
@@ -134,7 +180,7 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * Setzt den Endboss in den Alarmzustand.
+     * Setzt den Endboss in Alarmbereitschaft.
      */
     alert() {
         this.isAlerted = true;
@@ -143,7 +189,7 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * Führt einen Angriff aus, wenn der Endboss sich im Angriffsbereich befindet.
+     * Führt einen Angriff aus.
      */
     attack() {
         if (!this.isDead && !this.isAttacking) {
@@ -156,14 +202,14 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * Beendet den Angriff nach einer bestimmten Zeit.
+     * Beendet den Angriff nach einer Verzögerung.
      */
     endAttackAfterDelay() {
         setTimeout(() => this.isAttacking = false, 700);
     }
 
     /**
-     * Der Endboss nimmt Schaden und spielt die entsprechende Animation ab.
+     * Verarbeitet Schaden am Endboss.
      */
     takeDamage() {
         if (!this.isDead) {
@@ -177,7 +223,7 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * Setzt den Endboss in den Verletzungszustand für eine kurze Zeit.
+     * Setzt den Verletzungsstatus für eine begrenzte Zeit.
      */
     setHurtState() {
         this.isHurt = true;
@@ -185,14 +231,14 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * Überprüft, ob der Endboss besiegt wurde.
+     * Überprüft ob der Endboss gestorben ist.
      */
     checkDeath() {
         if (this.energie <= 0) this.die();
     }
 
     /**
-     * Spielt den Verletzungssound des Endbosses ab.
+     * Spielt den Verletzungssound ab.
      */
     playHurtSound() {
         if (this.endbossHurt.paused || this.endbossHurt.ended) {
@@ -202,7 +248,7 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * Markiert den Endboss als besiegt und entfernt ihn nach einer Verzögerung.
+     * Verarbeitet den Tod des Endbosses.
      */
     die() {
         if (this.isDead) return;
@@ -210,11 +256,11 @@ class Endboss extends MovableObject {
         this.markAsDead();
         this.playDeathAnimation();
         this.playDeathSound();
-        this.removeeEndboss();
+        this.removeEndbossAfterDelay();
     }
 
     /**
-     * Markiert den Endboss als tot und stoppt seine Bewegung.
+     * Markiert den Endboss als tot und stoppt die Bewegung.
      */
     markAsDead() {
         this.isDead = true;
@@ -222,14 +268,14 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * Spielt die Todesanimation des Endbosses.
+     * Spielt die Todesanimation ab.
      */
     playDeathAnimation() {
         this.playAnimation(this.ENDBOSS_DEAD);
     }
 
     /**
-     * Spielt den Sound ab, wenn der Endboss besiegt wird.
+     * Spielt den Todesound ab.
      */
     playDeathSound() {
         this.endbossDead.currentTime = 0;
@@ -239,14 +285,14 @@ class Endboss extends MovableObject {
     /**
      * Entfernt den Endboss nach einer Verzögerung.
      */
-    removeeEndboss() {
-        setTimeout(() => this.removeEndboss(), 1500);
+    removeEndbossAfterDelay() {
+        setTimeout(() => this.removeFromWorld(), 1500);
     }
 
     /**
-     * Löscht den Endboss aus der Welt.
+     * Entfernt den Endboss aus der Welt.
      */
-    removeEndboss() {
+    removeFromWorld() {
         if (this.world && this.world.level) {
             let index = this.world.level.enemies.indexOf(this);
             if (index !== -1) {
