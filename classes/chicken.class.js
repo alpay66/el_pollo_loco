@@ -5,6 +5,7 @@ class Chicken extends MovableObject {
     y = 335;
     height = 110;
     width = 80;
+    isDead = false;
     CHICKEN_WALKING = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -74,6 +75,7 @@ class Chicken extends MovableObject {
      * Beendet die Bewegung des Chickens und spielt die Sterbeanimation ab.
      */
     die() {
+        this.isDead = true;
         this.stopChickenSound();
         clearInterval(this.walkingInterval);
         clearInterval(this.animationInterval);

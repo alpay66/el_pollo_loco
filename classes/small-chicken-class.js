@@ -6,6 +6,7 @@ class SmallChicken extends MovableObject {
     y = 343;
     height = 100;
     width = 70;
+    isDead = false;
 
     /** @type {string[]} Bilder für die Geh-Animation. */
     SMALL_CHICKEN_WALKING = [
@@ -50,6 +51,7 @@ class SmallChicken extends MovableObject {
      * Setzt das SmallChicken in den toten Zustand und stoppt alle Animationen.
      */
     die() {
+        this.isDead = true;
         clearInterval(this.walkingInterval);
         clearInterval(this.animationInterval);
         this.loadImage(this.SMALL_CHICKEN_DEAD[0]);

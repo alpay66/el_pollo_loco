@@ -149,7 +149,7 @@ function hideControls() {
 }
 
 window.addEventListener("load", () => {
-    const savedMute = localStorage.getItem("isMuted") === "true";
+    const savedMute = localStorage.getItem("isMuted") === "false";
     isMuted = savedMute;
 
     document.getElementById("mute-btn").innerText = isMuted ? "🔇" : "🔊";

@@ -16,7 +16,7 @@ class World {
     stompSound = new Audio('audio/enemie_dead.mp3');
     collectBottleSound = new Audio('audio/collect_bottle.mp3');
     collectCoinSound = new Audio('audio/collect_coin.mp3');
-    
+
     /**
      * Erstellt eine neue World-Instanz.
      * @constructor
@@ -27,7 +27,7 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.renderer = new WorldRenderer(this, this.ctx, this.canvas); 
+        this.renderer = new WorldRenderer(this, this.ctx, this.canvas);
         this.setWorld();
         this.runCollisionCheck();
         this.runEndbossCollisionCheck();
@@ -131,13 +131,18 @@ class World {
      * @param {MovableObject} enemy - Der Gegner, mit dem der Charakter kollidiert.
      */
     handleEnemyCollision(enemy) {
-        if (this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
-            this.killEnemy(enemy);
-            this.character.bounceOff();
-        } else if (enemy instanceof Endboss) {
-            enemy.dealDamage(this.character);
-        } else {
-            this.character.hit();
+        if (enemy.isDead) {
+            return;
+        }
+        if (this.character.isAboveGround() && this.character.speedY < 0 && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
+            this.killEnemy(enemy); // Gegner töten
+            this.character.bounceOff(); // Charakter springt zurück
+        }
+        else if (enemy instanceof Endboss) {
+            enemy.dealDamage(this.character); // Endboss fügt Schaden zu
+        }
+        else {
+            this.character.hit(); // Charakter wird getroffen
         }
     }
 
