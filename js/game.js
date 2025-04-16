@@ -66,7 +66,6 @@ function registerSounds() {
  */
 function registerWorldSounds() {
     if (!world) return;
-
     registerSound(world.collectBottleSound);
     registerSound(world.collectCoinSound);
 }
@@ -76,7 +75,6 @@ function registerWorldSounds() {
  */
 function registerCharacterSounds() {
     if (!world.character) return;
-
     ["hurtSound", "jumpSound", "throwSound", "walkSound"].forEach(sound => 
         registerSound(world.character[sound])
     );
@@ -87,7 +85,6 @@ function registerCharacterSounds() {
  */
 function registerEnemySounds() {
     if (!world.level || !world.level.enemies) return;
-
     world.level.enemies.forEach(enemy => {
         if (enemy instanceof Chicken) {
             registerSound(enemy.chickenSound);
@@ -104,7 +101,6 @@ function registerEnemySounds() {
  */
 function registerBottleSounds() {
     if (!world.throwableObjects) return;
-
     world.throwableObjects.forEach(bottle => 
         registerSound(bottle.splashSound)
     );
