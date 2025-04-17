@@ -3,9 +3,9 @@
  * Erbt von MovableObject.
  */
 class SmallChicken extends MovableObject {
-    y = 343;
-    height = 100;
-    width = 70;
+    y = 378;
+    height = 60;
+    width = 60;
     isDead = false;
 
     /** @type {string[]} Bilder für die Geh-Animation. */
