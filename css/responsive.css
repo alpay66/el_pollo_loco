@@ -67,6 +67,66 @@
     }
 }
 
+/**
+ * Passt die Position des Mute-Buttons (#mute-btn) basierend auf der Bildschirmbreite an.
+ * 
+ * @media (max-width: 932px)
+ * - Setzt die `top`-Position des Mute-Buttons auf 378px.
+ */
+@media (max-width: 932px) {
+    #mute-btn {
+        top: 378px;
+    }
+}
+
+/**
+ * Passt die Position des Mute-Buttons (#mute-btn) basierend auf der Bildschirmbreite an.
+ * 
+ * @media (max-width: 915px)
+ * - Setzt die `top`-Position des Mute-Buttons auf 360px.
+ */
+@media (max-width: 915px) {
+    #mute-btn {
+        top: 360px;
+    }
+}
+
+/**
+ * Passt die Position des Mute-Buttons (#mute-btn) basierend auf der Bildschirmbreite an.
+ * 
+ * @media (max-width: 844px)
+ * - Setzt die `top`-Position des Mute-Buttons auf 338px.
+ */
+@media (max-width: 844px) {
+    #mute-btn {
+        top: 338px;
+    }
+}
+
+/**
+ * Passt die Position des Mute-Buttons (#mute-btn) basierend auf der Bildschirmbreite an.
+ * 
+ * @media (max-width: 740px)
+ * - Setzt die `top`-Position des Mute-Buttons auf 306px.
+ */
+@media (max-width: 740px) {
+    #mute-btn {
+        top: 306px;
+    }
+}
+
+/**
+ * Passt die Position des Mute-Buttons (#mute-btn) basierend auf der Bildschirmbreite an.
+ * 
+ * @media (max-width: 667px)
+ * - Setzt die `top`-Position des Mute-Buttons auf 323px.
+ */
+@media (max-width: 667px) {
+    #mute-btn {
+        top: 323px;
+    }
+}
+
 /* 
  * Media Query für Bildschirme mit einer maximalen Breite von 640px.
  * Passt die Canvas-Größe an.
