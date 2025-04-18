@@ -51,6 +51,7 @@ function registerSound(audioElement) {
  */
 function registerSounds() {
     registerSound(backgroundMusic);
+    allSounds.push(backgroundMusic);
 
     if (!world) return;
 
@@ -208,6 +209,11 @@ function startGame() {
  * @param {string} letsGo - 'play' zum Abspielen, 'stop' zum Stoppen.
  */
 function manageBackgroundMusic(letsGo) {
+    if (isMuted) {
+        backgroundMusic.pause();
+        backgroundMusic.volume = 0;
+        return;
+    }
     if (letsGo === 'play') {
         backgroundMusic.currentTime = 0;
         backgroundMusic.play().catch(error => console.error('Audio-Fehler:', error));

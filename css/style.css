@@ -271,17 +271,12 @@ span {
     font-weight: bold;
     color: white;
     background: linear-gradient(45deg, red, darkred);
-    /* Hintergrundverlauf */
     border: none;
     border-radius: 10px;
-    /* Abgerundete Ecken */
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    /* Animation beim Hovern */
     box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
-    /* Schatten */
     text-transform: uppercase;
-    /* Großbuchstaben */
 }
 
 /* 
