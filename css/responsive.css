@@ -27,16 +27,6 @@
 }
 
 /* 
- * Media Query für Bildschirme mit einer maximalen Breite von 800px.
- * Aktiviert die mobilen Steuerelemente.
- */
-@media (max-width: 800px) {
-    #mobile-controls {
-        display: flex; /* Zeigt die mobilen Steuerelemente an */
-    }
-}
-
-/* 
  * Media Query für Bildschirme mit einer maximalen Breite von 760px.
  * Blendet das h1-Element aus.
  */

@@ -115,7 +115,7 @@ function init() {
     canvas = document.getElementById('canvas');
     levelInit();
     world = new World(canvas, keyboard);
-    registerSounds(); 
+    registerSounds();
 }
 
 /**

@@ -6,10 +6,8 @@ function checkOrientation() {
     let rotateWarning = document.getElementById("rotate-warning");
     if (window.innerHeight > window.innerWidth && window.innerWidth <= 920) {
         rotateWarning.style.display = "flex";
-        enableMobileButtons();
     } else {
         rotateWarning.style.display = "none";
-        enableMobileButtons();
     }
 }
 
@@ -17,18 +15,6 @@ function checkOrientation() {
 window.addEventListener("resize", checkOrientation);
 window.addEventListener("orientationchange", checkOrientation);
 document.addEventListener("DOMContentLoaded", checkOrientation);
-window.addEventListener("resize", handleMobileControls);
-window.addEventListener("orientationchange", handleMobileControls);
-document.addEventListener("DOMContentLoaded", handleMobileControls);
-
-/**
- * Initialisiert die mobilen Steuerelemente beim Laden der Seite.
- * @listens window:load
- */
-window.onload = () => {
-    handleMobileControls();
-    setupMobileControls();
-};
 
 /**
  * Event-Handler für Tastendruck-Events.
