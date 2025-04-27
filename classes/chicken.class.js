@@ -32,6 +32,7 @@ class Chicken extends MovableObject {
         this.x = 550 + Math.random() * 3600;
         this.speed = 0.85 + Math.random() * 1.9;
         this.animateChicken();
+        allSounds.push(this.chickenSound);
         this.offsetX = 0.2; 
         this.offsetY = 0.2;
     }

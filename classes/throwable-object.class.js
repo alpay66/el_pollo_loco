@@ -35,13 +35,12 @@ class ThrowableObject extends MovableObject {
         super().loadImage(this.ROTATED_SALSA_BOTTLE[0]);
         this.loadImages(this.ROTATED_SALSA_BOTTLE);
         this.loadImages(this.SALSA_BOTTLE_SPLASH);
+        allSounds.push(this.splashSound);
         this.x = x;
         this.y = y;
         this.speedX = speedX;
         this.world = world;
         this.throwBottle();
-        this.splashSound = new Audio('audio/bottle-crack.mp3');
-        registerSound(this.splashSound);
     }
 
     /**

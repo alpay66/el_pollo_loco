@@ -132,33 +132,6 @@ function hideControls() {
 }
 
 /**
- * Initialisiert die Audio-Einstellungen beim Laden der Seite.
- * @listens window:load
- */
-window.addEventListener("load", () => {
-    const savedMute = localStorage.getItem("isMuted");
-    isMuted = savedMute === "true"; // Lese den gespeicherten Mute-Status
-
-    if (isMuted) {
-        allSounds.forEach(sound => {
-            sound.volume = 0;
-            sound.pause();
-        });
-        backgroundMusic.volume = 0;
-        backgroundMusic.pause();
-    } else {
-        allSounds.forEach(sound => {
-            sound.volume = 0.1;
-        });
-        backgroundMusic.volume = 0.1;
-        backgroundMusic.play().catch(() => {});
-    }
-
-    // Aktualisiere den Mute-Button
-    document.getElementById("mute-btn").innerText = isMuted ? "🔇" : "🔊";
-});
-
-/**
  * Versteckt den Fullscreen-Button auf mobilen Geräten.
  * Überprüft, ob das aktuelle Gerät ein mobiles Gerät ist, und passt die Sichtbarkeit des Buttons entsprechend an.
  * 

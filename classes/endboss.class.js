@@ -70,6 +70,8 @@ class Endboss extends MovableObject {
         this.loadImages(this.ENDBOSS_ATTACK);
         this.loadImages(this.ENDBOSS_HURT);
         this.loadImages(this.ENDBOSS_DEAD);
+        allSounds.push(this.endbossHurt);
+        allSounds.push(this.endbossDead);
         this.x = 2200;
         this.world = null;
         this.endbossBar = new EndbossBar();

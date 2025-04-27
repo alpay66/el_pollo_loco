@@ -27,6 +27,9 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        allSounds.push(this.stompSound);
+        allSounds.push(this.collectBottleSound);
+        allSounds.push(this.collectCoinSound);
         this.renderer = new WorldRenderer(this, this.ctx, this.canvas);
         this.setWorld();
         this.runCollisionCheck();

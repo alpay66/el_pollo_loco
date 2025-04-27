@@ -104,6 +104,10 @@ class Character extends MovableObject {
         this.hurtSound.volume = 0.5;
         this.applyGravity();
         this.animateCharacter();
+        allSounds.push(this.walkSound);
+        allSounds.push(this.jumpSound);
+        allSounds.push(this.hurtSound);
+        allSounds.push(this.throwSound);
         this.idleTime = 1;
         this.playAnimation(this.CHARACTER_IDLE);
         this.offsetX = 10;

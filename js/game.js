@@ -21,6 +21,7 @@ let allSounds = [];
 let backgroundMusic = new Audio('audio/background-musik-pollo.mp3');
 backgroundMusic.volume = 0.1;
 backgroundMusic.loop = true;
+allSounds.push(backgroundMusic);
 
 /**
  * Schaltet die Stummschaltung des Spiels um.
@@ -28,84 +29,34 @@ backgroundMusic.loop = true;
  */
 function toggleMute() {
     isMuted = !isMuted;
-    allSounds.forEach(sound => {
-        sound.volume = isMuted ? 0 : 0.1;
-        isMuted ? sound.pause() : sound.play().catch(() => {});
-    });
-
-    backgroundMusic[isMuted ? "pause" : "play"]();
+    
+    if (isMuted) {
+        allSounds.forEach(sound => sound.pause());
+        backgroundMusic.pause();
+    } else {
+        backgroundMusic.play().catch(() => {});
+    }
+    
     document.getElementById("mute-btn").innerText = isMuted ? "🔇" : "🔊";
     localStorage.setItem("isMuted", isMuted);
 }
 
-/**
- * Registriert einen Sound im `allSounds`-Array.
- * @param {HTMLAudioElement} audioElement - Der Sound, der registriert werden soll.
- */
-function registerSound(audioElement) {
-    allSounds.push(audioElement);
+function loadMuteSettings() {
+    isMuted = localStorage.getItem("isMuted") === "true";
+
+    allSounds.forEach(sound => sound.volume = isMuted ? 0 : 0.1);
+
+    if (isMuted) {
+        allSounds.forEach(sound => sound.pause());
+        backgroundMusic.pause();
+    } else {
+        backgroundMusic.volume = 0.1;
+        backgroundMusic.play().catch(() => {});
+    }
 }
 
-/**
- * Registriert alle Sounds des Spiels.
- */
-function registerSounds() {
-    registerSound(backgroundMusic);
-    allSounds.push(backgroundMusic);
 
-    if (!world) return;
 
-    registerSound(world.stompSound);
-    registerWorldSounds();
-    registerCharacterSounds();
-    registerEnemySounds();
-    registerBottleSounds();
-}
-
-/**
- * Registriert Sounds, die in der World-Klasse definiert sind.
- */
-function registerWorldSounds() {
-    if (!world) return;
-    registerSound(world.collectBottleSound);
-    registerSound(world.collectCoinSound);
-}
-
-/**
- * Registriert die Sounds des Charakters.
- */
-function registerCharacterSounds() {
-    if (!world.character) return;
-    ["hurtSound", "jumpSound", "throwSound", "walkSound"].forEach(sound => 
-        registerSound(world.character[sound])
-    );
-}
-
-/**
- * Registriert die Sounds der Gegner.
- */
-function registerEnemySounds() {
-    if (!world.level || !world.level.enemies) return;
-    world.level.enemies.forEach(enemy => {
-        if (enemy instanceof Chicken) {
-            registerSound(enemy.chickenSound);
-        } 
-        if (enemy instanceof Endboss) {
-            registerSound(enemy.endbossHurt);
-            registerSound(enemy.endbossDead);
-        }
-    });
-}
-
-/**
- * Registriert die Sounds der Flaschen.
- */
-function registerBottleSounds() {
-    if (!world.throwableObjects) return;
-    world.throwableObjects.forEach(bottle => 
-        registerSound(bottle.splashSound)
-    );
-}
 
 /**
  * Initialisiert das Spiel.
@@ -115,7 +66,7 @@ function init() {
     canvas = document.getElementById('canvas');
     levelInit();
     world = new World(canvas, keyboard);
-    registerSounds();
+    loadMuteSettings();
 }
 
 /**
@@ -138,7 +89,6 @@ function restartGame() {
     resetGame();
     enableMobileButtons();
     manageBackgroundMusic('play');
-    registerSounds();
     if (isMuted) {
         toggleMute();  
     }
@@ -162,7 +112,7 @@ function stopGame() {
 
     manageBackgroundMusic('stop');
 
-    for (let i = 1; i < 9999; i++) {
+    for (let i = 1; i < 999; i++) {
         window.clearInterval(i);
     }
 }
