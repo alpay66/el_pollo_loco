@@ -29,34 +29,53 @@ allSounds.push(backgroundMusic);
  */
 function toggleMute() {
     isMuted = !isMuted;
-    
-    if (isMuted) {
-        allSounds.forEach(sound => sound.pause());
-        backgroundMusic.pause();
-    } else {
-        backgroundMusic.play().catch(() => {});
-    }
-    
+
+    allSounds.forEach(sound => {
+        sound.volume = isMuted ? 0 : 0.1;
+        if (isMuted) {
+            sound.pause();
+        }
+    });
+
+    backgroundMusic.volume = isMuted ? 0 : 0.1;
+    isMuted ? backgroundMusic.pause() : backgroundMusic.play().catch(() => {});
+
+    stopAllEnemySounds(); // <-- hier neu hinzufügen!
+
     document.getElementById("mute-btn").innerText = isMuted ? "🔇" : "🔊";
     localStorage.setItem("isMuted", isMuted);
 }
 
+
 function loadMuteSettings() {
     isMuted = localStorage.getItem("isMuted") === "true";
-
-    allSounds.forEach(sound => sound.volume = isMuted ? 0 : 0.1);
-
-    if (isMuted) {
-        allSounds.forEach(sound => sound.pause());
-        backgroundMusic.pause();
-    } else {
-        backgroundMusic.volume = 0.1;
-        backgroundMusic.play().catch(() => {});
-    }
+    allSounds.forEach(sound => {
+        sound.volume = isMuted ? 0 : 0.1;
+        if (isMuted) sound.pause();
+    });
+    backgroundMusic.volume = isMuted ? 0 : 0.1;
+    isMuted ? backgroundMusic.pause() : backgroundMusic.play().catch(() => {});
+    stopAllEnemySounds(); 
+    document.getElementById("mute-btn").innerText = isMuted ? "🔇" : "🔊";
 }
 
-
-
+function stopAllEnemySounds() {
+    if (!world || !world.level || !world.level.enemies) return;
+    world.level.enemies.forEach(enemy => {
+        if (enemy instanceof Chicken && enemy.chickenSound) {
+            enemy.chickenSound.pause();
+            enemy.chickenSound.currentTime = 0;
+        }
+        if (enemy instanceof Endboss && enemy.endbossHurt) {
+            enemy.endbossHurt.pause();
+            enemy.endbossHurt.currentTime = 0;
+        }
+        if (enemy instanceof Endboss && enemy.endbossDead) {
+            enemy.endbossDead.pause();
+            enemy.endbossDead.currentTime = 0;
+        }
+    });
+}
 
 /**
  * Initialisiert das Spiel.
@@ -89,9 +108,7 @@ function restartGame() {
     resetGame();
     enableMobileButtons();
     manageBackgroundMusic('play');
-    if (isMuted) {
-        toggleMute();  
-    }
+    loadMuteSettings();
 }
 
 /**
@@ -114,19 +131,6 @@ function stopGame() {
 
     for (let i = 1; i < 999; i++) {
         window.clearInterval(i);
-    }
-}
-
-/**
- * Stoppt alle Sounds der Hühner.
- */
-function stopAllChickenSounds() {
-    if (world && world.level && world.level.enemies) {
-        world.level.enemies.forEach(enemy => {
-            if (enemy instanceof Chicken) {
-                enemy.stopChickenSound();
-            }
-        });
     }
 }
 

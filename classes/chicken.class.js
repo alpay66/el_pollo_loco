@@ -14,7 +14,7 @@ class Chicken extends MovableObject {
     CHICKEN_DEAD = [
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
-    chickenSound = new Audio('audio/chicken.mp3');
+    chickenSound;
     offset = {
         top: 5,
         bottom: 5,
@@ -31,10 +31,25 @@ class Chicken extends MovableObject {
         this.loadImages(this.CHICKEN_DEAD);
         this.x = 550 + Math.random() * 3600;
         this.speed = 0.85 + Math.random() * 1.9;
-        this.animateChicken();
-        allSounds.push(this.chickenSound);
         this.offsetX = 0.2; 
         this.offsetY = 0.2;
+        this.initChickenSound();
+        this.animateChicken();
+    }
+
+    /**
+     * Initialisiert den Chicken-Sound.
+     */
+    initChickenSound() {
+        this.chickenSound = new Audio('audio/chicken.mp3');
+        allSounds.push(this.chickenSound);
+
+        if (isMuted) {
+            this.chickenSound.volume = 0;
+            this.chickenSound.pause();
+        } else {
+            this.chickenSound.volume = 0.1;
+        }
     }
 
     /**
@@ -54,17 +69,18 @@ class Chicken extends MovableObject {
     }
 
     /**
-     * Spielt das Chicken-Sound ab.
+     * Spielt den Chicken-Sound ab.
      */
     playChickenSound() {
-        this.chickenSound.volume = 0.1;
-        this.chickenSound.loop = true;
-        this.chickenSound.play();
+        if (!isMuted) {
+            this.chickenSound.loop = true;
+            this.chickenSound.play();
+        }
         this.chickenSoundPlaying = true;
     }
 
     /**
-     * Stoppt das Chicken-Sound.
+     * Stoppt den Chicken-Sound.
      */
     stopChickenSound() {
         this.chickenSound.pause();

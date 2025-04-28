@@ -268,7 +268,6 @@ class World {
         this.stopAllMovement(world);
         cancelAnimationFrame(world.animationFrame);
         clearInterval(world.gameLoop);
-        stopAllChickenSounds();
         world.level.enemies = [];
     }
 
