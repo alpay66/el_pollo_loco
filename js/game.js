@@ -24,57 +24,143 @@ backgroundMusic.loop = true;
 allSounds.push(backgroundMusic);
 
 /**
- * Schaltet die Stummschaltung des Spiels um.
- * Pausiert oder spielt alle Sounds und aktualisiert den Mute-Button.
+ * Schaltet den Stumm-Modus um und aktualisiert alle Audio-Elemente.
  */
 function toggleMute() {
-    isMuted = !isMuted;
-
-    allSounds.forEach(sound => {
-        sound.volume = isMuted ? 0 : 0.1;
-        if (isMuted) {
-            sound.pause();
-        }
-    });
-
-    backgroundMusic.volume = isMuted ? 0 : 0.1;
-    isMuted ? backgroundMusic.pause() : backgroundMusic.play().catch(() => {});
-
-    stopAllEnemySounds(); // <-- hier neu hinzufügen!
-
-    document.getElementById("mute-btn").innerText = isMuted ? "🔇" : "🔊";
-    localStorage.setItem("isMuted", isMuted);
+    toggleMuteStatus();
+    updateAllSounds();
+    updateBackgroundMusic();
+    stopAllEnemySounds();
+    updateMuteButton();
+    saveMuteStatus();
 }
 
-
+/**
+ * Lädt die Stumm-Einstellungen und wendet sie auf alle Audio-Elemente an.
+ */
 function loadMuteSettings() {
-    isMuted = localStorage.getItem("isMuted") === "true";
+    loadMuteStatus();
+    adjustAllSoundsVolume();
+    adjustBackgroundMusic();
+    updateMuteButton();
+    stopAllEnemySounds();
+}
+
+/**
+ * Wechselt den aktuellen Stumm-Status zwischen true und false.
+ */
+function toggleMuteStatus() {
+    isMuted = !isMuted;
+}
+
+/**
+ * Aktualisiert Lautstärke und Wiedergabe für alle Spiel-Sounds basierend auf Stumm-Status.
+ */
+function updateAllSounds() {
     allSounds.forEach(sound => {
         sound.volume = isMuted ? 0 : 0.1;
         if (isMuted) sound.pause();
     });
+}
+
+/**
+ * Aktualisiert Lautstärke und Wiedergabe der Hintergrundmusik basierend auf Stumm-Status.
+ */
+function updateBackgroundMusic() {
     backgroundMusic.volume = isMuted ? 0 : 0.1;
-    isMuted ? backgroundMusic.pause() : backgroundMusic.play().catch(() => {});
-    stopAllEnemySounds(); 
+    if (isMuted) {
+        backgroundMusic.pause();
+    } else {
+        backgroundMusic.play().catch(() => {});
+    }
+}
+
+/**
+ * Speichert den aktuellen Stumm-Status im Local Storage.
+ */
+function saveMuteStatus() {
+    localStorage.setItem("isMuted", isMuted);
+}
+
+/**
+ * Lädt den Stumm-Status aus dem Local Storage.
+ */
+function loadMuteStatus() {
+    isMuted = localStorage.getItem("isMuted") === "true";
+}
+
+/**
+ * Passt die Lautstärke aller Spiel-Sounds basierend auf Stumm-Status an.
+ */
+function adjustAllSoundsVolume() {
+    allSounds.forEach(sound => {
+        sound.volume = isMuted ? 0 : 0.1;
+        if (isMuted) sound.pause();
+    });
+}
+
+/**
+ * Passt Lautstärke und Wiedergabe der Hintergrundmusik basierend auf Stumm-Status an.
+ */
+function adjustBackgroundMusic() {
+    backgroundMusic.volume = isMuted ? 0 : 0.1;
+    if (isMuted) {
+        backgroundMusic.pause();
+    } else {
+        backgroundMusic.play().catch(() => {});
+    }
+}
+
+/**
+ * Aktualisiert die Darstellung des Stumm-Buttons.
+ */
+function updateMuteButton() {
     document.getElementById("mute-btn").innerText = isMuted ? "🔇" : "🔊";
 }
 
+/**
+ * Stoppt alle Gegner-Sounds im Spiel.
+ */
 function stopAllEnemySounds() {
     if (!world || !world.level || !world.level.enemies) return;
     world.level.enemies.forEach(enemy => {
-        if (enemy instanceof Chicken && enemy.chickenSound) {
-            enemy.chickenSound.pause();
-            enemy.chickenSound.currentTime = 0;
-        }
-        if (enemy instanceof Endboss && enemy.endbossHurt) {
-            enemy.endbossHurt.pause();
-            enemy.endbossHurt.currentTime = 0;
-        }
-        if (enemy instanceof Endboss && enemy.endbossDead) {
-            enemy.endbossDead.pause();
-            enemy.endbossDead.currentTime = 0;
-        }
+        stopChickenSounds(enemy);
+        stopEndbossHurtSound(enemy);
+        stopEndbossDeadSound(enemy);
     });
+}
+
+/**
+ * Stoppt alle Sounds von Hühner-Gegnern.
+ * @param {Object} enemy - Das Gegner-Objekt das verarbeitet werden soll
+ */
+function stopChickenSounds(enemy) {
+    if (enemy instanceof Chicken && enemy.chickenSound) {
+        enemy.chickenSound.pause();
+        enemy.chickenSound.currentTime = 0;
+    }
+}
+
+/**
+ * Stoppt den Verletzt-Sound von Endboss-Gegnern.
+ * @param {Object} enemy - Das Gegner-Objekt das verarbeitet werden soll
+ */
+function stopEndbossHurtSound(enemy) {
+    if (enemy instanceof Endboss && enemy.endbossHurt) {
+        enemy.endbossHurt.pause();
+        enemy.endbossHurt.currentTime = 0;
+    }
+}
+
+/**
+ * Stoppt den Todes-Sound von Endboss-Gegnern.
+ * @param {Object} enemy - Das Gegner-Objekt das verarbeitet werden soll
+ */
+function stopEndbossDeadSound(enemy) {
+    if (enemy instanceof Endboss && enemy.endbossDead) {
+        enemy.endbossDead.pause();
+        enemy.endbossDead.currentTime = 0;
+    }
 }
 
 /**
