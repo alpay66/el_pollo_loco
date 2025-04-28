@@ -10,7 +10,6 @@ class Healthbar extends DrawableObject {
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/80.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png'
     ];
-    
     percantege = 100;
     type;
 

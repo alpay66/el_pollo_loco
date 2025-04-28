@@ -28,11 +28,6 @@ class MovableObject extends DrawableObject {
             this.y + this.height - a.bottom > mo.y + b.top
         );
     }
-    
-    drawCollisionBox(ctx) {
-        ctx.strokeStyle = 'red';
-        ctx.strokeRect(this.x + this.offsetX, this.y + this.offsetY, this.width, this.height);
-    }
 
     /**
      * Verursacht Schaden am Objekt, falls die Mindestzeit zwischen Treffern eingehalten wurde.

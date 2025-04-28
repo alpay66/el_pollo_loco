@@ -7,15 +7,11 @@ class SmallChicken extends MovableObject {
     height = 60;
     width = 60;
     isDead = false;
-
-    /** @type {string[]} Bilder für die Geh-Animation. */
     SMALL_CHICKEN_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
         'img/3_enemies_chicken/chicken_small/1_walk/3_w.png'
     ];
-
-    /** @type {string[]} Bild für das tote SmallChicken. */
     SMALL_CHICKEN_DEAD = [
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
