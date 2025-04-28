@@ -262,7 +262,7 @@ span {
     display: none;
     position: absolute;
     bottom: 20px;
-    width: 100%;
+    width: 80%;
     justify-content: center;
     gap: 10px;
     z-index: 10;

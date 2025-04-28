@@ -71,7 +71,7 @@ function updateBackgroundMusic() {
     if (isMuted) {
         backgroundMusic.pause();
     } else {
-        backgroundMusic.play().catch(() => {});
+        backgroundMusic.play().catch(() => { });
     }
 }
 
@@ -107,7 +107,7 @@ function adjustBackgroundMusic() {
     if (isMuted) {
         backgroundMusic.pause();
     } else {
-        backgroundMusic.play().catch(() => {});
+        backgroundMusic.play().catch(() => { });
     }
 }
 
@@ -169,6 +169,9 @@ function stopEndbossDeadSound(enemy) {
  */
 function init() {
     canvas = document.getElementById('canvas');
+    canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+    canvas.addEventListener('dblclick', (e) => e.preventDefault());
+    preventMobileDoubleTap(canvas);
     levelInit();
     world = new World(canvas, keyboard);
     loadMuteSettings();
@@ -185,12 +188,38 @@ function setStoppableInterval(fn, time) {
 }
 
 /**
+ * Verhindert das versehentliche Zoomen durch Doppeltippen auf Mobilgeräten
+ * @param {HTMLCanvasElement} canvas - Das Canvas-Element, auf das der Event-Listener angewendet wird
+ * @description
+ * Diese Funktion erkennt schnelle Doppel-Taps auf Touch-Geräten und unterdrückt
+ * das Standardverhalten (meistens Zoomen), wenn zwei Taps innerhalb von 300ms erfolgen.
+ * 
+ * Der Mechanismus arbeitet mit einer Zeitmessung zwischen den Touch-Events:
+ * - Bei zu schnellem hintereinander Tippen wird preventDefault() aufgerufen
+ * - Erster Tap wird immer durchgelassen, nur Folgetaps werden ggf. blockiert
+ */
+function preventMobileDoubleTap(canvas) {
+    let lastTap = 0;
+
+    canvas.addEventListener('touchend', (e) => {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap;
+
+        if (tapLength < 300 && tapLength > 0) {
+            e.preventDefault(); // Doppeltipp erkannt ➔ blockieren
+        }
+
+        lastTap = currentTime;
+    });
+}
+
+/**
  * Startet das Spiel neu.
  * Blendet den Startbildschirm aus, stoppt das Spiel, setzt es zurück und aktiviert die mobilen Buttons.
  */
 function restartGame() {
     document.getElementById('startscreen').style.display = 'none';
-    stopGame(); 
+    stopGame();
     resetGame();
     enableMobileButtons();
     manageBackgroundMusic('play');
@@ -225,7 +254,7 @@ function stopGame() {
  */
 function resetWorld() {
     if (!world) return;
-    
+
     world = null;
     world = new World(canvas, keyboard);
 }
@@ -241,7 +270,7 @@ function startGame() {
     enableMobileButtons();
     setupMobileControls();
     init();
-    document.getElementById("impressum-btn").style.display = "none"; 
+    document.getElementById("impressum-btn").style.display = "none";
 }
 
 /**
@@ -286,7 +315,7 @@ function goToStartScreen() {
  * Schaltet den Vollbildmodus um.
  */
 function toggleFullscreen() {
-    let elem = document.documentElement; 
+    let elem = document.documentElement;
 
     if (!document.fullscreenElement) {
         elem.requestFullscreen().then(() => {
