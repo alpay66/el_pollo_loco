@@ -51,17 +51,41 @@ window.addEventListener("keyup", (event) => {
  * Fügt Event-Listener für Touch-Events zu den Steuerungsbuttons hinzu.
  */
 function setupMobileControls() {
-    document.getElementById('left-btn').addEventListener('touchstart', () => keyboard.LEFT = true);
-    document.getElementById('left-btn').addEventListener('touchend', () => keyboard.LEFT = false);
+    document.getElementById('left-btn').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = true;
+    });
+    document.getElementById('left-btn').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = false;
+    });
 
-    document.getElementById('right-btn').addEventListener('touchstart', () => keyboard.RIGHT = true);
-    document.getElementById('right-btn').addEventListener('touchend', () => keyboard.RIGHT = false);
+    document.getElementById('right-btn').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = true;
+    });
+    document.getElementById('right-btn').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = false;
+    });
 
-    document.getElementById('jump-btn').addEventListener('touchstart', () => keyboard.UP = true);
-    document.getElementById('jump-btn').addEventListener('touchend', () => keyboard.UP = false);
+    document.getElementById('jump-btn').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.UP = true;
+    });
+    document.getElementById('jump-btn').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.UP = false;
+    });
 
-    document.getElementById('throw-btn').addEventListener('touchstart', () => keyboard.D = true);
-    document.getElementById('throw-btn').addEventListener('touchend', () => keyboard.D = false);
+    document.getElementById('throw-btn').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.D = true;
+    });
+    document.getElementById('throw-btn').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.D = false;
+    });
 }
 
 /**
