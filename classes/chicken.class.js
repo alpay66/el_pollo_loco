@@ -14,7 +14,7 @@ class Chicken extends MovableObject {
     CHICKEN_DEAD = [
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
-    chickenSound;
+    chickenSound = new Audio('audio/chicken.mp3');
     offset = {
         top: 5,
         bottom: 5,
