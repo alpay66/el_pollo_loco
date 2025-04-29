@@ -297,4 +297,15 @@ class Character extends MovableObject {
             setTimeout(() => this.isJumping = false, 500);
         }
     }
+
+    stopCharacterSounds() {
+        this.stopWalkSound();
+        this.jumpSound.pause();
+        this.jumpSound.currentTime = 0;
+        this.throwSound.pause();
+        this.throwSound.currentTime = 0;
+        this.hurtSound.pause();
+        this.hurtSound.currentTime = 0;
+    }
+    
 }

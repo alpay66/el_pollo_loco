@@ -161,6 +161,7 @@ class World {
      */
     checkGameOver() {
         if (this.character.energie <= 0) {
+            this.character.stopCharacterSounds();  
             this.stopAllChickenSounds();
             this.endGame(this);
             showEndscreen(false);
@@ -251,6 +252,7 @@ class World {
      */
     checkEndbossDefeat(endboss) {
         if (endboss.energie <= 0) {
+            this.character.stopCharacterSounds(); 
             setTimeout(() => {
                 this.endGame(this);
                 showEndscreen(true);
