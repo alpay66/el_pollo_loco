@@ -139,13 +139,13 @@ class World {
         }
         if (this.character.isAboveGround() && this.character.speedY < 0 && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
             this.killEnemy(enemy);
-            this.character.bounceOff(); 
+            this.character.bounceOff();
         }
         else if (enemy instanceof Endboss) {
-            enemy.dealDamage(this.character); 
+            enemy.dealDamage(this.character);
         }
         else {
-            this.character.hit(); 
+            this.character.hit();
         }
     }
 
@@ -161,9 +161,23 @@ class World {
      */
     checkGameOver() {
         if (this.character.energie <= 0) {
+            this.stopAllChickenSounds();
             this.endGame(this);
             showEndscreen(false);
         }
+    }
+
+    /**
+    * Stoppt alle Huhn-Soundeffekte im aktuellen Level.
+    * Durchläuft alle Gegner und stoppt den Sound für Chicken- und SmallChicken-Instanzen.
+    * Nutzt optionales Chaining, um die stop-Methode sicher aufzurufen, falls sie existiert.
+    */
+    stopAllChickenSounds() {
+        this.level.enemies.forEach(enemy => {
+            if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
+                enemy.stopChickenSound?.(); // mit optionalem Aufruf (falls nicht definiert)
+            }
+        });
     }
 
     /**

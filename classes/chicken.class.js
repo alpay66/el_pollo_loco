@@ -29,6 +29,7 @@ class Chicken extends MovableObject {
         super().loadImage(this.CHICKEN_WALKING[0]);
         this.loadImages(this.CHICKEN_WALKING);
         this.loadImages(this.CHICKEN_DEAD);
+        allSounds.push(this.chickenSound);
         this.x = 550 + Math.random() * 3600;
         this.speed = 0.85 + Math.random() * 1.9;
         this.offsetX = 0.2; 
@@ -41,9 +42,6 @@ class Chicken extends MovableObject {
      * Initialisiert den Chicken-Sound.
      */
     initChickenSound() {
-        this.chickenSound = new Audio('audio/chicken.mp3');
-        allSounds.push(this.chickenSound);
-
         if (isMuted) {
             this.chickenSound.volume = 0;
             this.chickenSound.pause();
