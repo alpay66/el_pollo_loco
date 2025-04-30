@@ -120,15 +120,17 @@ class World {
      * Überprüft Kollisionen zwischen dem Charakter und Gegnern.
      */
     checkEnemyCollisions() {
+        let alreadyHandled = false;
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy) && !alreadyHandled) {
                 this.handleEnemyCollision(enemy);
                 this.updateHealthBar();
                 this.checkGameOver();
+                alreadyHandled = true;
             }
         });
     }
-
+    
     /**
      * Verarbeitet die Kollision zwischen dem Charakter und einem Gegner.
      * @param {MovableObject} enemy - Der Gegner, mit dem der Charakter kollidiert.

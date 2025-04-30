@@ -19,7 +19,11 @@ function levelInit() {
             new Chicken(),       
             new SmallChicken(), 
             new SmallChicken(),  
+            new Chicken(),
             new Chicken(),       
+            new SmallChicken(), 
+            new SmallChicken(),  
+            new Chicken(),              
             new SmallChicken(),  
             new Chicken(),       
             new Endboss()        
