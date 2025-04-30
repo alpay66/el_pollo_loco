@@ -7,10 +7,10 @@ class Coin extends DrawableObject {
         'img/8_coin/coin_2.png'
     ];
     offset = {
-        top: 25,
-        bottom: 25,
-        left: 25,
-        right: 25
+        top: 60,
+        bottom: 60,
+        left: 60,
+        right: 60
     };
 
     /**

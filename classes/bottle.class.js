@@ -7,10 +7,10 @@ class Bottle extends DrawableObject {
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
     ];
     offset = {
-        top: 10,
-        bottom: 10,
-        left: 20,
-        right: 20
+        top: 20,
+        bottom: 20,
+        left: 40,
+        right: 40
     };
 
     /**

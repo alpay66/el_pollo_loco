@@ -75,7 +75,7 @@ class Character extends MovableObject {
     y = 180;
     height = 260;
     width = 110;
-    speed = 5;
+    speed = 1.5;
     world;
     idleTimer = 0;
     idleInterval;
@@ -199,7 +199,7 @@ class Character extends MovableObject {
             else if (this.isDead()) this.playAnimation(this.CHARACTER_DEAD);
             else if (this.isAboveGround()) this.playAnimation(this.CHARACTER_JUMPING);
             else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) this.playAnimation(this.CHARACTER_WALKING);
-        }, 250);
+        }, 150);
     }
 
     /**
