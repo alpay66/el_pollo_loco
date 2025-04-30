@@ -1,3 +1,9 @@
+window.addEventListener('unhandledrejection', function(event) {
+    // Optional: console.warn('Unbehandelter Promise-Fehler verhindert:', event.reason);
+    event.preventDefault(); // ⬅️ Unterdrückt die Fehlermeldung komplett
+});
+
+
 /**
  * Überprüft die Bildschirmausrichtung und zeigt eine Warnung an, wenn das Gerät im Hochformat ist.
  * Die Warnung wird angezeigt, wenn die Höhe größer als die Breite ist und die Breite 920px oder weniger beträgt.

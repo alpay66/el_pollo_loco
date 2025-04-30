@@ -243,6 +243,7 @@ function stopGame() {
     intervalIds = [];
 
     manageBackgroundMusic('stop');
+    backgroundMusic.play().catch(() => {});
 
     for (let i = 1; i < 999; i++) {
         window.clearInterval(i);
@@ -283,9 +284,10 @@ function manageBackgroundMusic(letsGo) {
         backgroundMusic.volume = 0;
         return;
     }
+
     if (letsGo === 'play') {
         backgroundMusic.currentTime = 0;
-        backgroundMusic.play().catch(error => console.error('Audio-Fehler:', error));
+        backgroundMusic.play().catch(() => {});
     } else if (letsGo === 'stop') {
         backgroundMusic.pause();
         backgroundMusic.currentTime = 0;
