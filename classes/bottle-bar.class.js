@@ -23,7 +23,7 @@ class Bottlebar extends DrawableObject {
         this.y = 20;
         this.width = 120;
         this.height = 40;
-        this.setBottles(0);
+        this.setBottles(99);
     }
 
     /**

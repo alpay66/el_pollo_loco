@@ -53,10 +53,10 @@ class Endboss extends MovableObject {
     endbossHurt = new Audio('audio/Endboss_hurt.mp3');
     endbossDead = new Audio('audio/endboss_defeat.mp3');
     offset = {
-        top: 100,
-        bottom: 100,
-        left: 30,
-        right: 30
+        top: 80,
+        bottom: 80,
+        left: 10,
+        right: 10
     };
 
     /**

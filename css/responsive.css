@@ -117,6 +117,18 @@
     }
 }
 
+/**
+ * Passt die Position des Mute-Buttons (#mute-btn) basierend auf der Bildschirmbreite an.
+ * 
+ * @media (max-width: 658px)
+ * - Setzt die `top`-Position des Mute-Buttons auf 266px.
+ */
+@media (max-width: 658px) {
+    #mute-btn {
+        top: 266px;
+    }
+}
+
 /* 
  * Media Query für Bildschirme mit einer maximalen Breite von 640px.
  * Passt die Canvas-Größe an.

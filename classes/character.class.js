@@ -179,6 +179,7 @@ class Character extends MovableObject {
     handleThrow() {
         if (this.world.keyboard.D) {
             this.throwBottle();
+            this.resetIdleTimer();
         }
     }
 
@@ -198,7 +199,7 @@ class Character extends MovableObject {
             else if (this.isDead()) this.playAnimation(this.CHARACTER_DEAD);
             else if (this.isAboveGround()) this.playAnimation(this.CHARACTER_JUMPING);
             else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) this.playAnimation(this.CHARACTER_WALKING);
-        }, 50);
+        }, 250);
     }
 
     /**
