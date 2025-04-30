@@ -299,6 +299,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Stopp alle Character Sounds.
+     */
     stopCharacterSounds() {
         this.stopWalkSound();
         this.jumpSound.pause();
@@ -308,5 +311,4 @@ class Character extends MovableObject {
         this.hurtSound.pause();
         this.hurtSound.currentTime = 0;
     }
-    
 }

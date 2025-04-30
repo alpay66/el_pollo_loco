@@ -1,8 +1,20 @@
+/**
+ * Globaler Error-Handler für nicht abgefangene Promise-Rejections.
+ * Verhindert, dass unbehandelte Promise-Fehler in der Konsole erscheinen.
+ * 
+ * @listens unhandledrejection
+ * @param {PromiseRejectionEvent} event - Das Event-Objekt mit Details zur abgelehnten Promise.
+ * @returns {void}
+ * 
+ * @example
+ * // Fügt den globalen Handler hinzu
+ * window.addEventListener('unhandledrejection', function(event) {
+ *     event.preventDefault();
+ * });
+ */
 window.addEventListener('unhandledrejection', function(event) {
-    // Optional: console.warn('Unbehandelter Promise-Fehler verhindert:', event.reason);
-    event.preventDefault(); // ⬅️ Unterdrückt die Fehlermeldung komplett
+    event.preventDefault();
 });
-
 
 /**
  * Überprüft die Bildschirmausrichtung und zeigt eine Warnung an, wenn das Gerät im Hochformat ist.
