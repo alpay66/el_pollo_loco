@@ -110,12 +110,18 @@ class WorldRenderer {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height); // <- Diese Zeile ist redundant
+    
+        // 🔽 NEU: Rahmen zeichnen
+        if (mo.drawFrame) {
+            mo.drawFrame(this.ctx);
+        }
     
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
     }
+    
 
     /**
      * Spiegelt das Bild horizontal.

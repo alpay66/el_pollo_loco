@@ -1,3 +1,8 @@
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('impressum').style.display = 'none';
+});
+
+
 /**
  * Schaltet die Sichtbarkeit des Impressums um (ein-/ausblenden).
  * Überprüft den aktuellen Anzeigestatus des Impressum-Elements und kehrt ihn um.

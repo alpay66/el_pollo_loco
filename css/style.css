@@ -507,21 +507,33 @@ th {
  * - Weiße Schrift mit roten Akzenten
  * - Hoher Z-Index für die Sichtbarkeit über anderen Elementen
  */
-#impressum {
+ #impressum {
     display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.99);
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom right, #1a0000, #000000);
+    background-size: cover;
     color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.3);
+    padding: 40px 20px;
     z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.impressum-box {
+    max-width: 600px;
+    background-color: rgba(20, 0, 0, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    animation: popIn 0.4s ease-in-out;
+    position: absolute;
+    top: 200px;
+    left: 400px;
 }
 
 /**
@@ -531,13 +543,18 @@ th {
  * - Zentrierte Ausrichtung der Elemente
  */
 .impressum-box h2 {
-    padding: 20px;
-    background-color: rgb(0, 0, 0);
-    border-radius: 10px;
-    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.7);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    text-transform: uppercase;
+    color: #ff4d4d;
+    text-shadow: 0 0 10px red;
+}
+
+.impressum-box p {
+    font-size: 16px;
+    margin: 10px 0;
+    line-height: 1.6;
+    color: #f8dede;
 }
 
 /**
@@ -546,18 +563,18 @@ th {
  * - Leichte Schatten und Animationen
  * - Großbuchstaben für bessere Sichtbarkeit
  */
-.close-impressum-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 18px;
+ .close-impressum-btn {
+    margin-top: 30px;
+    padding: 12px 25px;
+    font-size: 16px;
     font-weight: bold;
     color: white;
-    background: linear-gradient(45deg, red, darkred);
+    background: linear-gradient(45deg, crimson, darkred);
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
+    box-shadow: 0px 5px 20px rgba(255, 0, 0, 0.5);
     text-transform: uppercase;
 }
 
@@ -567,8 +584,8 @@ th {
  * - Leichte Vergrößerung
  * - Intensiverer Schatteneffekt
  */
-.close-impressum-btn:hover {
+ .close-impressum-btn:hover {
     background: linear-gradient(45deg, darkred, black);
     transform: scale(1.1);
-    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.7);
+    box-shadow: 0px 8px 25px rgba(255, 0, 0, 0.7);
 }
